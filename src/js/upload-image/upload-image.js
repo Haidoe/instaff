@@ -22,7 +22,7 @@ formUpload.addEventListener("submit", (e) => {
   console.log(image);
 
   const imageRef = ref(storage, `shifts/${image.name + uuidv4()}`);
-  return;
+
   const uploadTask = uploadBytesResumable(imageRef, image);
 
   uploadTask.on(
