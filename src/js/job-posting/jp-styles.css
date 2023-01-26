@@ -1,0 +1,28 @@
+* {
+  box-sizing: border-box;
+}
+
+main {
+  max-width: 400px;
+  margin: auto;
+}
+
+img {
+  max-width: 200px;
+  width: 100%;
+  height: auto;
+}
+
+label,
+input,
+textarea,
+button {
+  width: 100%;
+  display: block;
+  padding: 0.25rem;
+}
+
+label,
+button {
+  margin-top: 1rem;
+}
