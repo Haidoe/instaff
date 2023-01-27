@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="./sign-up.js"></script>
+  <title>Sign Up</title>
+</head>
+
+<body>
+  <div id="Sign Up">
+    <div class="header">
+      <h1>Sign Up</h1>
+    </div>
+    <form>
+      <div class="group">
+        <label for="txtFullName">Full Name</label>
+        <input id="txtFullName" type="text" placeholder="Firstname Lastname">
+
+      </div>
+      <div class="group">
+        <label for="txtEmail">Email</label>
+        <input id="txtEmail" type="email" placeholder="youremail@email.com">
+
+      </div>
+      <div class="group">
+        <label for="txtPassword">Password</label>
+        <input id="txtPassword" type="password">
+
+      </div>
+      <div id="UserType" class="group">
+        <label for="purpose">Purpose</label>
+        <select name="purpose" id="purpose">
+          <option value="employer">I'm looking for jobs.</option>
+          <option value="employee">I want to hire staffs.</option>
+        </select>
+      </div>
+      <button id="btnSignUp" type="button" class="button">Sign Up</button>
+    </form>
+  </div>
+
+
+
+</body>
+
+</html>

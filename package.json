@@ -1,7 +1,7 @@
 {
   "name": "instaff",
   "version": "1.0.0",
-  "description": "",
+  "description": "hi ;lsmdmsms;md",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Haidoe/instaff/issues"
   },
-  "homepage": "https://github.com/Haidoe/instaff#readme"
+  "homepage": "https://github.com/Haidoe/instaff#readme",
+  "dependencies": {
+    "firebase": "^9.16.0"
+  }
 }
