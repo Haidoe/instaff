@@ -6,6 +6,7 @@ import {
   setDoc,
   addDoc,
   collection,
+  serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js";
 
 // import {
@@ -54,6 +55,9 @@ jobPostingForm.addEventListener("submit", async (e) => {
     additionalInfo: additionalInfo.value,
     companyName: companyName.value,
     location: location.value,
+    created: serverTimestamp(),
+    updated: serverTimestamp(),
+    deleted: null,
   };
 
   const jobPostingCol = collection(firestore, "jobPostings");
