@@ -3,13 +3,12 @@ import header from "./components/header";
 
 const { firebaseApp } = initialize();
 
-console.log("Haidren amalia");
+console.log("Instaff Updates");
 
 const body = document.querySelector("body");
 
 body.appendChild(header);
 
-console.log("Hello World");
 const imgEl = document.createElement("img");
 imgEl.src = "/static/logo.svg";
 
