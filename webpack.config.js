@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env) => {
   //This is temporary -- for debugging
@@ -29,7 +30,13 @@ module.exports = (env) => {
       rules: [
         {
           test: /\.(scss|css)$/,
-          use: ["style-loader", "css-loader", "sass-loader"],
+          use: [
+            env.mode === "development"
+              ? "style-loader"
+              : MiniCssExtractPlugin.loader,
+            "css-loader",
+            "sass-loader",
+          ],
         },
         {
           test: /\.js$/,
@@ -51,6 +58,7 @@ module.exports = (env) => {
       new HtmlWebpackPlugin({
         template: "./src/index.html",
       }),
+      new MiniCssExtractPlugin(),
       new CopyPlugin({
         patterns: [
           {
