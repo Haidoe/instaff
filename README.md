@@ -1,3 +1,13 @@
 # instaff
 
-hi ;lsmdmsms;md
+## Getting Started
+
+```bash
+npm install
+```
+
+```bash
+npm start
+# or
+npm run build
+```
