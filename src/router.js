@@ -39,7 +39,7 @@ const getParams = (match) => {
   );
 };
 
-const router = async () => {
+export const router = async () => {
   //This is where you unsubscribe things from the previous active page
   if (activePage) {
     activePage.close();
@@ -58,18 +58,7 @@ const router = async () => {
   mainApp.innerHTML = activePage.load();
 };
 
-const pageTransition = (url) => {
+export const pageTransition = (url) => {
   history.pushState(null, null, url);
   router();
 };
-
-document.body.addEventListener("click", (e) => {
-  if (e.target.matches("[data-link]")) {
-    e.preventDefault();
-    pageTransition(e.target.href);
-  }
-});
-
-window.addEventListener("popstate", router);
-
-router();
