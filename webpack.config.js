@@ -3,15 +3,15 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = (env) => {
-  //This is temporary -- for debugging
-  console.log("ENV", env);
+const config = (env) => {
+  const devtool = env.mode === "development" ? "source-map" : false;
   return {
     mode: env.mode,
-    devtool: "source-map",
+    devtool,
     entry: "./src/index.js",
     output: {
       path: path.resolve(__dirname, "dist"),
+      publicPath: "/",
       filename: "[name][contenthash].js",
       assetModuleFilename: "assets/[name][ext]",
       clean: true,
@@ -70,3 +70,5 @@ module.exports = (env) => {
     ],
   };
 };
+
+module.exports = config;

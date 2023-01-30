@@ -11,16 +11,39 @@
 </head>
 
 <body>
-  <header>
-    <h1>Welcome to Instaff</h1>
+  <header class="main-header">
+    <h1>
+      <a href="/" data-link>
+        <img src="/static/logo.svg" alt="sample logo, to be replaced">
+        Instaff
+      </a>
+    </h1>
 
+    <nav class="nav">
+      <ul>
+        <li>
+          <a href="/" data-link>
+            Home
+          </a>
+        </li>
+
+        <li>
+          <a href="/sign-in" data-link>
+            Sign in
+          </a>
+        </li>
+
+        <li>
+          <a href="/browse" data-link>
+            Browse
+          </a>
+        </li>
+      </ul>
+    </nav>
   </header>
 
   <main id="app"></main>
 
-  <footer class="main-footer">
-    Amazing!
-  </footer>
 </body>
 
 </html>
