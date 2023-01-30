@@ -5,11 +5,46 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instaff</title>
-  <script type="module" src="./index.js"></script>
+  <link rel="shortcut icon" href="./static/test/favicon.png" type="image/x-icon">
+  <link rel="manifest" href="./static/manifest.json">
+
+  <title>Instaff | Homepage</title>
+
 </head>
 
 <body>
+  <header class="main-header">
+    <h1>
+      <a href="/" data-link>
+        <img src="/static/logo.svg" alt="sample logo, to be replaced">
+        Instaff
+      </a>
+    </h1>
+
+    <nav class="nav">
+      <ul>
+        <li>
+          <a href="/" data-link>
+            Home
+          </a>
+        </li>
+
+        <li>
+          <a href="/sign-in" data-link>
+            Sign in
+          </a>
+        </li>
+
+        <li>
+          <a href="/browse" data-link>
+            Browse
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="app"></main>
 
 </body>
 
