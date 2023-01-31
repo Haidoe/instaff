@@ -19,15 +19,28 @@ router();
 const { firebaseApp } = initialize();
 
 // For Service Worker
+// if ("serviceWorker" in navigator) {
+//   navigator.serviceWorker
+//     .register("./static/service-worker.js")
+//     .then(function (reg) {
+//       console.log(`Service Worker Registered`);
+//     })
+//     .catch(function (error) {
+//       console.log(`Service Worker Registration Error (${error})`);
+//     });
+// }
+
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register("./static/service-worker.js")
-    .then(function (reg) {
-      console.log(`Service Worker Registered`);
-    })
-    .catch(function (error) {
-      console.log(`Service Worker Registration Error (${error})`);
-    });
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then((registration) => {
+        console.log("SW registered: ", registration);
+      })
+      .catch((registrationError) => {
+        console.log("SW registration failed: ", registrationError);
+      });
+  });
 }
 
 console.log("Instaff Updates");
