@@ -6,7 +6,7 @@ class Login extends Page {
     super("Sign In");
   }
 
-  load() {
+  async load() {
     return `
       <div class="login-page"> 
         <h2> Welcome to Login Page </h2>

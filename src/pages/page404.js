@@ -5,7 +5,7 @@ class NotFound extends Pages {
     super("Page not Found");
   }
 
-  load() {
+  async load() {
     return `
       <h2> Page not Found </h2>
       <div>

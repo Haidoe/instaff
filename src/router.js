@@ -2,6 +2,7 @@ import Home from "./pages/Home";
 import PageNotFound from "./pages/page404";
 import SignIn from "./pages/Login";
 import Test from "./pages/Posting";
+import Register from "./pages/SignUp/sample";
 
 let activePage = null;
 const mainApp = document.querySelector("#app");
@@ -18,6 +19,10 @@ const routes = [
   {
     path: "/test/:id",
     page: Test,
+  },
+  {
+    path: "/lop",
+    page: Register,
   },
 ];
 
@@ -55,7 +60,7 @@ export const router = async () => {
     ? new activeRoute.page(getParams(activeRoute))
     : new PageNotFound();
 
-  mainApp.innerHTML = activePage.load();
+  mainApp.innerHTML = await activePage.load();
   activePage.mounted();
 };
 

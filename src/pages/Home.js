@@ -5,7 +5,7 @@ class Home extends Pages {
     super("Home");
   }
 
-  load() {
+  async load() {
     return `
       <h2> Welcome to Home Page</h2>
       <ul>
