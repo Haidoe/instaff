@@ -56,6 +56,7 @@ export const router = async () => {
     : new PageNotFound();
 
   mainApp.innerHTML = activePage.load();
+  activePage.mounted();
 };
 
 export const pageTransition = (url) => {

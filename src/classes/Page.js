@@ -14,7 +14,7 @@ class Page {
     return "";
   }
 
-  loaded() {}
+  mounted() {}
 
   close() {
     console.log(`${this.title} Page Closed`);
