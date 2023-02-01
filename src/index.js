@@ -19,16 +19,24 @@ router();
 const { firebaseApp } = initialize();
 
 // For Service Worker
-// if ("serviceWorker" in navigator) {
-//   navigator.serviceWorker
-//     .register("./static/service-worker.js")
-//     .then(function (reg) {
-//       console.log(`Service Worker Registered`);
-//     })
-//     .catch(function (error) {
-//       console.log(`Service Worker Registration Error (${error})`);
-//     });
-// }
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/static/service-worker.js")
+    .then(function (reg) {
+      console.log(reg);
+      console.log(`Service Worker Registered`);
+    })
+    .catch(function (error) {
+      console.log(`Service Worker Registration Error (${error})`);
+    });
+}
+
+// navigator.serviceWorker.getRegistrations().then(function (registrations) {
+//   console.log("LUHH", registrations);
+//   for (let registration of registrations) {
+//     registration.unregister();
+//   }
+// });
 
 // if ("serviceWorker" in navigator) {
 //   window.addEventListener("load", () => {
