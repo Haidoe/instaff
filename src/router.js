@@ -53,12 +53,17 @@ export const router = async () => {
     ? new activeRoute.page(getParams(activeRoute))
     : new PageNotFound();
 
+  //Converting the String to DomElements
   const pageContent = await activePage.load();
   const parsedPageElement = parser.parseFromString(pageContent, "text/html");
 
-  console.log(parsedPageElement);
-  mainApp.innerHTML = "";
+  //Removing the content of the mainApp
+  while (mainApp.firstChild) mainApp.removeChild(mainApp.firstChild);
+
+  //Inserting the Page
   mainApp.appendChild(parsedPageElement.body);
+
+  //Execute mounted
   activePage.mounted();
 };
 
