@@ -1,8 +1,9 @@
 import Home from "./pages/Home";
 import PageNotFound from "./pages/page404";
-import SignIn from "./pages/Login";
+import SignIn from "./pages/Signin";
 import Test from "./pages/Posting";
-import Register from "./pages/SignUp/sample";
+import SignUp from "./pages/Signup";
+import Verification from "./pages/Verification";
 
 let activePage = null;
 const mainApp = document.querySelector("#app");
@@ -21,8 +22,12 @@ const routes = [
     page: Test,
   },
   {
-    path: "/lop",
-    page: Register,
+    path: "/sign-up",
+    page: SignUp,
+  },
+  {
+    path: "/verification",
+    page: Verification,
   },
 ];
 
