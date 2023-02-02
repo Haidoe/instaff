@@ -8,6 +8,7 @@ class Home extends Pages {
   async load() {
     return `
       <h2> Welcome to Home Page</h2>
+
       <ul>
         <li>
           <a href="/test/1asdas" data-link>
@@ -27,7 +28,20 @@ class Home extends Pages {
           </a>
         </li>
       </ul>
+
+      <form id="pageForm">
+        <label for="testInput"> Display name: </label>
+        <input type="text" id="testInput" required />
+        <button type="submit"> Click me </button>
+      </form>
     `;
+  }
+
+  async mounted() {
+    pageForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      console.log("You're amazing!");
+    });
   }
 }
 

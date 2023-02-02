@@ -6,8 +6,7 @@ import "./css/global.scss";
 //Initialize Firebase App
 const firebaseApp = initialize();
 
-console.log("ENV", process.env.INSTAFF_MODE);
-
+//Disabling the service worker in the development
 if (process.env.INSTAFF_MODE !== "development") {
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
