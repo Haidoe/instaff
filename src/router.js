@@ -1,10 +1,4 @@
 import { getParams, pathToRegex } from "./js/utils";
-import Home from "./pages/Home";
-import PageNotFound from "./pages/page404";
-import SignIn from "./pages/Signin";
-import Test from "./pages/Posting";
-import SignUp from "./pages/Signup";
-import Verification from "./pages/Verification";
 
 //Will hold the class instance of the active page
 let activePage = null;
@@ -18,23 +12,26 @@ const parser = new DOMParser();
 const routes = [
   {
     path: "/",
-    page: Home,
+    page: () => import(/* webpackChunkName: "Home"  */ `./pages/Home`),
   },
   {
     path: "/sign-in",
-    page: SignIn,
+    page: () => import(/* webpackChunkName: "Signin" */ `./pages/Signin`),
   },
   {
     path: "/test/:id",
-    page: Test,
+    page: () => import(/* webpackChunkName: "Post" */ `./pages/Posting`),
   },
   {
     path: "/sign-up",
-    page: SignUp,
+    page: () => import(/* webpackChunkName: "Signup" */ `./pages/SignUp`),
   },
   {
     path: "/verification",
-    page: Verification,
+    page: () =>
+      import(
+        /* webpackChunkName: "EmailVerification" */ `./pages/Verification`
+      ),
   },
 ];
 
@@ -54,9 +51,13 @@ export const router = async () => {
   //This is to get the active route
   let activeRoute = transformedRoutes.find((route) => route.result !== null);
 
-  activePage = activeRoute
-    ? new activeRoute.page(getParams(activeRoute))
-    : new PageNotFound();
+  const lazyLoaded = await (activeRoute
+    ? activeRoute.page()
+    : import(/* webpackChunkName: "404" */ `./pages/page404`));
+
+  const Page = lazyLoaded.default;
+
+  activePage = new Page(getParams(activeRoute));
 
   //Converting the String to DomElements
   const pageContent = await activePage.load();

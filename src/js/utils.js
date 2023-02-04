@@ -5,6 +5,8 @@ export const pathToRegex = (path) =>
 
 //Extracting the slug -- returns an object --- used in
 export const getParams = (match) => {
+  if (!match) return false;
+
   const values = match.result.slice(1);
   const keys = Array.from(match.path.matchAll(/:(\w+)/g)).map(
     (result) => result[1]
