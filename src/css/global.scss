@@ -1,6 +1,14 @@
 :root {
   --sidePadding: 3%;
 }
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
 img {
   width: 100%;
   max-width: 100%;
@@ -13,7 +21,7 @@ a {
 }
 
 #app {
-  height: 100vh;
+  min-height: 100vh;
   background: rgb(226, 223, 223);
   padding: 1rem var(--sidePadding);
 }

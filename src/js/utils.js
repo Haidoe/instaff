@@ -18,3 +18,27 @@ export const getParams = (match) => {
     })
   );
 };
+
+//Used to display images
+// convert file to a base64 url
+export const readURL = (file) => {
+  return new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload = (e) => res(e.target.result);
+    reader.onerror = (e) => rej(e);
+    reader.readAsDataURL(file);
+  });
+};
+
+//Date
+export const formatDate = (date) => {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
+};

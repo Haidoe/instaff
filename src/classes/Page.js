@@ -10,11 +10,11 @@ class Page {
 
   preload() {}
 
-  load() {
+  async load() {
     return "";
   }
 
-  mounted() {}
+  async mounted() {}
 
   close() {
     console.log(`${this.title} Page Closed`);

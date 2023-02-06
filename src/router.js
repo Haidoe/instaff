@@ -19,10 +19,6 @@ const routes = [
     page: () => import(/* webpackChunkName: "Signin" */ `./pages/Signin`),
   },
   {
-    path: "/test/:id",
-    page: () => import(/* webpackChunkName: "Post" */ `./pages/Posting`),
-  },
-  {
     path: "/sign-up",
     page: () => import(/* webpackChunkName: "Signup" */ `./pages/SignUp`),
   },
@@ -31,6 +27,25 @@ const routes = [
     page: () =>
       import(
         /* webpackChunkName: "EmailVerification" */ `./pages/Verification`
+      ),
+  },
+  {
+    path: "/job-posting",
+    page: () =>
+      import(/* webpackChunkName: "JobPosting" */ `./pages/JobPosting`),
+  },
+  {
+    path: "/job-posting/:id",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingDetail" */ `./pages/JobPosting/detail`
+      ),
+  },
+  {
+    path: "/job-postings",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingList" */ `./pages/JobPosting/list`
       ),
   },
 ];
@@ -67,7 +82,9 @@ export const router = async () => {
   while (mainApp.firstChild) mainApp.removeChild(mainApp.firstChild);
 
   //Inserting the Page
-  mainApp.appendChild(parsedPageElement.body);
+  for (const child of parsedPageElement.body.childNodes) {
+    mainApp.appendChild(child);
+  }
 
   //Execute mounted
   activePage.mounted();
