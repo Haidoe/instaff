@@ -1,75 +1,96 @@
-import Home from "./pages/Home";
-import PageNotFound from "./pages/page404";
-import SignIn from "./pages/Login";
-import Test from "./pages/Posting";
+import { getParams, pathToRegex } from "./js/utils";
 
+//Will hold the class instance of the active page
 let activePage = null;
+
+//Entry point
 const mainApp = document.querySelector("#app");
 
+const parser = new DOMParser();
+
+//List of pages
 const routes = [
   {
     path: "/",
-    page: Home,
+    page: () => import(/* webpackChunkName: "Home"  */ `./pages/Home`),
   },
   {
     path: "/sign-in",
-    page: SignIn,
+    page: () => import(/* webpackChunkName: "Signin" */ `./pages/Signin`),
   },
   {
-    path: "/test/:id",
-    page: Test,
+    path: "/sign-up",
+    page: () => import(/* webpackChunkName: "Signup" */ `./pages/SignUp`),
+  },
+  {
+    path: "/verification",
+    page: () =>
+      import(
+        /* webpackChunkName: "EmailVerification" */ `./pages/Verification`
+      ),
+  },
+  {
+    path: "/job-posting",
+    page: () =>
+      import(/* webpackChunkName: "JobPosting" */ `./pages/JobPosting`),
+  },
+  {
+    path: "/job-posting/:id",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingDetail" */ `./pages/JobPosting/detail`
+      ),
+  },
+  {
+    path: "/job-postings",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingList" */ `./pages/JobPosting/list`
+      ),
   },
 ];
 
-//Transforming the path url to array
-const pathToRegex = (path) =>
-  new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
-
-//Get the Slug
-const getParams = (match) => {
-  const values = match.result.slice(1);
-  const keys = Array.from(match.path.matchAll(/:(\w+)/g)).map(
-    (result) => result[1]
-  );
-
-  return Object.fromEntries(
-    keys.map((key, i) => {
-      return [key, values[i]];
-    })
-  );
-};
-
-const router = async () => {
+export const router = async () => {
   //This is where you unsubscribe things from the previous active page
   if (activePage) {
     activePage.close();
   }
+
+  //Adding a result property and it will create an object if path matches the current location
+  //Will will have a result property with null if didn't met
   const transformedRoutes = routes.map((route) => ({
     ...route,
     result: location.pathname.match(pathToRegex(route.path)),
   }));
 
+  //This is to get the active route
   let activeRoute = transformedRoutes.find((route) => route.result !== null);
 
-  activePage = activeRoute
-    ? new activeRoute.page(getParams(activeRoute))
-    : new PageNotFound();
+  const lazyLoaded = await (activeRoute
+    ? activeRoute.page()
+    : import(/* webpackChunkName: "404" */ `./pages/page404`));
 
-  mainApp.innerHTML = activePage.load();
+  const Page = lazyLoaded.default;
+
+  activePage = new Page(getParams(activeRoute));
+
+  //Converting the String to DomElements
+  const pageContent = await activePage.load();
+  const parsedPageElement = parser.parseFromString(pageContent, "text/html");
+
+  //Removing the content of the mainApp
+  while (mainApp.firstChild) mainApp.removeChild(mainApp.firstChild);
+
+  //Inserting the Page
+  for (const child of parsedPageElement.body.childNodes) {
+    mainApp.appendChild(child);
+  }
+
+  //Execute mounted
+  activePage.mounted();
 };
 
-const pageTransition = (url) => {
+export const pageTransition = (url) => {
   history.pushState(null, null, url);
   router();
 };
-
-document.body.addEventListener("click", (e) => {
-  if (e.target.matches("[data-link]")) {
-    e.preventDefault();
-    pageTransition(e.target.href);
-  }
-});
-
-window.addEventListener("popstate", router);
-
-router();

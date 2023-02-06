@@ -3,10 +3,10 @@
   "name": "Instaff",
   "icons": [
     {
-      "src": "./favicon.png",
+      "src": "/static/favicon.png",
       "sizes": "512x512"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": "/index.html",
   "display": "standalone"
 }

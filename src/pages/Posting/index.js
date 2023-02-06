@@ -6,10 +6,10 @@ class Posting extends Page {
     this.id = id;
   }
 
-  load() {
+  async load() {
     return `
       <div class="posting-page"> 
-        <h2> Welcome to Posting Page with an id of ${this.id} </h2>
+        <h2> Welcome to Posting Page with an id of ${this.id}@@ </h2>
       </div>
     `;
   }
