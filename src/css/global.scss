@@ -1,0 +1,61 @@
+:root {
+  --sidePadding: 3%;
+}
+* {
+  box-sizing: border-box;
+}
+
+img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#app {
+  min-height: 100vh;
+  background: rgb(226, 223, 223);
+  padding: 1rem var(--sidePadding);
+}
+
+// Temporary
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem var(--sidePadding);
+
+  h1 {
+    margin: 0;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      img {
+        width: 50px;
+      }
+    }
+  }
+  nav ul {
+    list-style-type: none;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, auto);
+
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
+.main-footer {
+  background-color: black;
+  padding: 1rem;
+  color: #fff;
+  text-transform: uppercase;
+}

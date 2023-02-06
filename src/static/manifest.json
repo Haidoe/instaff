@@ -1,0 +1,12 @@
+{
+  "short_name": "Instaff",
+  "name": "Instaff",
+  "icons": [
+    {
+      "src": "/static/favicon.png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/index.html",
+  "display": "standalone"
+}

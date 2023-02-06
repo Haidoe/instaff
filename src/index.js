@@ -1,15 +1,35 @@
 import { initialize } from "./firebase.js";
-import header from "./components/header";
+import { router, pageTransition } from "./router";
+import "./css/normalize.css";
+import "./css/global.scss";
 
-const { firebaseApp } = initialize();
+//Initialize Firebase App
+const firebaseApp = initialize();
 
-console.log("Instaff Updates");
+//Disabling the service worker in the development
+if (process.env.INSTAFF_MODE !== "development") {
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then((registration) => {
+          console.log("SW registered: ", registration);
+        })
+        .catch((registrationError) => {
+          console.log("SW registration failed: ", registrationError);
+        });
+    });
+  }
+}
 
-const body = document.querySelector("body");
+//This is For Router
+document.body.addEventListener("click", (e) => {
+  if (e.target.matches("[data-link]")) {
+    e.preventDefault();
+    pageTransition(e.target.href);
+  }
+});
 
-body.appendChild(header);
+window.addEventListener("popstate", router);
 
-const imgEl = document.createElement("img");
-imgEl.src = "/static/logo.svg";
-
-body.appendChild(imgEl);
+router();

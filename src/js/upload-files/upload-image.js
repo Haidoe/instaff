@@ -1,27 +1,14 @@
-import { v4 as uuidv4 } from "https://jspm.dev/uuid";
+import { v4 as uuidv4 } from "uuid";
+
 import {
+  getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
-} from "https://www.gstatic.com/firebasejs/9.16.0/firebase-storage.js";
+} from "firebase/storage";
 
-//Used to display images
-// convert file to a base64 url
-export const readURL = (file) => {
-  return new Promise((res, rej) => {
-    const reader = new FileReader();
-    reader.onload = (e) => res(e.target.result);
-    reader.onerror = (e) => rej(e);
-    reader.readAsDataURL(file);
-  });
-};
-
-export const uploadFile = (
-  storage,
-  file,
-  folderName = "shifts",
-  callbacks = {}
-) => {
+export const uploadFile = (file, folderName = "shifts", callbacks = {}) => {
+  const storage = getStorage();
   const fileRef = ref(storage, `${folderName}/${uuidv4()}`);
 
   const uploadTask = uploadBytesResumable(fileRef, file);

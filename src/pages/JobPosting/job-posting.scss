@@ -1,0 +1,20 @@
+.job-posting-page {
+  form {
+    max-width: 400px;
+    margin: auto;
+    display: grid;
+    gap: 1rem;
+  }
+
+  label,
+  input,
+  textarea {
+    width: 100%;
+    display: block;
+    resize: vertical;
+  }
+
+  h2 {
+    text-align: center;
+  }
+}
