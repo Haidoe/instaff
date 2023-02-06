@@ -135,6 +135,9 @@ class JobPosting extends Page {
       try {
         jobPosting.bannerImageUrl = await uploadFile(this.image, "jobPostings");
         await setJobPosting(jobPosting);
+        form.reset();
+        companyName.focus();
+        bannerImg.classList.remove("visible");
       } catch (error) {
         console.log("ERROR", error);
       } finally {
