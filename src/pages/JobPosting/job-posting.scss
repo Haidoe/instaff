@@ -21,8 +21,8 @@
 
   .formImg {
     display: none;
-    width: 250px;
-    height: auto;
+    // width: 250px;
+    // height: auto;
   }
 
   .formImg.visible {
@@ -36,5 +36,25 @@
 
   button {
     padding: 0.5rem;
+  }
+
+  &.details-page {
+    .loading,
+    .no-result {
+      text-align: center;
+    }
+
+    form,
+    .no-result {
+      display: none;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .visible {
+      display: block;
+    }
   }
 }

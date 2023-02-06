@@ -19,10 +19,6 @@ const routes = [
     page: () => import(/* webpackChunkName: "Signin" */ `./pages/Signin`),
   },
   {
-    path: "/test/:id",
-    page: () => import(/* webpackChunkName: "Post" */ `./pages/Posting`),
-  },
-  {
     path: "/sign-up",
     page: () => import(/* webpackChunkName: "Signup" */ `./pages/SignUp`),
   },
@@ -37,6 +33,20 @@ const routes = [
     path: "/job-posting",
     page: () =>
       import(/* webpackChunkName: "JobPosting" */ `./pages/JobPosting`),
+  },
+  {
+    path: "/job-posting/:id",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingDetail" */ `./pages/JobPosting/detail`
+      ),
+  },
+  {
+    path: "/job-postings",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingList" */ `./pages/JobPosting/list`
+      ),
   },
 ];
 
