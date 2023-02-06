@@ -12,9 +12,29 @@
     width: 100%;
     display: block;
     resize: vertical;
+    padding: 0.5rem;
   }
 
   h2 {
     text-align: center;
+  }
+
+  .formImg {
+    display: none;
+    width: 250px;
+    height: auto;
+  }
+
+  .formImg.visible {
+    display: block;
+  }
+
+  label {
+    line-height: 1.5;
+    padding-left: 0;
+  }
+
+  button {
+    padding: 0.5rem;
   }
 }
