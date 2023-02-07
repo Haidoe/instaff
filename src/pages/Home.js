@@ -23,8 +23,25 @@ class Home extends Pages {
             </a>
           </li>
         </ul>
+
+        <div id="temp"></div>
       </div>
     `;
+  }
+
+  async mounted() {
+    // TODO - Remove this in the future
+    // This is just temporary
+    const temp = document.querySelector("#temp");
+    temp.innerHTML = "";
+
+    const user = await this.getCurrentUser();
+    if (user) {
+      const button = document.createElement("button");
+      button.textContent = "Sign out";
+      button.onclick = this.signOutUser;
+      temp.appendChild(button);
+    }
   }
 }
 

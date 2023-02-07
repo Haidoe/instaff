@@ -1,10 +1,11 @@
-import Page from "../../classes/Page";
+import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import { readURL } from "../../js/utils";
 import { uploadFile } from "../../js/upload-files/upload-image";
 import { setJobPosting } from "../../js/job-posting/job-posting";
 
 import "./job-posting.scss";
-class JobPosting extends Page {
+import { pageTransition } from "../../router";
+class JobPosting extends AuthenticatedPage {
   constructor() {
     super("Job Posting");
     this.image = null;
