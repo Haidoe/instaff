@@ -1,5 +1,5 @@
 import Page from "../../classes/Page";
-import "./login.scss";
+
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { pageTransition } from "../../router";
