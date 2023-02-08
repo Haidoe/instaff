@@ -73,6 +73,7 @@ class SignUp extends Page {
       let email = document.querySelector("#email").value;
       let password = document.querySelector("#psw").value;
       let typeOfUser = document.querySelector("#typeOfUser").value;
+      let displayName = document.querySelector("#displayname").value;
 
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -94,6 +95,7 @@ class SignUp extends Page {
 
           setDoc(userCol, {
             typeOfUser: typeOfUser,
+            displayName: displayName,
           });
         })
 

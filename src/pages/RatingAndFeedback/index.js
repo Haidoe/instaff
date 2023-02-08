@@ -1,7 +1,11 @@
 import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import "./ratingandfeedback.scss";
 import {
-  getFirestore, doc, getDoc, addDoc, collection, 
+  getFirestore,
+  doc,
+  getDoc,
+  addDoc,
+  collection,
 } from "@firebase/firestore";
 
 import { getAuth } from "@firebase/auth";
@@ -61,36 +65,36 @@ class RatingAndFeedback extends AuthenticatedPage {
   }
 
   async mounted() {
-    const stars = document.querySelectorAll('.star');
-    const ratingValue = document.querySelector('.rating-value');
+    const stars = document.querySelectorAll(".star");
+    const ratingValue = document.querySelector(".rating-value");
     const feedback = document.querySelector("#feedback");
     const isAnonymous = document.querySelector("#isanonymous");
     const btnSubmit = document.querySelector(".submit");
     let rating = 0;
 
-
     /*------- stars event listener -------*/
-    stars.forEach(star => {
-      star.addEventListener('click', (event) => {
-        rating = parseFloat(event.target.getAttribute('data-rating'));
+    stars.forEach((star) => {
+      star.addEventListener("click", (event) => {
+        rating = parseFloat(event.target.getAttribute("data-rating"));
         const maxRating = 5;
 
-        stars.forEach(star => {
-          star.classList.remove('selected');
-          if (parseFloat(star.getAttribute('data-rating')) <= rating && parseFloat(star.getAttribute('data-rating')) <= maxRating) {
-            star.classList.add('selected');
+        stars.forEach((star) => {
+          star.classList.remove("selected");
+          if (
+            parseFloat(star.getAttribute("data-rating")) <= rating &&
+            parseFloat(star.getAttribute("data-rating")) <= maxRating
+          ) {
+            star.classList.add("selected");
           }
         });
 
         //output rating value
         ratingValue.textContent = `${rating}/5`;
       });
-      
     });
     /*------- stars event listener -------*/
-    
 
-    //get "users" collection from 
+    //get "users" collection from
     const userData = await getUserDetails(this.currentUser.uid);
 
     //get current job posting data from firebase
@@ -98,7 +102,7 @@ class RatingAndFeedback extends AuthenticatedPage {
     //create job posting id static
     const staticId = "7MjviQqrRYVlYwKqtkVG";
 
-    const jobPostingsData = await getJobPostingDetail(staticId)
+    const jobPostingsData = await getJobPostingDetail(staticId);
 
     //populate job posting data
     const populateCompany = document.querySelector(".company-name");
@@ -115,14 +119,13 @@ class RatingAndFeedback extends AuthenticatedPage {
     const jobPostingId = staticId;
     const positionTitle = jobPostingsData.positionTitle;
     const companyName = jobPostingsData.companyName;
-    const feedbackFrom =  this.currentUser.uid ;
+    const feedbackFrom = this.currentUser.uid;
     const feedbackFromProfileImageUrl = userData.imageURL;
-    const feedbackTo =  jobPostingsData.userId ;
+    const feedbackTo = jobPostingsData.userId;
     const feedbackToProfileImageUrl = jobPostingsData.bannerImageUrl;
 
-    
     //submit button event listener
-    btnSubmit.addEventListener('click', async (event) => {
+    btnSubmit.addEventListener("click", async (event) => {
       event.preventDefault();
 
       const ratingAndFeedback = {
@@ -136,15 +139,12 @@ class RatingAndFeedback extends AuthenticatedPage {
         feedbackTo: feedbackTo,
         feedbackToProfileImageUrl: feedbackToProfileImageUrl,
         feedbackMessage: feedback.value,
-        isAnonymousValue: isAnonymous.checked
-      }
+        isAnonymousValue: isAnonymous.checked,
+      };
 
-      const response = await addRatingAndFeedback(ratingAndFeedback); 
+      const response = await addRatingAndFeedback(ratingAndFeedback);
       console.log(response);
-
-    }
-    );
+    });
   }
-   
 }
 export default RatingAndFeedback;
