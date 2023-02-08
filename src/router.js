@@ -1,72 +1,97 @@
-import Home from "./pages/Home";
-import PageNotFound from "./pages/page404";
-import SignIn from "./pages/Signin";
-import Test from "./pages/Posting";
-import SignUp from "./pages/Signup";
-import Verification from "./pages/Verification";
+import { getParams, pathToRegex } from "./js/utils";
 
+//Will hold the class instance of the active page
 let activePage = null;
+
+//Entry point
 const mainApp = document.querySelector("#app");
 
+const parser = new DOMParser();
+
+//List of pages
 const routes = [
   {
     path: "/",
-    page: Home,
+    page: () => import(/* webpackChunkName: "Home"  */ `./pages/Home`),
   },
   {
     path: "/sign-in",
-    page: SignIn,
-  },
-  {
-    path: "/test/:id",
-    page: Test,
+    page: () => import(/* webpackChunkName: "Signin" */ `./pages/Signin`),
   },
   {
     path: "/sign-up",
-    page: SignUp,
+    page: () => import(/* webpackChunkName: "Signup" */ `./pages/SignUp`),
   },
   {
     path: "/verification",
-    page: Verification,
+    page: () =>
+      import(
+        /* webpackChunkName: "EmailVerification" */ `./pages/Verification`
+      ),
+  },
+  {
+    path: "/job-posting",
+    page: () =>
+      import(/* webpackChunkName: "JobPosting" */ `./pages/JobPosting`),
+  },
+  {
+    path: "/job-posting/:id",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingDetail" */ `./pages/JobPosting/detail`
+      ),
+  },
+  {
+    path: "/job-postings",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingList" */ `./pages/JobPosting/list`
+      ),
   },
 ];
-
-//Transforming the path url to array
-const pathToRegex = (path) =>
-  new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
-
-//Get the Slug
-const getParams = (match) => {
-  const values = match.result.slice(1);
-  const keys = Array.from(match.path.matchAll(/:(\w+)/g)).map(
-    (result) => result[1]
-  );
-
-  return Object.fromEntries(
-    keys.map((key, i) => {
-      return [key, values[i]];
-    })
-  );
-};
 
 export const router = async () => {
   //This is where you unsubscribe things from the previous active page
   if (activePage) {
     activePage.close();
   }
+
+  //Adding a result property and it will create an object if path matches the current location
+  //Will will have a result property with null if didn't met
   const transformedRoutes = routes.map((route) => ({
     ...route,
     result: location.pathname.match(pathToRegex(route.path)),
   }));
 
+  //This is to get the active route
   let activeRoute = transformedRoutes.find((route) => route.result !== null);
 
-  activePage = activeRoute
-    ? new activeRoute.page(getParams(activeRoute))
-    : new PageNotFound();
+  const lazyLoaded = await (activeRoute
+    ? activeRoute.page()
+    : import(/* webpackChunkName: "404" */ `./pages/page404`));
 
-  mainApp.innerHTML = await activePage.load();
-  activePage.mounted();
+  const Page = lazyLoaded.default;
+
+  activePage = new Page(getParams(activeRoute));
+
+  const willLoad = await activePage.preload();
+
+  if (willLoad) {
+    //Converting the String to DomElements
+    const pageContent = await activePage.load();
+    const parsedPageElement = parser.parseFromString(pageContent, "text/html");
+
+    //Removing the content of the mainApp
+    while (mainApp.firstChild) mainApp.removeChild(mainApp.firstChild);
+
+    //Inserting the Page
+    for (const child of parsedPageElement.body.childNodes) {
+      mainApp.appendChild(child);
+    }
+
+    //Execute mounted
+    activePage.mounted();
+  }
 };
 
 export const pageTransition = (url) => {

@@ -40,6 +40,17 @@ class Login extends Page {
     `;
   }
 
+  async preload() {
+    const user = await this.getCurrentUser();
+
+    if (user) {
+      pageTransition("/");
+      return false;
+    }
+
+    return true;
+  }
+
   async mounted() {
     const auth = getAuth();
     const db = getFirestore();
