@@ -1,4 +1,5 @@
 import Pages from "../classes/Page";
+import Template from "./home.html";
 import "./home.scss";
 class Home extends Pages {
   constructor() {
@@ -6,27 +7,7 @@ class Home extends Pages {
   }
 
   async load() {
-    return `
-      <div class="home-page">
-        <h2> Home Page</h2>
-
-        <ul>
-          <li>
-            <a href="/job-posting" data-link>
-              Post a Job
-            </a>
-          </li>
-
-          <li>
-            <a href="/job-postings" data-link>
-              List of Job Posting
-            </a>
-          </li>
-        </ul>
-
-        <div id="temp"></div>
-      </div>
-    `;
+    return Template;
   }
 
   async mounted() {

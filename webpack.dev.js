@@ -19,6 +19,11 @@ const devConfig = {
   module: {
     rules: [
       {
+        test: /\.html$/,
+        loader: "html-loader",
+        include: path.resolve(__dirname, "src/pages"),
+      },
+      {
         test: /\.(scss|css)$/,
         use: ["style-loader", "css-loader", "sass-loader"],
       },
