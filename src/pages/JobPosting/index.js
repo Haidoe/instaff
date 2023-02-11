@@ -2,9 +2,8 @@ import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import { readURL } from "../../js/utils";
 import { uploadFile } from "../../js/upload-files/upload-image";
 import { setJobPosting } from "../../js/job-posting/job-posting";
-
+import Template from "./posting.html";
 import "./job-posting.scss";
-import { pageTransition } from "../../router";
 class JobPosting extends AuthenticatedPage {
   constructor() {
     super("Job Posting");
@@ -12,87 +11,7 @@ class JobPosting extends AuthenticatedPage {
   }
 
   async load() {
-    return `
-      <div class="job-posting-page">
-        <h2> Job Posting </h2>
-
-        <form action="#" id="jobPostingForm">
-          <div class="form-group">
-            <label for="postingBanner">Upload Image</label>
-            <input required type="file" id="postingBanner">
-            <img src="" alt="banner image" class="formImg" id="bannerImg" />
-          </div>
-          
-          <div class="form-group">
-            <label for="companyName">
-              Company Name
-            </label>
-        
-            <input required type="text" id="companyName">
-          </div>
-        
-          <div class="form-group">
-            <label for="positionTitle">Position Title</label>
-            <input required type="text" id="positionTitle">
-          </div>
-        
-          <div class="form-group">
-            <label for="shiftDate">Shift Date</label>
-            <input required type="date" id="shiftDate">
-          </div>
-        
-          <div class="form-group">
-            <label for="fromTime">
-              Time:
-            </label>
-            <input required type="text" id="fromTime">
-            <span>to</span>
-            <input required type="text" id="toTime">
-          </div>
-        
-          <div class="form-group">
-            <label for="wage">Wage ($)</label>
-            <input required type="number" id="wage">
-          </div>
-        
-          <div class="form-group">
-            <label for="positionAvailable">Position Available</label>
-            <input required type="number" id="positionAvailable">
-          </div>
-        
-          <div class="form-group">
-            <label for="description">
-              Description
-            </label>
-        
-            <textarea required id="description"></textarea>
-          </div>
-        
-          <div class="form-group">
-            <label for="additionalInfo">
-              Additional Information
-            </label>
-        
-            <textarea required id="additionalInfo"></textarea>
-          </div>
-        
-          <div class="form-group">
-            <label for="city">
-              City
-            </label>
-        
-            <input required type="text" id="city">
-          </div>
-        
-          <div class="form-group">
-            <label for="address">Address</label>
-            <input required type="text" id="address">
-          </div>
-        
-          <button type="submit" id="submitBtn">Submit</button>
-        </form>
-      </div>
-    `;
+    return Template;
   }
 
   async mounted() {
@@ -131,6 +50,7 @@ class JobPosting extends AuthenticatedPage {
         additionalInfo: additionalInfo.value,
         city: city.value,
         address: address.value,
+        userId: this.currentUser.uid,
       };
 
       try {
