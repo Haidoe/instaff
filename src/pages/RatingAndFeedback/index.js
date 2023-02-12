@@ -100,7 +100,7 @@ class RatingAndFeedback extends AuthenticatedPage {
     //get current job posting data from firebase
 
     //create job posting id static
-    const staticId = "7MjviQqrRYVlYwKqtkVG";
+    const staticId = "qx34OUbaBrLnz1UWSsPP";
 
     const jobPostingsData = await getJobPostingDetail(staticId);
 
@@ -114,7 +114,7 @@ class RatingAndFeedback extends AuthenticatedPage {
     //populate user image
     const populateUserImage = document.querySelector(".user-image");
     populateUserImage.src = userData.imageURL;
-
+    console.log(jobPostingsData);
     //collection
     const jobPostingId = staticId;
     const positionTitle = jobPostingsData.positionTitle;

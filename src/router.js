@@ -50,11 +50,15 @@ const routes = [
   },
   {
     path: "/rating-and-feedback",
-    page: () => 
+    page: () =>
       import(
         /* webpackChunkName: "RatingAndFeedback" */ `./pages/RatingAndFeedback`
-      )
-  }
+      ),
+  },
+  {
+    path: "/profile",
+    page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
+  },
 ];
 
 export const router = async () => {
