@@ -14,6 +14,7 @@ export const setJobPosting = async (initialJobPosting) => {
 
   const jobPosting = {
     ...initialJobPosting,
+    status: "draft",
     paymentType: "Cash",
     province: "British Columbia",
     created: serverTimestamp(),
@@ -47,7 +48,10 @@ export const getJobPostingDetail = async (id) => {
   const postingSnap = await getDoc(postingDoc);
 
   if (postingSnap.exists()) {
-    return postingSnap.data();
+    return {
+      ...postingSnap.data(),
+      id: postingSnap.id,
+    };
   } else {
     return null;
   }
