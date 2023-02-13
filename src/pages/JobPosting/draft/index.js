@@ -1,8 +1,12 @@
-import AuthenticatedPage from "../../classes/AuthenticatedPage";
-import { getJobPostingDetail } from "../../js/job-posting/job-posting";
-import { formatDate, readURL } from "../../js/utils";
+import AuthenticatedPage from "../../../classes/AuthenticatedPage";
+import {
+  getJobPostingDetail,
+  publishJobPosting,
+} from "../../../js/job-posting/job-posting";
+import { formatDate } from "../../../js/utils";
 import Template from "./draft.html";
-import "./job-posting.scss";
+import "../job-posting.scss";
+import { pageTransition } from "../../../router";
 
 class DraftJobPosting extends AuthenticatedPage {
   constructor({ id }) {
@@ -60,15 +64,13 @@ class DraftJobPosting extends AuthenticatedPage {
 
     loading.classList.add("hide");
 
-    detailsForm.addEventListener("submit", (e) => {
+    detailsForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const jobPostingUpdate = {
-        id: this.data.id,
-        status: "published",
-      };
-
-      console.log(jobPostingUpdate);
+      const response = await publishJobPosting(this.data.id);
+      if (response) {
+        pageTransition(`/job-posting/${this.data.id}`);
+      }
     });
   }
 }

@@ -1,7 +1,7 @@
-import Page from "../../classes/Page";
-import { getJobPostingDetail } from "../../js/job-posting/job-posting";
-import { formatDate } from "../../js/utils";
-import "./job-posting.scss";
+import Page from "../../../classes/Page";
+import { getJobPostingDetail } from "../../../js/job-posting/job-posting";
+import { formatDate } from "../../../js/utils";
+import "../job-posting.scss";
 
 class JobPosting extends Page {
   constructor({ id }) {
@@ -13,7 +13,7 @@ class JobPosting extends Page {
   async load() {
     return `
       <div class="job-posting-page details-page">
-        <h2> Job Posting | ${this.id} </h2>
+        <h2> [PUBLISHED] Job Posting </h2>
 
         <div class="loading">
           Loading...

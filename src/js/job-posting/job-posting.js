@@ -6,6 +6,7 @@ import {
   getDocs,
   doc,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 // Add a job posting
@@ -22,9 +23,15 @@ export const setJobPosting = async (initialJobPosting) => {
     deleted: null,
   };
 
-  const jobPostingCol = collection(db, "jobPostings");
-  const docRef = await addDoc(jobPostingCol, jobPosting);
-  console.log("Document written with ID: ", docRef.id);
+  try {
+    const jobPostingCol = collection(db, "jobPostings");
+    const docRef = await addDoc(jobPostingCol, jobPosting);
+
+    return docRef.id;
+  } catch (error) {
+    console.log("Error adding job posting document: ", error);
+    return null;
+  }
 };
 
 // TODO
@@ -53,6 +60,24 @@ export const getJobPostingDetail = async (id) => {
       id: postingSnap.id,
     };
   } else {
+    return null;
+  }
+};
+
+export const publishJobPosting = async (id) => {
+  const db = getFirestore();
+  const postingDoc = doc(db, `jobPostings/${id}`);
+
+  const jobPosting = {
+    status: "published",
+    updated: serverTimestamp(),
+  };
+
+  try {
+    await updateDoc(postingDoc, jobPosting);
+    return true;
+  } catch (error) {
+    console.log("Error updating job posting document: ", error);
     return null;
   }
 };
