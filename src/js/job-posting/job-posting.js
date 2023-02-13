@@ -7,6 +7,8 @@ import {
   doc,
   getDoc,
   updateDoc,
+  query,
+  where,
 } from "firebase/firestore";
 
 // Add a job posting
@@ -39,7 +41,11 @@ export const setJobPosting = async (initialJobPosting) => {
 export const getAllJobPostings = async () => {
   const db = getFirestore();
   const jobPostingCol = collection(db, "jobPostings");
-  const jobPostingDocs = await getDocs(jobPostingCol);
+  const filteredJobPostingCol = query(
+    jobPostingCol,
+    where("status", "==", "published")
+  );
+  const jobPostingDocs = await getDocs(filteredJobPostingCol);
 
   const result = jobPostingDocs.docs.map((doc) => ({
     id: doc.id,
