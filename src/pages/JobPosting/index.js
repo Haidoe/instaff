@@ -4,6 +4,7 @@ import { uploadFile } from "../../js/upload-files/upload-image";
 import { setJobPosting } from "../../js/job-posting/job-posting";
 import Template from "./posting.html";
 import "./job-posting.scss";
+import { pageTransition } from "../../router";
 class JobPosting extends AuthenticatedPage {
   constructor() {
     super("Job Posting");
@@ -55,10 +56,11 @@ class JobPosting extends AuthenticatedPage {
 
       try {
         jobPosting.bannerImageUrl = await uploadFile(this.image, "jobPostings");
-        await setJobPosting(jobPosting);
-        form.reset();
-        companyName.focus();
-        bannerImg.classList.remove("visible");
+        const id = await setJobPosting(jobPosting);
+
+        if (id) {
+          pageTransition(`/job-posting/draft/${id}`);
+        }
       } catch (error) {
         console.log("ERROR", error);
       } finally {
