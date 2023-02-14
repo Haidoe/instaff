@@ -25,7 +25,7 @@ class Home extends Pages {
       temp.appendChild(button);
     }
 
-    console.log("Home mountedx", process.env.INSTAFF_MAP_KEY);
+    console.log("Home mounted", process.env.INSTAFF_MAP_KEY);
   }
 }
 
