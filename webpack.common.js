@@ -1,7 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const Dotenv = require("dotenv-webpack");
 
 const config = {
   entry: "./src/index.js",
@@ -13,8 +12,6 @@ const config = {
     clean: true,
   },
   plugins: [
-    new Dotenv(),
-
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),

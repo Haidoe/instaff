@@ -2,6 +2,7 @@ const path = require("path");
 const { merge } = require("webpack-merge");
 const { EnvironmentPlugin } = require("webpack");
 const commonConfig = require("./webpack.common.js");
+const Dotenv = require("dotenv-webpack");
 
 const devConfig = {
   mode: "development",
@@ -44,6 +45,7 @@ const devConfig = {
     ],
   },
   plugins: [
+    new Dotenv(),
     new EnvironmentPlugin({
       INSTAFF_MODE: "development",
     }),
