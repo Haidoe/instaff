@@ -9,6 +9,7 @@ import {
   updateDoc,
   query,
   where,
+  setDoc,
 } from "firebase/firestore";
 
 // Add a job posting
@@ -33,6 +34,19 @@ export const setJobPosting = async (initialJobPosting) => {
   } catch (error) {
     console.log("Error adding job posting document: ", error);
     return null;
+  }
+};
+
+export const updateJobPosting = async (id, jobPosting) => {
+  const db = getFirestore();
+  const postingDoc = doc(db, `jobPostings/${id}`);
+
+  try {
+    await setDoc(postingDoc, jobPosting, { merge: true });
+    return true;
+  } catch (error) {
+    console.log("Error updating job posting document: ", error);
+    return false;
   }
 };
 

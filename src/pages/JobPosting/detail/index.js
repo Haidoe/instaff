@@ -129,6 +129,8 @@ class JobPosting extends Page {
   }
 
   async mounted() {
+    window.scrollTo(0, 0);
+
     const detailsForm = document.querySelector("#detailsForm");
     const noresult = document.querySelector(".no-result");
     const loading = document.querySelector(".loading");

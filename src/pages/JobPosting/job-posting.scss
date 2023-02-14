@@ -6,6 +6,19 @@
     gap: 1rem;
   }
 
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 400px;
+    margin: auto;
+  }
+
+  header button {
+    padding: 0.5rem;
+    margin: 0;
+  }
+
   label,
   input,
   textarea {
@@ -34,7 +47,7 @@
     padding-left: 0;
   }
 
-  button {
+  form button {
     padding: 0.5rem;
     width: 100%;
     margin-top: 1rem;

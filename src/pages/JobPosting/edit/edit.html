@@ -1,8 +1,6 @@
 <div class="job-posting-page details-page">
   <header>
-    <h2> View Summary </h2>
-
-    <button id="edit-job-posting-summary"> Edit </button>
+    <h2> Edit View Summary </h2>
   </header>
 
   <div class="loading">
@@ -14,43 +12,47 @@
   </div>
 
   <form action="#" id="detailsForm">
-    <img alt="banner image" class="formImg" id="bannerImg" />
+    <div class="form-group">
+      <label for="postingBanner">Upload Image</label>
+      <input type="file" id="postingBanner">
+      <img alt="banner image" class="formImg" id="bannerImg" />
+    </div>
 
     <div class="form-group">
       <label for="companyName">
         Company Name
       </label>
 
-      <input readonly type="text" id="companyName">
+      <input required type="text" id="companyName">
     </div>
 
     <div class="form-group">
       <label for="positionTitle">Position Title</label>
-      <input readonly type="text" id="positionTitle">
+      <input required type="text" id="positionTitle">
     </div>
 
     <div class="form-group">
       <label for="shiftDate">Shift Date</label>
-      <input readonly type="date" id="shiftDate">
+      <input required type="date" id="shiftDate">
     </div>
 
     <div class="form-group">
       <label for="fromTime">
         Time:
       </label>
-      <input readonly type="text" id="fromTime">
+      <input required type="text" id="fromTime">
       <span>to</span>
-      <input readonly type="text" id="toTime">
+      <input required type="text" id="toTime">
     </div>
 
     <div class="form-group">
       <label for="wage">Wage ($)</label>
-      <input readonly type="number" id="wage">
+      <input required type="number" id="wage">
     </div>
 
     <div class="form-group">
       <label for="positionAvailable">Position Available</label>
-      <input readonly type="number" id="positionAvailable">
+      <input required type="number" id="positionAvailable">
     </div>
 
     <div class="form-group">
@@ -58,7 +60,7 @@
         Description
       </label>
 
-      <textarea readonly id="description"></textarea>
+      <textarea required id="description"></textarea>
     </div>
 
     <div class="form-group">
@@ -66,7 +68,7 @@
         Additional Information
       </label>
 
-      <textarea readonly id="additionalInfo"></textarea>
+      <textarea required id="additionalInfo"></textarea>
     </div>
 
     <div class="form-group">
@@ -74,14 +76,14 @@
         City
       </label>
 
-      <input readonly type="text" id="city">
+      <input required type="text" id="city">
     </div>
 
     <div class="form-group">
       <label for="address">Address</label>
-      <input readonly type="text" id="address">
+      <input required type="text" id="address">
     </div>
 
-    <button type="submit">Publish</button>
+    <button type="submit">Save</button>
   </form>
 </div>
