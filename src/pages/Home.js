@@ -1,6 +1,7 @@
 import Pages from "../classes/Page";
 import Template from "./home.html";
 import "./home.scss";
+import { convertAddressToCoordinates } from "../js/job-posting/job-posting";
 class Home extends Pages {
   constructor() {
     super("Home");
@@ -23,6 +24,8 @@ class Home extends Pages {
       button.onclick = this.signOutUser;
       temp.appendChild(button);
     }
+
+    console.log("Home mounted", process.env.MAPS_KEY);
   }
 }
 
