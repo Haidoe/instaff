@@ -1,0 +1,15 @@
+.star {
+  display: inline-block;
+  font-size: 30px;
+  color: rgb(192, 192, 192);
+}
+
+.star.selected {
+  color: yellow;
+}
+
+img {
+  width: 150px;
+  height: auto;
+  border-radius: 50%;
+}

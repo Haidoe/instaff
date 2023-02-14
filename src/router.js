@@ -48,6 +48,13 @@ const routes = [
         /* webpackChunkName: "JobPostingList" */ `./pages/JobPosting/list`
       ),
   },
+  {
+    path: "/rating-and-feedback",
+    page: () => 
+      import(
+        /* webpackChunkName: "RatingAndFeedback" */ `./pages/RatingAndFeedback`
+      )
+  }
 ];
 
 export const router = async () => {
