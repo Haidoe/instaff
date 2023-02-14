@@ -35,6 +35,13 @@ const routes = [
       import(/* webpackChunkName: "JobPosting" */ `./pages/JobPosting`),
   },
   {
+    path: "/job-posting/edit/:id",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingEdit" */ `./pages/JobPosting/edit`
+      ),
+  },
+  {
     path: "/job-posting/draft/:id",
     page: () =>
       import(

@@ -49,6 +49,8 @@ class DraftJobPosting extends AuthenticatedPage {
   }
 
   async mounted() {
+    window.scrollTo(0, 0);
+
     const detailsForm = document.querySelector("#detailsForm");
     const noresult = document.querySelector(".no-result");
     const loading = document.querySelector(".loading");
@@ -71,6 +73,12 @@ class DraftJobPosting extends AuthenticatedPage {
       if (response) {
         pageTransition(`/job-posting/${this.data.id}`);
       }
+    });
+
+    const editBtn = document.querySelector("#edit-job-posting-summary");
+
+    editBtn.addEventListener("click", () => {
+      pageTransition(`/job-posting/edit/${this.data.id}`);
     });
   }
 }
