@@ -21,6 +21,7 @@
 
   label,
   input,
+  select,
   textarea {
     width: 100%;
     display: block;
@@ -71,5 +72,9 @@
     .visible {
       display: block;
     }
+  }
+
+  #job-posting-map {
+    height: 300px;
   }
 }
