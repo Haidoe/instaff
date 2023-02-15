@@ -96,7 +96,7 @@ class RatingAndFeedback extends AuthenticatedPage {
     //get current job posting data from firebase
 
     //create job posting id static
-    const staticId = "6E1723bjDpBMWstjLxUe";
+    const staticId = "7MjviQqrRYVlYwKqtkVG";
 
     const jobPostingsData = await getJobPostingDetail(staticId)
 
