@@ -35,6 +35,20 @@ const routes = [
       import(/* webpackChunkName: "JobPosting" */ `./pages/JobPosting`),
   },
   {
+    path: "/job-posting/edit/:id",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingEdit" */ `./pages/JobPosting/edit`
+      ),
+  },
+  {
+    path: "/job-posting/draft/:id",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingDraft" */ `./pages/JobPosting/draft`
+      ),
+  },
+  {
     path: "/job-posting/:id",
     page: () =>
       import(
@@ -46,6 +60,17 @@ const routes = [
     page: () =>
       import(
         /* webpackChunkName: "JobPostingList" */ `./pages/JobPosting/list`
+      ),
+  },
+  {
+    path: "/profile",
+    page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
+  },
+  {
+    path: "/rating-and-feedback",
+    page: () =>
+      import(
+        /* webpackChunkName: "RatingAndFeedback" */ `./pages/RatingAndFeedback`
       ),
   },
 ];
@@ -74,20 +99,24 @@ export const router = async () => {
 
   activePage = new Page(getParams(activeRoute));
 
-  //Converting the String to DomElements
-  const pageContent = await activePage.load();
-  const parsedPageElement = parser.parseFromString(pageContent, "text/html");
+  const willLoad = await activePage.preload();
 
-  //Removing the content of the mainApp
-  while (mainApp.firstChild) mainApp.removeChild(mainApp.firstChild);
+  if (willLoad) {
+    //Converting the String to DomElements
+    const pageContent = await activePage.load();
+    const parsedPageElement = parser.parseFromString(pageContent, "text/html");
 
-  //Inserting the Page
-  for (const child of parsedPageElement.body.childNodes) {
-    mainApp.appendChild(child);
+    //Removing the content of the mainApp
+    while (mainApp.firstChild) mainApp.removeChild(mainApp.firstChild);
+
+    //Inserting the Page
+    for (const child of parsedPageElement.body.childNodes) {
+      mainApp.appendChild(child);
+    }
+
+    //Execute mounted
+    activePage.mounted();
   }
-
-  //Execute mounted
-  activePage.mounted();
 };
 
 export const pageTransition = (url) => {

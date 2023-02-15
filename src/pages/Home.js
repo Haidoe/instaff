@@ -1,30 +1,31 @@
 import Pages from "../classes/Page";
+import Template from "./home.html";
 import "./home.scss";
+import { convertAddressToCoordinates } from "../js/job-posting/job-posting";
 class Home extends Pages {
   constructor() {
     super("Home");
   }
 
   async load() {
-    return `
-      <div class="home-page">
-        <h2> Home Page</h2>
+    return Template;
+  }
 
-        <ul>
-          <li>
-            <a href="/job-posting" data-link>
-              Post a Job
-            </a>
-          </li>
+  async mounted() {
+    // TODO - Remove this in the future
+    // This is just temporary
+    const temp = document.querySelector("#temp");
+    temp.innerHTML = "";
 
-          <li>
-            <a href="/job-postings" data-link>
-              List of Job Posting
-            </a>
-          </li>
-        </ul>
-      </div>
-    `;
+    const user = await this.getCurrentUser();
+    if (user) {
+      const button = document.createElement("button");
+      button.textContent = "Sign out";
+      button.onclick = this.signOutUser;
+      temp.appendChild(button);
+    }
+
+    console.log("Home mounted", process.env.INSTAFF_MAP_KEY);
   }
 }
 

@@ -1,5 +1,4 @@
 import Page from "../../classes/Page";
-import "./login.scss";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { pageTransition } from "../../router";
@@ -38,6 +37,17 @@ class Login extends Page {
         </form>
       </div>
     `;
+  }
+
+  async preload() {
+    const user = await this.getCurrentUser();
+
+    if (user) {
+      pageTransition("/");
+      return false;
+    }
+
+    return true;
   }
 
   async mounted() {
