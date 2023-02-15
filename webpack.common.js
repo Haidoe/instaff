@@ -13,7 +13,9 @@ const config = {
     clean: true,
   },
   plugins: [
-    new Dotenv(),
+    new Dotenv({
+      systemvars: true
+    }),
 
     new HtmlWebpackPlugin({
       template: "./src/index.html",
