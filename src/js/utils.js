@@ -42,3 +42,16 @@ export const formatDate = (date) => {
 
   return [year, month, day].join("-");
 };
+
+//Extract Time from Date
+export const extractTime = (date) => {
+  const convertToDate = date.toDate();
+  let hour = `${convertToDate.getHours()}`;
+  let minute = `${convertToDate.getMinutes()}`;
+
+  if (hour.length < 2) hour = "0" + hour;
+
+  if (minute.length < 2) minute = "0" + minute;
+
+  return [hour, minute].join(":");
+};
