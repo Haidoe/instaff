@@ -1,7 +1,6 @@
 import Pages from "../classes/Page";
 import Template from "./home.html";
 import "./home.scss";
-import { convertAddressToCoordinates } from "../js/job-posting/job-posting";
 class Home extends Pages {
   constructor() {
     super("Home");
