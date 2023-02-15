@@ -31,6 +31,7 @@ class DraftJobPosting extends AuthenticatedPage {
     const companyName = document.getElementById("companyName");
     const city = document.getElementById("city");
     const address = document.getElementById("address");
+    const postalCode = document.getElementById("postalCode");
     const parsedDate = this.data.shiftDate.toDate().toDateString();
 
     bannerImg.src = this.data.bannerImageUrl;
@@ -46,7 +47,7 @@ class DraftJobPosting extends AuthenticatedPage {
     additionalInfo.value = this.data.additionalInfo;
     city.value = this.data.city;
     address.value = this.data.address;
-
+    postalCode.value = this.data.postalCode;
     this.initMap(this.data.coordinates);
   }
 

@@ -72,13 +72,13 @@
     .visible {
       display: block;
     }
+
+    #job-posting-map {
+      margin: 1rem 0;
+    }
   }
 
   #job-posting-map {
     height: 300px;
-  }
-
-  &.draft #job-posting-map {
-    margin: 1rem 0;
   }
 }
