@@ -105,7 +105,6 @@ class RatingAndFeedback extends AuthenticatedPage {
     //populate user image
     const populateUserImage = document.querySelector(".user-image");
     populateUserImage.src = userData.imageURL;
-
     //collection
     const jobPostingId = staticId;
     const positionTitle = jobPostingsData.positionTitle;
