@@ -63,13 +63,6 @@ const routes = [
       ),
   },
   {
-    path: "/rating-and-feedback",
-    page: () =>
-      import(
-        /* webpackChunkName: "RatingAndFeedback" */ `./pages/RatingAndFeedback`
-      ),
-  },
-  {
     path: "/profile",
     page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
   },
