@@ -52,6 +52,8 @@ class Page {
   close() {
     console.log(`${this.title} Page Closed`);
   }
+
+  async fallback() {}
 }
 
 export default Page;
