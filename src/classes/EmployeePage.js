@@ -11,7 +11,7 @@ class EmployeePage extends AuthenticatedPage {
 
     if (!result) return false;
 
-    if (this.currentUser.type !== "employer") {
+    if (this.currentUser.details.typeOfUser !== "employer") {
       return true;
     }
 
