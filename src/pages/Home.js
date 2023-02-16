@@ -23,8 +23,6 @@ class Home extends Pages {
       button.onclick = this.signOutUser;
       temp.appendChild(button);
     }
-
-    console.log("Home mounted", process.env.INSTAFF_MAP_KEY);
   }
 }
 

@@ -1,9 +1,5 @@
 <div class="job-posting-page details-page">
-  <header>
-    <h2> Edit View Summary </h2>
-
-    <button id="cancel-job-posting-summary"> Cancel </button>
-  </header>
+  <h2> [PUBLISHED] Job Posting </h2>
 
   <div class="loading">
     Loading...
@@ -15,8 +11,6 @@
 
   <form action="#" id="detailsForm">
     <div class="form-group">
-      <label for="postingBanner">Upload Image</label>
-      <input type="file" id="postingBanner">
       <img alt="banner image" class="formImg" id="bannerImg" />
     </div>
 
@@ -25,17 +19,17 @@
         Company Name
       </label>
 
-      <input required type="text" id="companyName">
+      <input readonly type="text" id="companyName">
     </div>
 
     <div class="form-group">
       <label for="positionTitle">Position Title</label>
-      <input required type="text" id="positionTitle">
+      <input readonly type="text" id="positionTitle">
     </div>
 
     <div class="form-group">
       <label for="shiftDate">Shift Date</label>
-      <input required type="date" id="shiftDate">
+      <input readonly type="date" id="shiftDate">
     </div>
 
     <div class="form-group">
@@ -43,7 +37,7 @@
         Start Time:
       </label>
 
-      <input required type="time" id="fromTime">
+      <input type="time" readonly id="fromTime">
     </div>
 
     <div class="form-group">
@@ -51,17 +45,17 @@
         Hours of shift:
       </label>
 
-      <input required type="number" id="hoursOfShift">
+      <input readonly type="number" id="hoursOfShift">
     </div>
 
     <div class="form-group">
       <label for="wage">Wage ($)</label>
-      <input required type="number" id="wage">
+      <input readonly type="number" id="wage">
     </div>
 
     <div class="form-group">
       <label for="positionAvailable">Position Available</label>
-      <input required type="number" id="positionAvailable">
+      <input readonly type="number" id="positionAvailable">
     </div>
 
     <div class="form-group">
@@ -69,7 +63,7 @@
         Description
       </label>
 
-      <textarea required id="description"></textarea>
+      <textarea readonly id="description"></textarea>
     </div>
 
     <div class="form-group">
@@ -77,7 +71,15 @@
         Additional Information
       </label>
 
-      <textarea required id="additionalInfo"></textarea>
+      <textarea readonly id="additionalInfo"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="province">
+        Province
+      </label>
+
+      <input readonly type="text" id="province" value="British Columbia">
     </div>
 
     <div class="form-group">
@@ -85,21 +87,14 @@
         City
       </label>
 
-      <input required type="text" id="city">
+      <input readonly type="text" id="city">
     </div>
 
     <div class="form-group">
       <label for="address">Address</label>
-      <input required type="text" id="address">
-    </div>
-
-    <div class="form-group">
-      <label for="postalCode">Postal Code</label>
-      <input required type="text" id="postalCode">
+      <input readonly type="text" id="address">
     </div>
 
     <div id="job-posting-map"></div>
-
-    <button type="submit">Save</button>
   </form>
 </div>

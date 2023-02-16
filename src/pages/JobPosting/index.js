@@ -1,4 +1,3 @@
-import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import { readURL } from "../../js/utils";
 import { uploadFile } from "../../js/upload-files/upload-image";
 import { setJobPosting } from "../../js/job-posting/job-posting";
@@ -9,7 +8,8 @@ import {
   convertAddressToCoordinates,
   convertCoordinatesToAddress,
 } from "../../js/map-util";
-class JobPosting extends AuthenticatedPage {
+import EmployerPage from "../../classes/EmployerPage";
+class JobPosting extends EmployerPage {
   constructor() {
     super("Job Posting");
     this.image = null;
