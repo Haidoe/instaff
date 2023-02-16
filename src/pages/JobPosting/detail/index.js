@@ -1,10 +1,10 @@
-import Page from "../../../classes/Page";
+import EmployerPage from "../../../classes/EmployerPage";
 import { getJobPostingDetail } from "../../../js/job-posting/job-posting";
 import { extractTime, formatDate } from "../../../js/utils";
 import Template from "./detail.html";
 import "../job-posting.scss";
 
-class JobPosting extends Page {
+class JobPosting extends EmployerPage {
   constructor({ id }) {
     super("Job Posting");
     this.id = id;

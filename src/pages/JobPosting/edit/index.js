@@ -1,4 +1,4 @@
-import AuthenticatedPage from "../../../classes/AuthenticatedPage";
+import EmployerPage from "../../../classes/EmployerPage";
 import {
   getJobPostingDetail,
   updateJobPosting,
@@ -10,7 +10,7 @@ import "../job-posting.scss";
 import { pageTransition } from "../../../router";
 import { convertAddressToCoordinates } from "../../../js/map-util";
 
-class EditJobPosting extends AuthenticatedPage {
+class EditJobPosting extends EmployerPage {
   constructor({ id }) {
     super("Edit | Job Posting");
     this.id = id;

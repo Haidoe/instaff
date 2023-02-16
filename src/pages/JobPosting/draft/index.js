@@ -1,4 +1,4 @@
-import AuthenticatedPage from "../../../classes/AuthenticatedPage";
+import EmployerPage from "../../../classes/EmployerPage";
 import {
   getJobPostingDetail,
   publishJobPosting,
@@ -8,7 +8,7 @@ import Template from "./draft.html";
 import "../job-posting.scss";
 import { pageTransition } from "../../../router";
 
-class DraftJobPosting extends AuthenticatedPage {
+class DraftJobPosting extends EmployerPage {
   constructor({ id }) {
     super("Draft Job Posting");
     this.id = id;
