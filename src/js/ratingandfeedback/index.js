@@ -1,4 +1,4 @@
-import { serverTimestamp,collection, addDoc, getFirestore } from "firebase/firestore";
+import { serverTimestamp, collection, addDoc, getFirestore } from "firebase/firestore";
 
 
 export const addRatingAndFeedback = async (ratingandfeedback) => {
@@ -16,7 +16,6 @@ export const addRatingAndFeedback = async (ratingandfeedback) => {
   } catch (error) {
     console.log(error);
     return null;
-    
   }
   
 }

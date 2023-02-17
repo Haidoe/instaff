@@ -1,6 +1,6 @@
 import Page from "../../classes/Page";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import { pageTransition } from "../../router";
 
 class Login extends Page {
@@ -11,7 +11,7 @@ class Login extends Page {
   async load() {
     return `
      <div class="sign-in">
-        <form>
+        <form action="#" id="signInForm">
           <div class="container">
             <h1>Sign In</h1>
             <p>Please fill in this form to sign-in.</p>
@@ -30,7 +30,7 @@ class Login extends Page {
               <p>Forgot password? <a href="">Reset password.</a></p>
             </div>
     
-            <button type="button" id="submitData" name="submitData" class="signinbtn">Sign In</button>
+            <button type="submit" id="submitData" name="submitData" class="signinbtn">Sign In</button>
 
 
           </div>
@@ -53,30 +53,41 @@ class Login extends Page {
   async mounted() {
     const auth = getAuth();
     const db = getFirestore();
+    const form = document.getElementById("signInForm");
+    
+    
 
-    submitData.addEventListener("click", (e) => {
+    form.addEventListener("submit", async (e) => {
+
+      e.preventDefault();
       const email = document.getElementById("email").value;
       const password = document.getElementById("psw").value;
+      
 
       // log in user
       signInWithEmailAndPassword(auth, email, password)
-        .then(async (userCredential) => {
+      .then(async (userCredential) => {
           // Signed in
-          const user = userCredential.user;
-
-          if (user.emailVerified) {
-            pageTransition("/");
-            console.log("email is verified: sign in successfully");
+        const user = userCredential.user;
+        
+        if (user.emailVerified) {
+          pageTransition("/");
+          console.log("email is verified: sign in successfully");
+          return;
           } else {
             console.log("email is not verified.");
             pageTransition("/verification");
-          }
-        })
+        }
+      })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-        });
+          console.log(errorCode, errorMessage);
+        }
+      );
+      return false;
     });
+        
   }
 }
 
