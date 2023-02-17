@@ -10,7 +10,11 @@ class Page {
   }
 
   setDocumentTitle() {
-    document.title = `${this.title} | Instaff`;
+    if (this.title === "Home") {
+      document.title = "Instaff | Hire. Instantly.";
+    } else {
+      document.title = `${this.title} | Instaff | Hire. Instantly.`;
+    }
   }
 
   get currentUser() {
