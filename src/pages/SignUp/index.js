@@ -4,7 +4,6 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   sendEmailVerification,
-  onAuthStateChanged,
 } from "firebase/auth";
 
 import { getFirestore, doc, setDoc } from "firebase/firestore";
@@ -17,7 +16,7 @@ class SignUp extends Page {
   async load() {
     return `
       <div class="sign-up">
-      <form>
+      <form action="#" id="signUpForm">
       <div class="container">
       <h1>Sign Up</h1>
       <p>Please fill in this form to create an account.</p>
@@ -50,7 +49,7 @@ class SignUp extends Page {
       <hr>
       <p>By creating an account you agree to our <a href="#" id="termsandprivacy">Terms & Privacy</a>.</p>
 
-      <button type="button" id="submitData" name="submitData" class="registerbtn">Register</button>
+      <button type="submit" id="submitData" name="submitData" class="registerbtn">Register</button>
       </div>
       <div class="group">
         <p id="output"></p>
@@ -68,27 +67,38 @@ class SignUp extends Page {
     const auth = getAuth();
     const db = getFirestore();
     const submitBtn = document.querySelector("#submitData");
+    const form = document.querySelector("#signUpForm");
 
-    submitBtn.addEventListener("click", (e) => {
+
+    form.addEventListener("submit", (e) => {
       let email = document.querySelector("#email").value;
       let password = document.querySelector("#psw").value;
       let typeOfUser = document.querySelector("#typeOfUser").value;
 
+      //display "loading" on submit button when clicked
+      e.preventDefault();
+      submitBtn.innerHTML = `<div>Loading...</div>`;
+    
+
       createUserWithEmailAndPassword(auth, email, password)
+        
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
 
           // ...
           console.log(user);
+        
           sendEmailVerification(auth.currentUser).then(() => {
             output.innerHTML = `<div>Welcome to Instaff.</div>
             <div>We're happy you signed up.</div>
             <div>start exploring the app, please confirm your email address.</div>`;
 
             console.log("Email sent");
+            submitBtn.innerHTML = `<div>Sign in</div>`;
           });
-
+          
+          
           //calling the collection
           const userCol = doc(db, "users", user.uid);
 
