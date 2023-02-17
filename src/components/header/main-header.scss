@@ -64,6 +64,10 @@
         &:hover {
           @extend .gradient-text;
         }
+
+        &.active-menu-item {
+          @extend .gradient-text;
+        }
       }
     }
   }

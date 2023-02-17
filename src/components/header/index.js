@@ -169,6 +169,13 @@ class MainHeader {
       itemAnchor.addEventListener("click", () => {
         this.hamburger.classList.remove("open");
         this.nav.classList.remove("nav--open");
+        const prevActiveMenu = document.querySelector(".active-menu-item");
+
+        if (prevActiveMenu) {
+          prevActiveMenu.classList.remove("active-menu-item");
+        }
+
+        itemAnchor.classList.add("active-menu-item");
       });
 
       li.appendChild(itemAnchor);
