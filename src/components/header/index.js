@@ -32,6 +32,7 @@ class MainHeader {
     this.h1 = document.createElement("h1");
     this.h1Anchor = document.createElement("a");
     this.h1Anchor.href = "/";
+    this.h1Anchor.setAttribute("data-link", "");
 
     this.hiddenLogoText = document.createElement("span");
     this.hiddenLogoText.textContent = "Instaff";
@@ -164,6 +165,11 @@ class MainHeader {
       } else {
         itemAnchor.setAttribute("data-link", "");
       }
+
+      itemAnchor.addEventListener("click", () => {
+        this.hamburger.classList.remove("open");
+        this.nav.classList.remove("nav--open");
+      });
 
       li.appendChild(itemAnchor);
 

@@ -41,32 +41,35 @@ class JobPosting extends EmployerPage {
     this.marker = new tt.Marker().setLngLat(defaultCenter).addTo(this.map);
 
     navigator.geolocation.getCurrentPosition(async (position) => {
-      const pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
+      try {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
 
-      this.coordinates = pos;
+        this.coordinates = pos;
 
-      this.map.easeTo({ center: pos });
-      this.marker.setLngLat(pos).addTo(this.map);
+        this.map.easeTo({ center: pos });
+        this.marker.setLngLat(pos).addTo(this.map);
 
-      // convertCoordinatesToAddress
-      const response = await convertCoordinatesToAddress(pos.lat, pos.lng);
+        // convertCoordinatesToAddress
+        const response = await convertCoordinatesToAddress(pos.lat, pos.lng);
 
-      console.log(response);
+        if (response.municipality) {
+          document.querySelector("#city").value = response.municipality;
+        }
 
-      if (response.municipality) {
-        document.querySelector("#city").value = response.municipality;
-      }
+        if (response.streetNameAndNumber) {
+          document.querySelector("#address").value =
+            response.streetNameAndNumber;
+        }
 
-      if (response.streetNameAndNumber) {
-        document.querySelector("#address").value = response.streetNameAndNumber;
-      }
-
-      if (response.extendedPostalCode) {
-        document.querySelector("#postalCode").value =
-          response.extendedPostalCode;
+        if (response.extendedPostalCode) {
+          document.querySelector("#postalCode").value =
+            response.extendedPostalCode;
+        }
+      } catch (error) {
+        console.log("Unable to do autocomplete.");
       }
     });
   }

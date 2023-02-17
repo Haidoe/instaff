@@ -30,33 +30,33 @@ const routes = [
       ),
   },
   {
-    path: "/job-posting",
+    path: "/post",
     page: () =>
       import(/* webpackChunkName: "JobPosting" */ `./pages/JobPosting`),
   },
   {
-    path: "/job-posting/edit/:id",
+    path: "/post/edit/:id",
     page: () =>
       import(
         /* webpackChunkName: "JobPostingEdit" */ `./pages/JobPosting/edit`
       ),
   },
   {
-    path: "/job-posting/draft/:id",
+    path: "/post/draft/:id",
     page: () =>
       import(
         /* webpackChunkName: "JobPostingDraft" */ `./pages/JobPosting/draft`
       ),
   },
   {
-    path: "/job-posting/:id",
+    path: "/post/:id",
     page: () =>
       import(
         /* webpackChunkName: "JobPostingDetail" */ `./pages/JobPosting/detail`
       ),
   },
   {
-    path: "/job-postings",
+    path: "/postings",
     page: () =>
       import(
         /* webpackChunkName: "JobPostingList" */ `./pages/JobPosting/list`

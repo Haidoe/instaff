@@ -25,6 +25,18 @@ if (process.env.INSTAFF_MODE !== "development") {
 
 //This is For Router
 document.body.addEventListener("click", (e) => {
+  //Avoid redirecting to the same page
+  if (e.target.href && e.target.href === window.location.href) {
+    e.preventDefault();
+    return;
+  }
+
+  //This is to avoid the logo image redirection
+  if (e.target.matches("[alt='Instaff Logo']")) {
+    e.preventDefault();
+    if (window.location.pathname === "/") return;
+  }
+
   //This is for the sign out button
   if (e.target.matches("[data-signout]")) {
     e.preventDefault();
