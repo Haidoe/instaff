@@ -123,7 +123,7 @@ class JobPosting extends EmployerPage {
       const id = await setJobPosting(jobPosting);
 
       if (id) {
-        pageTransition(`/job-posting/draft/${id}`);
+        pageTransition(`/post/draft/${id}`);
       }
     } catch (error) {
       console.log("ERROR", error);

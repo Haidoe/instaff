@@ -129,7 +129,7 @@ class EditJobPosting extends EmployerPage {
         const response = await updateJobPosting(this.id, jobPosting);
 
         if (response) {
-          pageTransition(`/job-posting/draft/${this.data.id}`);
+          pageTransition(`/post/draft/${this.data.id}`);
         }
       } catch (error) {
         console.log("Job Posting Update Error: ", error);
@@ -142,7 +142,7 @@ class EditJobPosting extends EmployerPage {
 
     cancelBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      pageTransition(`/job-posting/draft/${this.data.id}`);
+      pageTransition(`/post/draft/${this.data.id}`);
     });
   }
 

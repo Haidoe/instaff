@@ -87,14 +87,14 @@ class DraftJobPosting extends EmployerPage {
 
       const response = await publishJobPosting(this.data.id);
       if (response) {
-        pageTransition(`/job-posting/${this.data.id}`);
+        pageTransition(`/post/${this.data.id}`);
       }
     });
 
     const editBtn = document.querySelector("#edit-job-posting-summary");
 
     editBtn.addEventListener("click", () => {
-      pageTransition(`/job-posting/edit/${this.data.id}`);
+      pageTransition(`/post/edit/${this.data.id}`);
     });
   }
 }
