@@ -35,6 +35,20 @@ const routes = [
       import(/* webpackChunkName: "JobPosting" */ `./pages/JobPosting`),
   },
   {
+    path: "/job-posting/edit/:id",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingEdit" */ `./pages/JobPosting/edit`
+      ),
+  },
+  {
+    path: "/job-posting/draft/:id",
+    page: () =>
+      import(
+        /* webpackChunkName: "JobPostingDraft" */ `./pages/JobPosting/draft`
+      ),
+  },
+  {
     path: "/job-posting/:id",
     page: () =>
       import(
@@ -49,12 +63,16 @@ const routes = [
       ),
   },
   {
+    path: "/profile",
+    page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
+  },
+  {
     path: "/rating-and-feedback",
-    page: () => 
+    page: () =>
       import(
         /* webpackChunkName: "RatingAndFeedback" */ `./pages/RatingAndFeedback`
-      )
-  }
+      ),
+  },
 ];
 
 export const router = async () => {

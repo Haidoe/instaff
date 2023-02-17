@@ -74,6 +74,7 @@ class SignUp extends Page {
       let email = document.querySelector("#email").value;
       let password = document.querySelector("#psw").value;
       let typeOfUser = document.querySelector("#typeOfUser").value;
+      let displayName = document.querySelector("#displayname").value;
 
       //display "loading" on submit button when clicked
       e.preventDefault();
@@ -104,6 +105,7 @@ class SignUp extends Page {
 
           setDoc(userCol, {
             typeOfUser: typeOfUser,
+            displayName: displayName,
           });
         })
 

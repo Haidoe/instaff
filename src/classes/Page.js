@@ -31,8 +31,7 @@ class Page {
     const auth = getAuth();
 
     return new Promise((resolve, reject) => {
-      const unsubscribe = auth.onAuthStateChanged((user) => {
-        unsubscribe();
+      auth.onAuthStateChanged((user) => {
         resolve(user);
       }, reject);
     });
