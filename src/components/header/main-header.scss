@@ -1,0 +1,28 @@
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem var(--sidePadding);
+
+  h1 {
+    margin: 0;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      img {
+        width: 150px;
+      }
+    }
+  }
+  nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 1rem;
+
+    a {
+      text-decoration: none;
+    }
+  }
+}

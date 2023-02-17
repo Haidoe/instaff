@@ -1,5 +1,6 @@
 import { initialize } from "./firebase.js";
 import { router, pageTransition } from "./router";
+import MainHeader from "./components/header";
 import "./css/normalize.css";
 import "./css/global.scss";
 
@@ -24,12 +25,19 @@ if (process.env.INSTAFF_MODE !== "development") {
 
 //This is For Router
 document.body.addEventListener("click", (e) => {
-  if (e.target.matches("[data-link]")) {
+  //This is for the sign out button
+  if (e.target.matches("[data-signout]")) {
     e.preventDefault();
-    pageTransition(e.target.href);
+  } else if (e.target.matches("[data-link]")) {
+    e.preventDefault();
+    pageTransition(e.target.href || "/");
   }
 });
 
 window.addEventListener("popstate", router);
 
 router();
+
+const mainHeader = new MainHeader();
+mainHeader.wrapper = document.querySelector("body");
+mainHeader.render();
