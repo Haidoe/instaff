@@ -107,3 +107,61 @@
     }
   }
 }
+
+@media screen and (min-width: $mediumSmall) {
+  .main-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem $sidePadding;
+    border-bottom: 2px solid #d2d2d2;
+
+    .heading-wrapper {
+      padding: unset;
+      border-bottom: unset;
+
+      h1 {
+        flex-grow: unset;
+        img {
+          width: 150px;
+        }
+      }
+
+      button {
+        position: relative;
+        right: unset;
+        display: none;
+      }
+    }
+
+    .nav-wrapper {
+      flex-grow: 1;
+    }
+
+    nav {
+      flex-direction: row;
+      position: relative;
+      background-color: #fff;
+      transform: translateY(0);
+      box-shadow: unset;
+      // justify-content: flex-end;
+
+      ul {
+        flex-direction: row;
+        li {
+          display: block;
+          border-bottom: unset;
+
+          a {
+            display: block;
+            text-align: center;
+            padding: 0.5rem 1rem;
+          }
+        }
+
+        &:last-of-type {
+          margin-left: auto;
+        }
+      }
+    }
+  }
+}
