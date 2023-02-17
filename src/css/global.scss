@@ -1,6 +1,5 @@
-:root {
-  --sidePadding: 3%;
-}
+@import "variables";
+
 * {
   box-sizing: border-box;
 }
@@ -10,6 +9,14 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
 }
 
 img {
@@ -24,10 +31,16 @@ a {
   text-decoration: none;
 }
 
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 #app {
   flex-grow: 1;
   background: rgb(226, 223, 223);
-  padding: 1rem var(--sidePadding);
+  padding: 1rem $sidePadding;
 }
 
 .visually-hidden {
@@ -38,11 +51,4 @@ a {
   position: absolute;
   white-space: nowrap;
   width: 1px;
-}
-
-.main-footer {
-  background-color: black;
-  padding: 1rem;
-  color: #fff;
-  text-transform: uppercase;
 }

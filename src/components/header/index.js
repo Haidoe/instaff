@@ -14,8 +14,22 @@ class MainHeader {
     this.header = document.createElement("header");
     this.header.className = "main-header";
 
-    this.h1 = document.createElement("h1");
+    this.headingWrapper = document.createElement("div");
+    this.headingWrapper.className = "heading-wrapper";
+    this.hamburger = document.createElement("button");
+    this.hamburger.setAttribute("aria-label", "Menu");
 
+    this.hamburger.className = "hamburger ";
+    // hamburger--collapse
+    const spanBar = document.createElement("span");
+    spanBar.className = "bar";
+    const vshText = document.createElement("i");
+    vshText.className = "visually-hidden";
+    vshText.textContent = "Menu";
+    this.hamburger.appendChild(spanBar);
+    this.hamburger.appendChild(vshText);
+
+    this.h1 = document.createElement("h1");
     this.h1Anchor = document.createElement("a");
     this.h1Anchor.href = "/";
 
@@ -28,8 +42,16 @@ class MainHeader {
     this.logoImg.alt = "Instaff Logo";
     this.logoImg.setAttribute("data-link", "");
 
-    this.ul = document.createElement("ul");
+    this.navWrapper = document.createElement("div");
+    this.navWrapper.className = "nav-wrapper";
     this.nav = document.createElement("nav");
+    this.navUl = document.createElement("ul");
+    this.actionUl = document.createElement("ul");
+
+    this.hamburger.addEventListener("click", () => {
+      this.hamburger.classList.toggle("open");
+      this.nav.classList.toggle("nav--open");
+    });
 
     this.dynamicNavList = {
       employee: [
@@ -54,6 +76,7 @@ class MainHeader {
         },
       ],
     };
+
     const loggedInNavs = [
       {
         text: "Inbox",
@@ -66,8 +89,10 @@ class MainHeader {
     ];
 
     this.auth = getAuth();
+
     onAuthStateChanged(this.auth, async (user) => {
-      let navItemList = null;
+      let navItemList = [];
+      let actionItemList = [];
 
       if (user) {
         const userDetails = await getUserDetails(user.uid);
@@ -75,15 +100,19 @@ class MainHeader {
         navItemList = [
           ...this.dynamicNavList[userDetails.typeOfUser],
           ...loggedInNavs,
+        ];
+
+        actionItemList = [
           {
             text: "Sign out",
             href: "/sign-out",
           },
         ];
 
-        this.loadNavs(navItemList);
+        this.loadNavs(this.navUl, navItemList);
+        this.loadNavs(this.actionUl, actionItemList);
       } else {
-        navItemList = [
+        actionItemList = [
           {
             text: "Sign In",
             href: "/sign-in",
@@ -94,21 +123,30 @@ class MainHeader {
           },
         ];
 
-        this.loadNavs(navItemList);
+        this.loadNavs(this.navUl, navItemList);
+        this.loadNavs(this.actionUl, actionItemList);
       }
+
+      if (this.navUl.hasChildNodes()) {
+        this.nav.appendChild(this.navUl);
+      }
+
+      this.nav.appendChild(this.actionUl);
     });
 
     this.h1Anchor.appendChild(this.hiddenLogoText);
     this.h1Anchor.appendChild(this.logoImg);
     this.h1.appendChild(this.h1Anchor);
-    this.nav.appendChild(this.ul);
-    this.header.appendChild(this.h1);
-    this.header.appendChild(this.nav);
+    this.headingWrapper.appendChild(this.h1);
+    this.headingWrapper.appendChild(this.hamburger);
+    this.header.appendChild(this.headingWrapper);
+    this.navWrapper.appendChild(this.nav);
+    this.header.appendChild(this.navWrapper);
   }
 
-  loadNavs(navList) {
-    while (this.ul.firstChild) {
-      this.ul.removeChild(this.ul.firstChild);
+  loadNavs(ul, navList) {
+    while (ul.firstChild) {
+      ul.removeChild(ul.firstChild);
     }
 
     for (const item of navList) {
@@ -128,7 +166,8 @@ class MainHeader {
       }
 
       li.appendChild(itemAnchor);
-      this.ul.appendChild(li);
+
+      ul.appendChild(li);
     }
   }
 
