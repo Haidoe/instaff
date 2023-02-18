@@ -1,6 +1,8 @@
 import Pages from "../classes/Page";
 import Template from "./home.html";
 import "./home.scss";
+import { getAllJobPostings
+ } from "../js/job-posting/job-posting"
 class Home extends Pages {
   constructor() {
     super("Home");
@@ -8,6 +10,10 @@ class Home extends Pages {
 
   async load() {
     return Template;
+  }
+
+  handleSearch() {
+
   }
 
   async mounted() {
@@ -26,6 +32,10 @@ class Home extends Pages {
       center: defaultCenter,
       zoom: defaultZoom,
     });
+
+    const result = await getAllJobPostings();
+    
+    console.log(result)
   }
 
   close() {
