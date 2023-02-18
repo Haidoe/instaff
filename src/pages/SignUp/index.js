@@ -22,22 +22,22 @@ class SignUp extends Page {
       <h1>Create an account </h1>
  
     
-      <div class="group ">
+      <div class="group input-group-2cols">
         <label for="displayname">Name</label>
         <input type="text" placeholder="Enter Display Name" name="displayname" id="displayname" required>
       </div>
 
-      <div class="group">
+      <div class="group input-group-2cols">
         <label for="email">Email</label>
         <input type="text" placeholder="Enter Email" name="email" id="email" required>
       </div>
 
-      <div class="group">
+      <div class="group input-group-2cols">
         <label for="psw">Password</label>
         <input type="password" name="psw" id="psw" required>
       </div>
 
-      <div class="group">
+      <div class="group input-group-2cols">
         <label for="typeOfUser">Purpose</label>
         <select name="typeOfUser" id="typeOfUser">
           <option value="employee">I want to find a job.</option>
