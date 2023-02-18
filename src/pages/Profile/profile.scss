@@ -1,4 +1,8 @@
-.job-posting-page {
+.profile-page {
+  img {
+    //width: 300px;
+    border-radius: 50%;
+  }
   form {
     max-width: 400px;
     margin: auto;
@@ -6,22 +10,8 @@
     gap: 1rem;
   }
 
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 400px;
-    margin: auto;
-  }
-
-  header button {
-    padding: 0.5rem;
-    margin: 0;
-  }
-
   label,
   input,
-  select,
   textarea {
     width: 100%;
     display: block;
@@ -34,7 +24,6 @@
   }
 
   .formImg {
-    display: none;
     // width: 250px;
     // height: auto;
   }
@@ -43,15 +32,17 @@
     display: block;
   }
 
+  .profile-image {
+    text-align: center;
+  }
+
   label {
     line-height: 1.5;
     padding-left: 0;
   }
 
-  form button {
+  button {
     padding: 0.5rem;
-    width: 100%;
-    margin-top: 1rem;
   }
 
   &.details-page {
@@ -72,13 +63,5 @@
     .visible {
       display: block;
     }
-
-    #job-posting-map {
-      margin: 1rem 0;
-    }
-  }
-
-  #job-posting-map {
-    height: 300px;
   }
 }

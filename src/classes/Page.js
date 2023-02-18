@@ -10,7 +10,11 @@ class Page {
   }
 
   setDocumentTitle() {
-    document.title = `${this.title} | Instaff`;
+    if (this.title === "Home") {
+      document.title = "Instaff | Hire. Instantly.";
+    } else {
+      document.title = `${this.title} | Instaff | Hire. Instantly.`;
+    }
   }
 
   get currentUser() {
@@ -31,8 +35,7 @@ class Page {
     const auth = getAuth();
 
     return new Promise((resolve, reject) => {
-      const unsubscribe = auth.onAuthStateChanged((user) => {
-        unsubscribe();
+      auth.onAuthStateChanged((user) => {
         resolve(user);
       }, reject);
     });
@@ -53,6 +56,8 @@ class Page {
   close() {
     console.log(`${this.title} Page Closed`);
   }
+
+  async fallback() {}
 }
 
 export default Page;

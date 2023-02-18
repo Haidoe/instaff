@@ -1,3 +1,4 @@
+const path = require("path");
 const { merge } = require("webpack-merge");
 const { EnvironmentPlugin } = require("webpack");
 const commonConfig = require("./webpack.common.js");
@@ -8,6 +9,11 @@ const prodConfig = {
   mode: "production",
   module: {
     rules: [
+      {
+        test: /\.html$/,
+        loader: "html-loader",
+        include: path.resolve(__dirname, "src/pages"),
+      },
       {
         test: /\.(scss|css)$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],

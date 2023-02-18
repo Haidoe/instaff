@@ -1,7 +1,6 @@
 import Page from "./Page";
-
 import { pageTransition } from "../router";
-
+import { getUserDetails } from "../js/users";
 class AuthenticatedPage extends Page {
   constructor(title) {
     super(title);
@@ -12,7 +11,11 @@ class AuthenticatedPage extends Page {
 
     if (user) {
       if (!user.emailVerified) pageTransition("/verification");
+
       this.currentUser = user;
+
+      this.currentUser.details = await getUserDetails(user.uid);
+
       return true;
     } else {
       pageTransition("/sign-in");

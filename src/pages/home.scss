@@ -1,6 +1,10 @@
-.home-page {
-  img {
-    width: 200px;
-    height: auto;
+//.home-body is dynamically added to the body tag
+.home-body #app {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+
+  .home-page {
+    flex-grow: 1;
   }
 }

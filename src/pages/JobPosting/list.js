@@ -1,7 +1,7 @@
-import Page from "../../classes/Page";
+import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import { getAllJobPostings } from "../../js/job-posting/job-posting";
 
-class PostingList extends Page {
+class PostingList extends AuthenticatedPage {
   constructor() {
     super("Job Postings");
   }
