@@ -7,7 +7,7 @@ import {
   getTypeOfWorkByUserId,
   updatetypeOfWork,
   setTypeOfWorkInfo,
-} from "../../js/profile-setting/profile";
+} from "../../js/account-setting/account";
 import "./acount-typeofwork.scss";
 
 class TypeOfWork extends EmployeePage {

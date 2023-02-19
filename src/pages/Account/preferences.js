@@ -1,6 +1,6 @@
 import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import EmployeePage from "../../classes/EmployeePage";
-import { getProfile } from "../../js/profile-setting/profile";
+import { getProfile } from "../../js/account-setting/account";
 import "./account-preferences.scss";
 
 class Preferences extends EmployeePage {

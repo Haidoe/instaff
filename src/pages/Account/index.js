@@ -1,4 +1,4 @@
-import { getProfile } from "../../js/profile-setting/profile";
+import { getProfile } from "../../js/account-setting/account";
 import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import "./account.scss";
 

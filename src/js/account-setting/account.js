@@ -12,6 +12,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 
+// Profile =======================
 export const setProfileInfo = async (initialProfileInfo) => {
   const db = getFirestore();
   console.log("saving......");
@@ -28,7 +29,7 @@ export const getProfile = async (profileId) => {
   const pofileSnap = await getDoc(profileRef);
   return pofileSnap;
 };
-// Type Of Work
+// Type Of Work ==================
 
 export const getTypeOfWorkByUserId = async (userId) => {
   const db = getFirestore();
@@ -78,6 +79,59 @@ export const setTypeOfWorkInfo = async (initialTypeOfWorkInfo) => {
     return docRef.id;
   } catch (error) {
     console.log("Error adding job posting document: ", error);
+    return null;
+  }
+};
+
+// Availiability =================
+
+export const getAvailiabilityByUserId = async (userId) => {
+  const db = getFirestore();
+  const availiabilityCol = collection(db, "availiability");
+  const filteredtypeOfWorkCol = query(
+    availiabilityCol,
+    where("userId", "==", userId)
+  );
+  const availiabilityDocs = await getDocs(filteredAvailiabilityCol);
+
+  const result = availiabilityDocs.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return result;
+};
+export const updateAvailiability = async (id, availiability) => {
+  const db = getFirestore();
+  const postingDoc = doc(db, `availiability/${id}`);
+
+  try {
+    await setDoc(postingDoc, availiability, { merge: true });
+    return true;
+  } catch (error) {
+    console.log("Error updating availiability document: ", error);
+    return false;
+  }
+};
+
+export const setAvailiability = async (initialAvailiabilityInfo) => {
+  const db = getFirestore();
+  console.log("saving......");
+
+  const availiability = {
+    ...initialAvailiabilityInfo,
+    created: serverTimestamp(),
+    updated: serverTimestamp(),
+    deleted: null,
+  };
+
+  try {
+    const availiabilityCol = collection(db, "availiability");
+    const docRef = await addDoc(availiabilityCol, availiability);
+
+    return docRef.id;
+  } catch (error) {
+    console.log("Error adding availiability document: ", error);
     return null;
   }
 };

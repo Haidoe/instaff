@@ -1,7 +1,7 @@
 import { async } from "@firebase/util";
 import { getFirestore, getDoc, doc, collection } from "firebase/firestore";
 import AuthenticatedPage from "../../classes/AuthenticatedPage";
-import { setProfileInfo, getProfile } from "../../js/profile-setting/profile";
+import { setProfileInfo, getProfile } from "../../js/account-setting/account";
 import { uploadFile } from "../../js/upload-files/upload-image";
 import { formatDate, readURL } from "../../js/utils";
 import "./profile.scss";
@@ -96,19 +96,31 @@ class Profile extends AuthenticatedPage {
     const submitBtn = document.getElementById("submitBtn");
 
     console.log(this.data.imageURL);
-    if (typeof this.data.imageURL !== 'undefined' && this.data.imageURL !== "") {
+    if (
+      typeof this.data.imageURL !== "undefined" &&
+      this.data.imageURL !== ""
+    ) {
       profileImg.src = this.data.imageURL;
     } else {
       profileImg.src = "../static/images/sample.jpg";
     }
 
     displayName.value = this.data.displayName;
-    dateOfBirth.value = typeof this.data.dateOfBirth !== 'undefined' ? formatDate(this.data.dateOfBirth.toDate().toDateString()) : "";
+    dateOfBirth.value =
+      typeof this.data.dateOfBirth !== "undefined"
+        ? formatDate(this.data.dateOfBirth.toDate().toDateString())
+        : "";
     selectUserType.value = this.data.typeOfUser;
-    selectProvince.value = typeof this.data.province !== 'undefined' ? this.data.province : "";
-    addressLine.value = typeof this.data.addressLine !== 'undefined' ? this.data.addressLine : "";
-    contactNumber.value = typeof this.data.contactNumber !== 'undefined' ? this.data.contactNumber : "";
-    zipCode.value = typeof this.data.zipCode !== 'undefined' ? this.data.zipCode : "";
+    selectProvince.value =
+      typeof this.data.province !== "undefined" ? this.data.province : "";
+    addressLine.value =
+      typeof this.data.addressLine !== "undefined" ? this.data.addressLine : "";
+    contactNumber.value =
+      typeof this.data.contactNumber !== "undefined"
+        ? this.data.contactNumber
+        : "";
+    zipCode.value =
+      typeof this.data.zipCode !== "undefined" ? this.data.zipCode : "";
   }
 
   async mounted() {
@@ -136,7 +148,8 @@ class Profile extends AuthenticatedPage {
       const profile = {
         id: this.currentUser.uid, //this.profileId,
         displayName: displayName.value,
-        dateOfBirth: dateOfBirth.value !== null ? new Date(dateOfBirth.value) : "",
+        dateOfBirth:
+          dateOfBirth.value !== null ? new Date(dateOfBirth.value) : "",
         typeOfUser: selectUserType.value,
         province: selectProvince.value,
         addressLine: addressLine.value,
@@ -148,9 +161,15 @@ class Profile extends AuthenticatedPage {
           this.profileImageToUpload,
           "users"
         );
-        proofOfWork.imageURL = this.proofOfWork !== null ? await uploadFile(this.proofOfWork, "users") : "";
+        proofOfWork.imageURL =
+          this.proofOfWork !== null
+            ? await uploadFile(this.proofOfWork, "users")
+            : "";
 
-        profile.imageURL = postingProfileImage !== null ? await uploadFile(this.profileImageToUpload, "users") : "";
+        profile.imageURL =
+          postingProfileImage !== null
+            ? await uploadFile(this.profileImageToUpload, "users")
+            : "";
         console.log(this.profileImageToUpload);
         console.log(profile.imageURL);
         profile.proofOfWork = proofOfWork.imageURL;
