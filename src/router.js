@@ -63,6 +63,20 @@ const routes = [
       ),
   },
   {
+    path: "/account",
+    page: () => import(/* webpackChunkName: "Account" */ `./pages/Account`),
+  },
+  {
+    path: "/account/preferences",
+    page: () =>
+      import(/* webpackChunkName: "Account" */ `./pages/Account/Preferences`),
+  },
+  {
+    path: "/account/typeOfWork",
+    page: () =>
+      import(/* webpackChunkName: "Account" */ `./pages/Account/typeOfWork`),
+  },
+  {
     path: "/profile",
     page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
   },
