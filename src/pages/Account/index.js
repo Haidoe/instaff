@@ -1,10 +1,11 @@
+import { async } from "@firebase/util";
 import { getProfile } from "../../js/account-setting/account";
-import AuthenticatedPage from "../../classes/AuthenticatedPage";
+import EmployeePage from "../../classes/EmployeePage";
 import "./account.scss";
 
-class Account extends AuthenticatedPage {
+class Account extends EmployeePage {
   constructor() {
-    super("Preferences");
+    super("Account");
   }
 
   async load() {

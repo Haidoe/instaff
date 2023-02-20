@@ -83,55 +83,107 @@ export const setTypeOfWorkInfo = async (initialTypeOfWorkInfo) => {
   }
 };
 
-// Availiability =================
+// Availability =================
 
-export const getAvailiabilityByUserId = async (userId) => {
+export const getAvailabilityByUserId = async (userId) => {
   const db = getFirestore();
-  const availiabilityCol = collection(db, "availiability");
-  const filteredtypeOfWorkCol = query(
-    availiabilityCol,
+  const availabilityCol = collection(db, "availability");
+  const filteredAvailabilityCol = query(
+    availabilityCol,
     where("userId", "==", userId)
   );
-  const availiabilityDocs = await getDocs(filteredAvailiabilityCol);
+  const availabilityDocs = await getDocs(filteredAvailabilityCol);
 
-  const result = availiabilityDocs.docs.map((doc) => ({
+  const result = availabilityDocs.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
 
   return result;
 };
-export const updateAvailiability = async (id, availiability) => {
+export const updateAvailability = async (id, availability) => {
   const db = getFirestore();
-  const postingDoc = doc(db, `availiability/${id}`);
+  const postingDoc = doc(db, `availability/${id}`);
 
   try {
-    await setDoc(postingDoc, availiability, { merge: true });
+    await setDoc(postingDoc, availability, { merge: true });
     return true;
   } catch (error) {
-    console.log("Error updating availiability document: ", error);
+    console.log("Error updating availability document: ", error);
     return false;
   }
 };
 
-export const setAvailiability = async (initialAvailiabilityInfo) => {
+export const setAvailability = async (initialAvailabilityInfo) => {
   const db = getFirestore();
   console.log("saving......");
 
-  const availiability = {
-    ...initialAvailiabilityInfo,
+  const availability = {
+    ...initialAvailabilityInfo,
     created: serverTimestamp(),
     updated: serverTimestamp(),
     deleted: null,
   };
 
   try {
-    const availiabilityCol = collection(db, "availiability");
-    const docRef = await addDoc(availiabilityCol, availiability);
+    const availabilityCol = collection(db, "availability");
+    const docRef = await addDoc(availabilityCol, availability);
 
     return docRef.id;
   } catch (error) {
-    console.log("Error adding availiability document: ", error);
+    console.log("Error adding availability document: ", error);
+    return null;
+  }
+};
+
+// Length of Shift ===============
+export const getLengthOfShiftByUserId = async (userId) => {
+  const db = getFirestore();
+  const lengthOfShiftCol = collection(db, "lengthOfShift");
+  const filteredlengthOfShiftCol = query(
+    lengthOfShiftCol,
+    where("userId", "==", userId)
+  );
+  const lengthOfShiftDocs = await getDocs(filteredlengthOfShiftCol);
+
+  const result = lengthOfShiftDocs.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return result;
+};
+export const updatelengthOfShift = async (id, lengthOfShift) => {
+  const db = getFirestore();
+  const postingDoc = doc(db, `lengthOfShift/${id}`);
+
+  try {
+    await setDoc(postingDoc, lengthOfShift, { merge: true });
+    return true;
+  } catch (error) {
+    console.log("Error updating lengthOfShift document: ", error);
+    return false;
+  }
+};
+
+export const setLengthOfShift = async (initialLengthOfShiftInfo) => {
+  const db = getFirestore();
+  console.log("saving......");
+
+  const lengthOfShift = {
+    ...initialLengthOfShiftInfo,
+    created: serverTimestamp(),
+    updated: serverTimestamp(),
+    deleted: null,
+  };
+
+  try {
+    const lengthOfShiftCol = collection(db, "lengthOfShift");
+    const docRef = await addDoc(lengthOfShiftCol, lengthOfShift);
+
+    return docRef.id;
+  } catch (error) {
+    console.log("Error adding lengthOfShift document: ", error);
     return null;
   }
 };

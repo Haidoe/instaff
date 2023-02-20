@@ -1,11 +1,11 @@
 import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import EmployeePage from "../../classes/EmployeePage";
 import { getProfile } from "../../js/account-setting/account";
-import "./account-preferences.scss";
+import "./account.scss";
 
 class Preferences extends EmployeePage {
   constructor() {
-    super("Account");
+    super("Preferences");
   }
 
   async load() {
@@ -14,10 +14,10 @@ class Preferences extends EmployeePage {
         <div class="profile">
             <h2 id="displayName">Preferences</h2>
             <ul class="menu">
-                <li><span class="logo"></span><span class="text">Student</span></li>
+                
                 <li><span class="logo"></span><span class="text"><a href="/account/typeOfWork">Type of work</a></span></li>
-                <li><span class="logo"></span><span class="text">Availability</span></li>
-                <li><span class="logo"></span><span class="text">Length of shift</span></li>
+                <li><span class="logo"></span><span class="text"><a href="/account/availability">Availability</a></span></li>
+                <li><span class="logo"></span><span class="text"><a href="/account/lengthOfShift">Length of shift</a></span></li>
             </ul>
         </div>
       </div> 

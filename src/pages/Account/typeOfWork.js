@@ -8,7 +8,7 @@ import {
   updatetypeOfWork,
   setTypeOfWorkInfo,
 } from "../../js/account-setting/account";
-import "./acount-typeofwork.scss";
+import "./account.scss";
 
 class TypeOfWork extends EmployeePage {
   constructor() {
@@ -32,9 +32,9 @@ class TypeOfWork extends EmployeePage {
     ];
 
     var htmlString = `
-    <div class="typeOfWork-page">
+    <div class="account-page type-of-work-page">
               <h2 id="displayName">What type of work are you interested in?</h2>
-              <form action="#" id="typeOfWorkForm">`;
+              <form action="#" id="typeOfWorkForm"><div class="type-of-work">`;
 
     console.log(results);
 
@@ -51,7 +51,7 @@ class TypeOfWork extends EmployeePage {
 
       htmlString += `
               <div class="form-group">
-                <input type="checkbox" id="${item.toLowerCase()}" name="workType" value="${item}" ${
+                <input type="checkbox" class="logo" id="${item.toLowerCase()}" name="workType" value="${item}" ${
         findItem != undefined ? "checked" : ""
       } />
                 <label for="${item.toLowerCase()}">${item}</label>
@@ -63,7 +63,7 @@ class TypeOfWork extends EmployeePage {
             <div class="button-container">
             <button type="submit" id="submitBtn">Save</button>
           </div>
-      </form>
+      </form></div>
       </div > `;
 
     return htmlString;
@@ -89,7 +89,7 @@ class TypeOfWork extends EmployeePage {
 
   async handleFormSubmit(e) {
     e.preventDefault();
-    console.log("Hello");
+    submitBtn.innerHTML = "Saving...";
 
     let form = document.querySelector("#typeOfWorkForm");
     let checkBoxes = form.querySelectorAll('input[type="checkbox"]');
@@ -100,25 +100,22 @@ class TypeOfWork extends EmployeePage {
     };
 
     checkBoxes.forEach((item) => {
-      // loop all the checkbox item
       if (item.checked) {
-        //if the check box is checked
-        // let data = {
-        //   // create an object
-        //   item: item.value,
-        //   selected: item.checked,
-        // };
-
         typeOfWork.positionTitle.push(item.value); //stored the objects to result array
       }
     });
 
     let results = await getTypeOfWorkByUserId(typeOfWork.userId);
-    console.log(results);
-    if (results.length > 0) {
-      await updatetypeOfWork(results[0].id, typeOfWork);
-    } else {
-      await setTypeOfWorkInfo(typeOfWork);
+    try {
+      if (results.length > 0) {
+        await updatetypeOfWork(results[0].id, typeOfWork);
+      } else {
+        await setTypeOfWorkInfo(typeOfWork);
+      }
+    } catch (error) {
+      console.log("ERROR", error);
+    } finally {
+      submitBtn.innerHTML = "Save";
     }
   }
 }

@@ -77,6 +77,16 @@ const routes = [
       import(/* webpackChunkName: "Account" */ `./pages/Account/typeOfWork`),
   },
   {
+    path: "/account/availability",
+    page: () =>
+      import(/* webpackChunkName: "Account" */ `./pages/Account/availability`),
+  },
+  {
+    path: "/account/lengthOfShift",
+    page: () =>
+      import(/* webpackChunkName: "Account" */ `./pages/Account/lengthOfShift`),
+  },
+  {
     path: "/profile",
     page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
   },
