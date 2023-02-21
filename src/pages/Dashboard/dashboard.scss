@@ -23,6 +23,7 @@
     padding: 1rem;
     border-radius: 5px;
     margin-bottom: 1rem;
+    gap: 1rem;
 
     .box {
       display: flex;
@@ -93,18 +94,27 @@
         padding: 0.5rem 1rem;
 
         .details {
-          display: flex;
+          display: grid;
           gap: 1rem;
-          margin-bottom: 1rem;
+          margin-bottom: 2rem;
+          grid-template-columns: 3fr 4fr;
+        }
+      }
+
+      .article-meta {
+        color: #525b64;
+        font-size: 1.25rem;
+
+        span:first-of-type {
+          @extend .gradient-text;
         }
       }
 
       img {
         display: block;
-        width: 124px;
-        height: 80px;
         object-fit: cover;
         border-radius: 5px;
+        height: 100%;
       }
 
       .history {
@@ -118,7 +128,8 @@
         gap: 1rem;
 
         article {
-          display: flex;
+          display: grid;
+          grid-template-columns: 3fr 4fr;
           gap: 1rem;
 
           .content {
