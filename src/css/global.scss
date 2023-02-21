@@ -15,8 +15,10 @@ body {
 h1,
 h2,
 h3,
+h4,
 p {
   margin: 0;
+  font-weight: normal;
 }
 
 img {
@@ -51,4 +53,10 @@ ul {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+.primary-btn {
+  background: linear-gradient(180deg, #ff005d 0%, #391865 100%);
+  border-radius: 5px;
+  color: #fff;
 }
