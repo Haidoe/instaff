@@ -24,6 +24,14 @@ class Dashboard extends EmployerPage {
     const articleImg3 = document.querySelector("#articleTest3 img");
 
     articleImg3.src = "/static/images/3.png";
+
+    const articleImg4 = document.querySelector("#articleTest4 img");
+
+    articleImg4.src = "/static/images/3.png";
+
+    const articleImg5 = document.querySelector("#articleTest5 img");
+
+    articleImg5.src = "/static/images/2.png";
   }
 }
 
