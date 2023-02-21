@@ -40,8 +40,6 @@
   .postings {
     margin: 0 -1rem;
     background-color: #fff;
-    // recent job?
-    // F5F5F5
 
     nav ul {
       border-bottom: 2px solid $borderColor;
@@ -75,6 +73,36 @@
           @extend .gradient-text;
         }
       }
+    }
+
+    @media screen and (min-width: 768px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      nav {
+        grid-column: 1 / -1;
+
+        ul {
+          display: flex;
+          gap: 2rem;
+
+          .active {
+            a::before {
+              width: 100%;
+            }
+          }
+        }
+      }
+
+      aside {
+        border-right: 1px solid $borderColor;
+      }
+    }
+
+    @media screen and (min-width: 1024px) {
+      grid-template-columns: 400px 1fr;
+      max-width: 1200px;
+      margin: auto;
     }
 
     aside {
@@ -145,6 +173,14 @@
             margin-bottom: 0.5rem;
           }
         }
+      }
+    }
+
+    & > section {
+      padding: 1rem;
+
+      h3 {
+        font-size: 1.5rem;
       }
     }
   }
