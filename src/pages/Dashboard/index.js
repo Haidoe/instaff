@@ -1,4 +1,9 @@
 import EmployerPage from "../../classes/EmployerPage";
+import {
+  getActiveTotalApplicantsByUser,
+  getActiveTotalEmployeeToPayByUser,
+  getActiveTotalJobPostingsByUser,
+} from "../../js/job-posting/job-posting";
 import template from "./dashboard.html";
 import "./dashboard.scss";
 
@@ -9,6 +14,35 @@ class Dashboard extends EmployerPage {
 
   async load() {
     return template;
+  }
+
+  loadBoardData() {
+    getActiveTotalJobPostingsByUser(this.currentUser.uid)
+      .then((total) => {
+        const boxPostedJobs = document.querySelector("#box-posted-jobs p");
+        boxPostedJobs.textContent = total;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    getActiveTotalEmployeeToPayByUser(this.currentUser.uid)
+      .then((total) => {
+        const applicants = document.querySelector("#box-applicants p");
+        applicants.textContent = total;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    getActiveTotalApplicantsByUser(this.currentUser.uid)
+      .then((total) => {
+        const toPay = document.querySelector("#box-pending-payments p");
+        toPay.textContent = total;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   async mounted() {
@@ -48,6 +82,8 @@ class Dashboard extends EmployerPage {
     );
 
     applicantImage3.src = "/static/images/sample.jpg";
+
+    this.loadBoardData();
   }
 }
 

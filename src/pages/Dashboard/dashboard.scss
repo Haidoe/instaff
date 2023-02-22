@@ -6,7 +6,7 @@
   h2 {
     font-weight: normal;
     font-size: 3rem;
-    max-width: 1200px;
+    max-width: $maxWidthContainer;
     margin: auto;
     margin-bottom: 1rem;
   }
@@ -46,7 +46,7 @@
       border-radius: unset;
 
       gap: 2rem;
-      max-width: 1200px;
+      max-width: $maxWidthContainer;
       margin: auto;
       padding: 1rem 0;
 
@@ -121,7 +121,7 @@
 
     @media screen and (min-width: 1024px) {
       grid-template-columns: 400px 1fr;
-      max-width: 1200px;
+      max-width: $maxWidthContainer;
       margin: auto;
     }
 
@@ -243,9 +243,8 @@
       .applicants {
         margin-top: 2rem;
         display: grid;
-        // background: #000;
         text-align: center;
-        gap: 2rem;
+        gap: 1rem;
         @media screen and (min-width: 1024px) {
           grid-template-columns: repeat(2, 1fr);
         }

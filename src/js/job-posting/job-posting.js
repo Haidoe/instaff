@@ -10,6 +10,7 @@ import {
   query,
   where,
   setDoc,
+  getCountFromServer,
 } from "firebase/firestore";
 
 // Add a job posting
@@ -100,4 +101,45 @@ export const publishJobPosting = async (id) => {
     console.log("Error updating job posting document: ", error);
     return null;
   }
+};
+
+// TODO - Add filter for date and status
+export const getActiveTotalJobPostingsByUser = async (id) => {
+  const db = getFirestore();
+  const jobPostingCol = collection(db, "jobPostings");
+  const JobPostingQuery = query(jobPostingCol, where("userId", "==", id));
+  const result = await getCountFromServer(JobPostingQuery);
+  return result.data().count;
+};
+
+// TODO - Get first the active job postings, then get the applicants
+export const getActiveTotalApplicantsByUser = async (id) => {
+  const db = getFirestore();
+
+  const applicantsCol = collection(db, "applicants");
+
+  const applicantQuery = query(
+    applicantsCol,
+    where("employerId", "==", id),
+    where("status", "==", "pending")
+  );
+
+  const result = await getCountFromServer(applicantQuery);
+  return result.data().count;
+};
+
+// TODO - Get first the active job postings, then get the applicants that have status completed
+export const getActiveTotalEmployeeToPayByUser = async (id) => {
+  const db = getFirestore();
+
+  const applicantsCol = collection(db, "applicants");
+
+  const applicantQuery = query(
+    applicantsCol,
+    where("employerId", "==", id),
+    where("status", "==", "completed")
+  );
+
+  const result = await getCountFromServer(applicantQuery);
+  return result.data().count;
 };
