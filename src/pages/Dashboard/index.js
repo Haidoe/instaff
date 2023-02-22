@@ -45,6 +45,23 @@ class Dashboard extends EmployerPage {
       });
   }
 
+  // TODO - Refactor this -- add event listener to the specific element [posted and payable]
+  subMenuEvent() {
+    // Refactory This
+    document.body.addEventListener("click", (e) => {
+      if (e.target.matches("[data-submenu]")) {
+        e.preventDefault();
+
+        const previousActiveMenu = document.querySelector(
+          ".postings nav li.active"
+        );
+        previousActiveMenu.classList.remove("active");
+
+        e.target.parentElement.classList.add("active");
+      }
+    });
+  }
+
   async mounted() {
     // Page is loaded
     const articleImg = document.querySelector("#articleTest img");
@@ -84,6 +101,8 @@ class Dashboard extends EmployerPage {
     applicantImage3.src = "/static/images/sample.jpg";
 
     this.loadBoardData();
+    //Add event listeners for Submenu
+    this.subMenuEvent();
   }
 }
 
