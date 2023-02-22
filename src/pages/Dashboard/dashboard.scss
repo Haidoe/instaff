@@ -33,7 +33,7 @@
 
     p {
       font-size: 4rem;
-      color: #525b64;
+      color: $colorGray;
     }
 
     background-color: #fff;
@@ -137,12 +137,15 @@
 
       .recent {
         display: grid;
-        gap: 1rem;
+        gap: 1.5rem;
 
         article {
           margin: 0 -1rem;
-          background-color: #f5f5f5;
           padding: 0.5rem 1rem;
+
+          &:hover {
+            background-color: #f5f5f5;
+          }
 
           .details {
             display: grid;
@@ -154,7 +157,7 @@
       }
 
       .article-meta {
-        color: #525b64;
+        color: $colorGray;
         font-size: 1.25rem;
 
         span:first-of-type {
@@ -184,6 +187,12 @@
           display: grid;
           grid-template-columns: 3fr 4fr;
           gap: 1rem;
+          margin: 0 -1rem;
+          padding: 0.5rem 1rem;
+
+          &:hover {
+            background-color: #f5f5f5;
+          }
 
           .content {
             flex-grow: 1;
@@ -204,6 +213,112 @@
         font-size: 1.5rem;
       }
 
+      .job-details {
+        display: flex;
+        justify-content: space-between;
+
+        & > div:first-child {
+          p:first-of-type {
+            span {
+              color: black;
+            }
+          }
+        }
+
+        & > div:last-child {
+          text-align: right;
+
+          p {
+            span:first-of-type {
+              @extend .gradient-text;
+            }
+          }
+        }
+
+        p {
+          color: $colorGray;
+        }
+      }
+
+      .applicants {
+        margin-top: 2rem;
+        display: grid;
+        // background: #000;
+        text-align: center;
+        gap: 2rem;
+        @media screen and (min-width: 1024px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        img {
+          display: block;
+          object-fit: cover;
+          border-radius: 50%;
+          aspect-ratio: 1 / 1;
+          width: 50%;
+          margin: auto;
+        }
+
+        h4 {
+          font-size: 1.5rem;
+        }
+
+        .stars {
+          margin: 0.5rem 0;
+          i {
+            font-size: 0.75rem;
+            padding: 0.25rem;
+            background: $colorLightGray;
+            border-radius: 50%;
+            color: white;
+
+            &.active {
+              background: $colorYellow;
+            }
+          }
+
+          span {
+            color: $colorGray;
+          }
+        }
+
+        p {
+          font-size: 1.25rem;
+        }
+
+        .content {
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          border-radius: 5px 5px 13px 13px;
+          overflow: hidden;
+          padding-top: 3rem;
+          margin-top: -2rem;
+        }
+
+        .meta {
+          .action-btns {
+            display: flex;
+
+            button {
+              flex: 1;
+              padding: 0.5rem 1rem;
+              text-transform: uppercase;
+            }
+          }
+
+          .hire {
+            border-bottom-right-radius: 13px;
+          }
+
+          a {
+            padding: 0.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+          }
+        }
+      }
       @media screen and (min-width: 768px) {
         display: unset;
       }

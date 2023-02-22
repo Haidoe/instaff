@@ -32,6 +32,22 @@ class Dashboard extends EmployerPage {
     const articleImg5 = document.querySelector("#articleTest5 img");
 
     articleImg5.src = "/static/images/2.png";
+
+    const applicantImage = document.querySelector(".applicant img");
+
+    applicantImage.src = "/static/images/sample.jpg";
+
+    const applicantImage2 = document.querySelector(
+      ".applicant:nth-of-type(2) img"
+    );
+
+    applicantImage2.src = "/static/images/sample.jpg";
+
+    const applicantImage3 = document.querySelector(
+      ".applicant:nth-of-type(3) img"
+    );
+
+    applicantImage3.src = "/static/images/sample.jpg";
   }
 }
 
