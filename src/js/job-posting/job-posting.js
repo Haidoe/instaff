@@ -12,6 +12,7 @@ import {
   where,
   setDoc,
   getCountFromServer,
+  orderBy,
 } from "firebase/firestore";
 
 // Add a job posting
@@ -128,7 +129,7 @@ export const getAllActiveJobPostingsByUser = async (id) => {
     jobPostingCol,
     where("userId", "==", id),
     where("status", "==", "published"),
-    where("time.from", ">", Timestamp.now())
+    orderBy("updated", "desc")
   );
 
   const jobPostingDocs = await getDocs(JobPostingQuery);

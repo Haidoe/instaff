@@ -1,5 +1,3 @@
-import { formatDate } from "../../../js/utils";
-
 const recentJobs = (obj) => {
   const anchorWrapper = document.createElement("a");
   anchorWrapper.href = "javascript:void(0)";
@@ -22,8 +20,7 @@ const recentJobs = (obj) => {
   wage.textContent = `$${obj.wageRate} / hr`;
 
   const postedDate = document.createElement("p");
-  // const parsedDate = this.data.shiftDate.toDate().toDateString();
-  console.log(obj);
+
   postedDate.textContent = `Posted Date: ${obj.created
     .toDate()
     .toDateString()} `;
