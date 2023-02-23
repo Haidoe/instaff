@@ -143,6 +143,7 @@
           margin: 0 -1rem;
           padding: 0.5rem 1rem;
 
+          &.active,
           &:hover {
             background-color: #f5f5f5;
           }
@@ -328,5 +329,9 @@
         display: unset;
       }
     }
+  }
+
+  .hidden {
+    opacity: 0;
   }
 }

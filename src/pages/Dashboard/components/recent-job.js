@@ -3,6 +3,7 @@ const recentJobs = (obj) => {
   anchorWrapper.href = "javascript:void(0)";
 
   const article = document.createElement("article");
+  article.id = `jp-${obj.id}`;
 
   const details = document.createElement("div");
   details.className = "details";

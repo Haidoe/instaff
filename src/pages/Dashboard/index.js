@@ -85,8 +85,57 @@ class Dashboard extends EmployerPage {
       item.totalPositionAvailableLeft =
         item.positionAvailable - totalAcceptedApplicants;
 
-      container.appendChild(RecentJob(item));
+      const recentJob = RecentJob(item);
+
+      recentJob.addEventListener("click", () => {
+        this.loadJobListingDetails(item);
+      });
+
+      container.appendChild(recentJob);
     }
+
+    if (recent.length) {
+      const data = recent[0];
+      this.loadJobListingDetails(data);
+
+      const jobDetailsContainer = document.querySelector(
+        "section.job-posting-details"
+      );
+
+      this.loadApplicants();
+
+      jobDetailsContainer.classList.remove("hidden");
+    }
+  }
+
+  loadJobListingDetails(data) {
+    const jpCompanyName = document.querySelector("#jpCompanyName");
+    const jpTitle = document.querySelector("#jpTitle");
+    const jpWageRate = document.querySelector("#jpWageRate");
+    const jpTotalApplicants = document.querySelector("#jpTotalApplicants");
+    const jpPositionAvailableLeft = document.querySelector(
+      "#jpPositionAvailableLeft"
+    );
+    const jpPositionAvailable = document.querySelector("#jpPositionAvailable");
+
+    jpCompanyName.textContent = data.companyName;
+    jpTitle.textContent = data.positionTitle;
+    jpWageRate.textContent = data.wageRate;
+    jpTotalApplicants.textContent = data.totalApplicants;
+    jpPositionAvailableLeft.textContent = data.totalPositionAvailableLeft;
+    jpPositionAvailable.textContent = data.positionAvailable;
+
+    const previousActiveJob = document.querySelector(
+      "section.recent article.active"
+    );
+
+    if (previousActiveJob) {
+      previousActiveJob.classList.remove("active");
+      this.loadApplicants();
+    }
+
+    const recentJobContainer = document.querySelector(`#jp-${data.id}`);
+    recentJobContainer.classList.add("active");
   }
 
   async loadPostingHistory() {
@@ -112,6 +161,8 @@ class Dashboard extends EmployerPage {
 
   async loadApplicants() {
     const container = document.querySelector("div.applicants");
+    container.innerHTML = "";
+
     const applicants = Math.round(Math.random());
 
     if (applicants) {
@@ -132,7 +183,6 @@ class Dashboard extends EmployerPage {
     this.loadBoardData();
     this.loadRecentJobsPosting();
     this.loadPostingHistory();
-    this.loadApplicants();
     //Add event listeners for Submenu
     this.subMenuEvent();
   }
