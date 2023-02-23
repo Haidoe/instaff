@@ -93,7 +93,10 @@ class Dashboard extends EmployerPage {
         pubsub.publish("mainHeaderShowBackBtn");
         const mainPageContainer = document.querySelector(".dashboard-page");
         mainPageContainer.classList.add("db-page-mobile");
-        window.scrollTo(0, 0);
+
+        if (window.innerWidth < 768) {
+          window.scrollTo(0, 0);
+        }
       });
 
       container.appendChild(recentJob);

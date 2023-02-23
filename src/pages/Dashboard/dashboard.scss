@@ -342,7 +342,7 @@
 }
 
 .db-page-mobile .postings {
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     background-color: $mainBgColor;
 
     .job-posting-details {
