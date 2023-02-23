@@ -1,5 +1,6 @@
 @import "variables";
 @import "buttons";
+@import "icons";
 
 * {
   box-sizing: border-box;
@@ -12,6 +13,7 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   min-width: 320px;
+  background: $mainBgColor;
 }
 
 h1,
@@ -43,7 +45,6 @@ ul {
 
 #app {
   flex-grow: 1;
-  background: rgb(226, 223, 223);
   padding: 1rem $sidePadding;
 }
 

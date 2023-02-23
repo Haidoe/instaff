@@ -1,4 +1,5 @@
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import pubsub from "../../classes/PubSub";
 import { getUserDetails } from "../../js/users";
 import { pageTransition } from "../../router";
 import "./main-header.scss";
@@ -16,9 +17,27 @@ class MainHeader {
 
     this.headingWrapper = document.createElement("div");
     this.headingWrapper.className = "heading-wrapper";
+
+    this.backBtn = document.createElement("button");
+    this.backBtn.className = "icon back-icon hidden";
+    this.backBtn.setAttribute("aria-label", "Back Button");
+
+    this.backBtn.addEventListener("click", () => {
+      pubsub.publish("mainHeaderBackBtnClicked", null);
+    });
+
+    pubsub.subscribe("mainHeaderShowBackBtn", () => {
+      this.backBtn.classList.remove("hidden");
+    });
+
+    pubsub.subscribe("mainHeaderHideBackBtn", () => {
+      this.backBtn.classList.add("hidden");
+    });
+
+    this.headingWrapper.appendChild(this.backBtn);
+
     this.hamburger = document.createElement("button");
     this.hamburger.setAttribute("aria-label", "Menu");
-
     this.hamburger.className = "hamburger ";
     // hamburger--collapse
     const spanBar = document.createElement("span");
