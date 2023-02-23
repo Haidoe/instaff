@@ -202,6 +202,13 @@ class Dashboard extends EmployerPage {
     //Add event listeners for Submenu
     this.subMenuEvent();
 
+    //Just to make sure Active Menu is set to Dashboard
+    const dashboardMenu = document.querySelector(
+      ".main-header a[href='/dashboard']"
+    );
+
+    dashboardMenu.classList.add("active-menu-item");
+
     //PubSub for Mobile Related Stuff
     pubsub.subscribe("mainHeaderBackBtnClicked", this.popStateListener);
     window.addEventListener("popstate", this.popStateListener);

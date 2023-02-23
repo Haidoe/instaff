@@ -162,6 +162,17 @@ class MainHeader {
     this.header.appendChild(this.headingWrapper);
     this.navWrapper.appendChild(this.nav);
     this.header.appendChild(this.navWrapper);
+
+    this.logoImg.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.hamburger.classList.remove("open");
+      this.nav.classList.remove("nav--open");
+      const prevActiveMenu = document.querySelector(".active-menu-item");
+
+      if (prevActiveMenu) {
+        prevActiveMenu.classList.remove("active-menu-item");
+      }
+    });
   }
 
   loadNavs(ul, navList) {

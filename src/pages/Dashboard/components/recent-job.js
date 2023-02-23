@@ -3,9 +3,12 @@ const recentJobs = (obj) => {
 
   anchorWrapper.addEventListener("click", (e) => {
     e.preventDefault();
-    const url = new URL(window.location);
-    url.hash = `jp-${obj.id}`;
-    window.history.pushState({}, "", url);
+
+    if (window.innerWidth < 768) {
+      const url = new URL(window.location);
+      url.hash = `jp-${obj.id}`;
+      window.history.pushState({}, "", url);
+    }
   });
 
   const article = document.createElement("article");
