@@ -8,6 +8,7 @@ import {
 import template from "./dashboard.html";
 import RecentJob from "./components/recent-job";
 import HistoryJob from "./components/history-job";
+import ApplicantBox from "./components/applicant-box";
 import "./dashboard.scss";
 import {
   getTotalAcceptedApplicantsByPostId,
@@ -109,10 +110,29 @@ class Dashboard extends EmployerPage {
     }
   }
 
+  async loadApplicants() {
+    const container = document.querySelector("div.applicants");
+    const applicants = Math.round(Math.random());
+
+    if (applicants) {
+      for (let i = 0; i < 4; i++) {
+        const applicant = new ApplicantBox({});
+        container.appendChild(applicant.toElement());
+      }
+    } else {
+      const noApplicants = document.createElement("div");
+      noApplicants.className = "no-applicants";
+      noApplicants.textContent = "No applicants yet.";
+
+      container.appendChild(noApplicants);
+    }
+  }
+
   async mounted() {
     this.loadBoardData();
     this.loadRecentJobsPosting();
     this.loadPostingHistory();
+    this.loadApplicants();
     //Add event listeners for Submenu
     this.subMenuEvent();
   }

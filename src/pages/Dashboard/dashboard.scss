@@ -317,6 +317,12 @@
             font-size: 1.25rem;
           }
         }
+
+        .no-applicants {
+          grid-column: 1 / -1;
+          font-size: 2rem;
+          color: $colorPink;
+        }
       }
       @media screen and (min-width: 768px) {
         display: unset;
