@@ -1,3 +1,4 @@
+import globalState from "./classes/GlobalState";
 import { getParams, pathToRegex } from "./js/utils";
 
 //Will hold the class instance of the active page
@@ -80,6 +81,11 @@ const routes = [
 ];
 
 export const router = async () => {
+  if (globalState.preventPopState) {
+    globalState.preventPopState = false;
+    return;
+  }
+
   //This is where you unsubscribe things from the previous active page
   if (activePage) {
     activePage.close();
