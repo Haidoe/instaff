@@ -15,6 +15,7 @@ import {
   getTotalApplicantsByPostId,
 } from "../../js/applicants";
 import getPostingHistoryByUser from "../../js/job-posting/getPostingHistoryByUser";
+import pubsub from "../../classes/PubSub";
 
 class Dashboard extends EmployerPage {
   constructor() {
@@ -89,6 +90,10 @@ class Dashboard extends EmployerPage {
 
       recentJob.addEventListener("click", () => {
         this.loadJobListingDetails(item);
+        pubsub.publish("mainHeaderShowBackBtn");
+        const mainPageContainer = document.querySelector(".dashboard-page");
+        mainPageContainer.classList.add("db-page-mobile");
+        window.scrollTo(0, 0);
       });
 
       container.appendChild(recentJob);
@@ -104,7 +109,7 @@ class Dashboard extends EmployerPage {
 
       this.loadApplicants();
 
-      jobDetailsContainer.classList.remove("hidden");
+      jobDetailsContainer.classList.add("show");
     }
   }
 
@@ -185,6 +190,17 @@ class Dashboard extends EmployerPage {
     this.loadPostingHistory();
     //Add event listeners for Submenu
     this.subMenuEvent();
+
+    //PubSub for Mobile Related Stuff
+    pubsub.subscribe("mainHeaderBackBtnClicked", () => {
+      const mainPageContainer = document.querySelector(".dashboard-page");
+      mainPageContainer.classList.remove("db-page-mobile");
+      pubsub.publish("mainHeaderHideBackBtn");
+    });
+  }
+
+  close() {
+    pubsub.publish("mainHeaderHideBackBtn");
   }
 }
 
