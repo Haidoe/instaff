@@ -1,6 +1,12 @@
 const recentJobs = (obj) => {
   const anchorWrapper = document.createElement("a");
-  anchorWrapper.href = "javascript:void(0)";
+
+  anchorWrapper.addEventListener("click", (e) => {
+    e.preventDefault();
+    const url = new URL(window.location);
+    url.hash = `jp-${obj.id}`;
+    window.history.pushState({}, "", url);
+  });
 
   const article = document.createElement("article");
   article.id = `jp-${obj.id}`;

@@ -16,6 +16,7 @@ import {
 } from "../../js/applicants";
 import getPostingHistoryByUser from "../../js/job-posting/getPostingHistoryByUser";
 import pubsub from "../../classes/PubSub";
+import globalState from "../../classes/GlobalState";
 
 class Dashboard extends EmployerPage {
   constructor() {
@@ -96,6 +97,7 @@ class Dashboard extends EmployerPage {
 
         if (window.innerWidth < 768) {
           window.scrollTo(0, 0);
+          globalState.preventPopState = true;
         }
       });
 
@@ -187,6 +189,12 @@ class Dashboard extends EmployerPage {
     }
   }
 
+  popStateListener(e) {
+    const mainPageContainer = document.querySelector(".dashboard-page");
+    mainPageContainer.classList.remove("db-page-mobile");
+    pubsub.publish("mainHeaderHideBackBtn");
+  }
+
   async mounted() {
     this.loadBoardData();
     this.loadRecentJobsPosting();
@@ -195,24 +203,14 @@ class Dashboard extends EmployerPage {
     this.subMenuEvent();
 
     //PubSub for Mobile Related Stuff
-    pubsub.subscribe("mainHeaderBackBtnClicked", () => {
-      const mainPageContainer = document.querySelector(".dashboard-page");
-      mainPageContainer.classList.remove("db-page-mobile");
-      pubsub.publish("mainHeaderHideBackBtn");
-    });
-
-    window.addEventListener("hashchange", function (e) {
-      const mainPageContainer = document.querySelector(".db-page-mobile");
-
-      if (mainPageContainer) {
-        e.preventDefault();
-        mainPageContainer.classList.remove("db-page-mobile");
-      }
-    });
+    pubsub.subscribe("mainHeaderBackBtnClicked", this.popStateListener);
+    window.addEventListener("popstate", this.popStateListener);
   }
 
   close() {
     pubsub.publish("mainHeaderHideBackBtn");
+    window.removeEventListener("popstate", this.popStateListener);
+    pubsub.unsubscribe("mainHeaderBackBtnClicked");
   }
 }
 
