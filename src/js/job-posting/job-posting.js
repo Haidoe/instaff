@@ -3,6 +3,7 @@ import {
   collection,
   getFirestore,
   serverTimestamp,
+  Timestamp,
   getDocs,
   doc,
   getDoc,
@@ -103,13 +104,43 @@ export const publishJobPosting = async (id) => {
   }
 };
 
-// TODO - Add filter for date and status
 export const getActiveTotalJobPostingsByUser = async (id) => {
   const db = getFirestore();
   const jobPostingCol = collection(db, "jobPostings");
-  const JobPostingQuery = query(jobPostingCol, where("userId", "==", id));
+  const JobPostingQuery = query(
+    jobPostingCol,
+    where("userId", "==", id),
+    where("status", "==", "published"),
+    where("time.from", ">", Timestamp.now())
+  );
+
   const result = await getCountFromServer(JobPostingQuery);
+
   return result.data().count;
+};
+
+export const getAllActiveJobPostingsByUser = async (id) => {
+  const db = getFirestore();
+
+  const jobPostingCol = collection(db, "jobPostings");
+
+  const JobPostingQuery = query(
+    jobPostingCol,
+    where("userId", "==", id),
+    where("status", "==", "published"),
+    where("time.from", ">", Timestamp.now())
+  );
+
+  const jobPostingDocs = await getDocs(JobPostingQuery);
+
+  const result = jobPostingDocs.docs.map((doc) => {
+    return {
+      id: doc.id,
+      ...doc.data(),
+    };
+  });
+
+  return result;
 };
 
 // TODO - Get first the active job postings, then get the applicants
