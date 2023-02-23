@@ -1,4 +1,5 @@
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import globalState from "../../classes/GlobalState";
 import pubsub from "../../classes/PubSub";
 import { getUserDetails } from "../../js/users";
 import { pageTransition } from "../../router";
@@ -165,8 +166,13 @@ class MainHeader {
 
     this.logoImg.addEventListener("click", (e) => {
       e.preventDefault();
+
+      //Making sure that no one can stop the popstate event redirecting to the home page
+      globalState.preventPopState = false;
+
       this.hamburger.classList.remove("open");
       this.nav.classList.remove("nav--open");
+
       const prevActiveMenu = document.querySelector(".active-menu-item");
 
       if (prevActiveMenu) {
