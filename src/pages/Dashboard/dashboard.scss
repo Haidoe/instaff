@@ -217,8 +217,10 @@
       display: none;
       padding: 1rem;
 
-      &.show {
-        display: unset;
+      @media screen and (min-width: 768px) {
+        &.show {
+          display: unset;
+        }
       }
 
       h3 {

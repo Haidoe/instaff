@@ -200,6 +200,15 @@ class Dashboard extends EmployerPage {
       mainPageContainer.classList.remove("db-page-mobile");
       pubsub.publish("mainHeaderHideBackBtn");
     });
+
+    window.addEventListener("hashchange", function (e) {
+      const mainPageContainer = document.querySelector(".db-page-mobile");
+
+      if (mainPageContainer) {
+        e.preventDefault();
+        mainPageContainer.classList.remove("db-page-mobile");
+      }
+    });
   }
 
   close() {
