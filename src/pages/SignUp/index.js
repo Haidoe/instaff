@@ -1,5 +1,7 @@
 import Page from "../../classes/Page";
 import "./signup.scss";
+import { pageTransition } from "../../router";
+
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -11,54 +13,64 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 class SignUp extends Page {
   constructor() {
     super("SignUp");
-  }
+  }     
 
   async load() {
     return `
-      <div class="sign-up gradient-bg">
-      <img src="./static/instaff-logo-white.svg" alt="instaff logo" class="logo">
+      <div class="sign-up-page">
+      <div class="left-col">
+      <img src="./static/images/undraw_Work_together.png" alt="work-together" class="undraw-work-together">
+      </div>
+      <div class="right-col">
+            <img src="./static/instaff-logo-light-full-text.svg" alt="instaff logo" class="logo">
       <form action="#" id="signUpForm" class= "center-form">
-      <div class="container center-form">
-      <h1>Create an account </h1>
- 
+          <div class="container center-form">
+          <h1>Create an account </h1>
     
-      <div class="group input-group-2cols">
-        <label for="displayname">Name</label>
-        <input type="text" placeholder="Enter Display Name" name="displayname" id="displayname" required>
+        
+          <div class="group input-group-2cols">
+            <label for="displayname">Name</label>
+            <input type="text" placeholder="Enter Display Name" name="displayname" id="displayname" required>
+          </div>
+
+          <div class="group input-group-2cols">
+            <label for="email">Email</label>
+            <input type="text" placeholder="Enter Email" name="email" id="email" required>
+          </div>
+
+          <div class="group input-group-2cols">
+            <label for="psw">Password</label>
+            <input type="password" name="psw" id="psw" required>
+          </div>
+
+          <div class="group input-group-2cols">
+            <label for="typeOfUser">Purpose</label>
+            <select name="typeOfUser" id="typeOfUser">
+              <option value="employee">I want to find a job.</option>
+              <option value="employer">I want to hire staffs.</option>
+            </select>
+          </div>
+
+          <button type="submit" id="submitData" name="submitData" class="button-white lock-bottom">Next</button>
+          </div>
+          <div class="group">
+            <p id="output"></p>
+          </div>
+
+       </form>
       </div>
 
-      <div class="group input-group-2cols">
-        <label for="email">Email</label>
-        <input type="text" placeholder="Enter Email" name="email" id="email" required>
-      </div>
 
-      <div class="group input-group-2cols">
-        <label for="psw">Password</label>
-        <input type="password" name="psw" id="psw" required>
       </div>
-
-      <div class="group input-group-2cols">
-        <label for="typeOfUser">Purpose</label>
-        <select name="typeOfUser" id="typeOfUser">
-          <option value="employee">I want to find a job.</option>
-          <option value="employer">I want to hire staffs.</option>
-        </select>
-      </div>
-
-      <button type="submit" id="submitData" name="submitData" class="button-white lock-bottom">Register</button>
-      </div>
-      <div class="group">
-        <p id="output"></p>
-      </div>
-
-  </form>
-</div>
     `;
   }
 
   
   
   async mounted() {
+    document.querySelector("body").classList.add(".home-body");
+
+
     const auth = getAuth();
     const db = getFirestore();
     const submitBtn = document.querySelector("#submitData");
@@ -86,14 +98,9 @@ class SignUp extends Page {
           console.log(user);
         
           sendEmailVerification(auth.currentUser).then(() => {
-            output.innerHTML = `<div>Welcome to Instaff.</div>
-            <div>We're happy you signed up.</div>
-            <div>start exploring the app, please confirm your email address.</div>`;
-
             console.log("Email sent");
-            submitBtn.innerHTML = `<div>Sign in</div>`;
+                     pageTransition("/verification")
           });
-          
           
           //calling the collection
           const userCol = doc(db, "users", user.uid);
@@ -111,6 +118,10 @@ class SignUp extends Page {
           alert(errorMessage);
         });
     });
+  }
+
+  close() {
+    document.querySelector("body").classList.remove(".home-body");
   }
 }
 

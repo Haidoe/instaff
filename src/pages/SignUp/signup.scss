@@ -1,83 +1,99 @@
-/*-----------------------------------*\ 
- * #Reset
-\*-----------------------------------*/
 
-#app {
-  padding: 0;
-}
-
-h1 {
-  font-size: 37px;
-  font-weight: normal;
-}
-
-.logo {
-  width: 60%;
-  margin: 0 auto;
-  padding-top: 8vh;
-}
-
-.sign-up {
+.sign-up-page {
   color: white;
   height: 100vh;
-  width: 100vw;
-}
-
-.gradient-bg {
   background: linear-gradient(180deg, #FF005D 0%, #391865 100%);
-}
+  position: relative;
 
-.center-form {
-  display: grid;
-  text-align: center;
-  padding: 1rem;
-  row-gap: 3vh;
-}
+  .home-body #app {
+  padding: 0rem;
+} 
 
-.input-group-2cols {
-  display: grid;
-  grid-template-columns: 30% 70%;
-  justify-content: left;
-  text-align: left;
-}
+  .left-col img{
+    display: none;
+  }
 
-input[type="text"],
-select {
-  width: 100%;
-  padding-bottom: 0.5rem;
-  background: none;
-  border: none;
-  border-bottom: 1px solid white;
-}
+  form{
+    max-width: 360px;
+    margin: auto;
+    display: grid;
+    gap: 1rem;
+    font-size: 17px;
+  }
 
-::placeholder {
-  color: white;
-  opacity: 0.8;
-}
+ .logo {
+    max-width: 208px;
+    margin: 0 auto;
+    padding-top: 136px;
+    padding-bottom: 36px;
+  }
 
-select option {
-  color: black;
-}
+  h1 {
+    font-size: 37px;
+    font-weight: normal;  
+  }
 
-.button-white {
-  font: inherit;
-  width: 288px;
-  height: 56px;
-  border-radius: 5px;
-  background: white;
-  color: black;
-  margin: 0 auto;
-  border: none;
-  cursor: pointer;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-}
+  .center-form {
+    display: grid;
+    text-align: center;
+    row-gap: 1rem;
+  }
 
-.lock-bottom {
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  bottom: 5vh;
-  cursor: pointer;
+  .input-group-2cols {
+    display: grid;
+    grid-template-columns: auto 236px;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  select {
+    width: 100%;
+    padding-bottom: 0.5rem;
+    background: none;
+    border: none;
+    border-bottom: 1px solid white;
+  }
+
+  ::placeholder {
+    color: white;
+    opacity: 0.8;
+  }
+
+  select option {
+    color: black;
+  }
+
+  .button-white {
+    font: inherit;
+    width: 288px;
+    height: 55px;
+    border-radius: 5px;
+    background: white;
+    color: black;
+    margin: 0 auto;
+    border: none;
+    cursor: pointer;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+    &:hover {
+      background: #f2f2f2;
+    }
+
+    &:active {
+      background: #717171;
+    color: #fff;
+    }
+  }
+
+  .lock-bottom {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    bottom: 36px;
+    cursor: pointer;
+  }
 }
