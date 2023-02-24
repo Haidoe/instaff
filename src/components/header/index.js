@@ -179,6 +179,14 @@ class MainHeader {
         prevActiveMenu.classList.remove("active-menu-item");
       }
     });
+
+    pubsub.subscribe("showMainHeader", () => {
+      this.header.style.display = "flex";
+    });
+
+    pubsub.subscribe("hideMainHeader", () => {
+      this.header.style.display = "none";
+    });
   }
 
   loadNavs(ul, navList) {
