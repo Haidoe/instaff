@@ -111,8 +111,7 @@ export const getActiveTotalJobPostingsByUser = async (id) => {
   const JobPostingQuery = query(
     jobPostingCol,
     where("userId", "==", id),
-    where("status", "==", "published"),
-    where("time.from", ">", Timestamp.now())
+    where("status", "==", "published")
   );
 
   const result = await getCountFromServer(JobPostingQuery);
