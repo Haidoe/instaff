@@ -245,6 +245,14 @@ class JobPosting extends EmployerPage {
 
   mounted() {
     document.querySelector("body").classList.add("job-post-body");
+
+    //Just to make sure Active Menu is set to Dashboard
+    const dashboardMenu = document.querySelector(
+      ".main-header a[href='/post']"
+    );
+
+    dashboardMenu.classList.add("active-menu-item");
+
     this.initMap();
     this.imageListener();
     this.formListener();
