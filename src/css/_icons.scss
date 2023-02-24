@@ -8,4 +8,9 @@
     -webkit-mask: url(../static/icons/arrow-left.svg) no-repeat center;
     mask: url(../static/icons/arrow-left.svg) no-repeat center;
   }
+
+  &.image-icon {
+    -webkit-mask: url(../static/icons/image.svg) no-repeat center;
+    mask: url(../static/icons/image.svg) no-repeat center;
+  }
 }
