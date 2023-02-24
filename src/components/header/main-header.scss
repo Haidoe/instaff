@@ -2,6 +2,7 @@
 @import "../../css/gradientText";
 
 .main-header {
+  background-color: white;
   .heading-wrapper {
     position: relative;
     padding: 1rem $sidePadding;
@@ -20,9 +21,21 @@
       }
     }
 
-    button {
+    button.hamburger {
       position: absolute;
       right: 1rem;
+    }
+
+    .back-icon {
+      position: absolute;
+      left: 1rem;
+      right: unset;
+      outline: none;
+      border: none;
+    }
+
+    .hidden {
+      display: none;
     }
   }
 

@@ -1,0 +1,190 @@
+<div class="job-post-page">
+
+  <div class="container">
+    <aside>
+      <ul>
+        <li class="active" id="part1">
+          <span>
+            Part 1: Information Detail
+          </span>
+        </li>
+
+        <li id="part2">
+          <span>
+            Part 2: Job Description
+          </span>
+        </li>
+
+        <li id="part3">
+          <span>
+            Part 3: Company Details
+          </span>
+        </li>
+      </ul>
+    </aside>
+
+    <section>
+      <section class="partition-1">
+        <h2>Part 1: Job Detail</h2>
+
+        <form id="form1" class="content">
+          <div class="banner-field">
+            <label for="postingBanner" class="visually-hidden">
+              Upload Image
+            </label>
+
+            <input required type="file" id="postingBanner" name="postingBanner">
+
+            <button id="uploadImgBtn" disabled>
+              <div class="icon image-icon">
+                <span class="visually-hidden">Upload Image Button</span>
+              </div>
+            </button>
+
+            <span class="info">
+              Click here to upload a banner.
+            </span>
+          </div>
+
+          <div class="input-group">
+            <label for="positionTitle">
+              Position Title
+            </label>
+
+            <input required type="text" id="positionTitle" name="positionTitle">
+          </div>
+
+          <div class="input-group">
+            <label for="shiftDate">
+              Shift Date
+            </label>
+
+            <input required type="date" id="shiftDate" name="shiftDate">
+          </div>
+
+
+          <div class="input-group">
+            <label for="fromTime">
+              Start Time:
+            </label>
+
+            <input required type="time" id="fromTime" name="fromTime">
+          </div>
+
+          <div class="input-group">
+            <label for="hoursOfShift">
+              Hours of shift:
+            </label>
+
+            <input required type="number" id="hoursOfShift" name="hoursOfShift">
+          </div>
+
+          <div class="input-group">
+            <label for="wage">Wage</label>
+            <span class="pre"> $ </span>
+            <input required type="number" id="wage" name="wage">
+          </div>
+
+          <div class="input-group">
+            <label for="positionAvailable">Position Available</label>
+            <input required type="number" id="positionAvailable" name="positionAvailable">
+          </div>
+
+          <div class="input-group">
+            <label for="paymentType">Payment Type</label>
+            <input readonly type="text" id="paymentType" name="paymentType" value="Cash">
+          </div>
+
+          <div class="action-btn-wrapper center">
+            <button type="submit" class="primary-button next-btn">
+              Next
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="partition-2">
+        <h2>Part 2: Job Detail</h2>
+
+        <form id="form2" class="content">
+          <div class="input-group description-input">
+            <label for="description">
+              Description
+            </label>
+
+            <textarea required id="description" name="description" rows="8"></textarea>
+          </div>
+
+          <div class="input-group additionalInfo-input">
+            <label for="additionalInfo">
+              Additional Information
+            </label>
+
+            <textarea required id="additionalInfo" name="additionalInfo" rows="4"></textarea>
+          </div>
+
+          <div class="action-btn-wrapper">
+            <button class="secondary-button back-btn">
+              <span class="icon back-icon"></span>
+              Back
+            </button>
+
+            <button class="primary-button">
+              Next
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="partition-3">
+        <h2>Part 3: Company Details</h2>
+
+        <form id="form3" class="content">
+          <div class="input-group">
+            <label for="companyName">
+              Company Name
+            </label>
+
+            <input required type="text" id="companyName" name="companyName">
+          </div>
+
+          <div class="input-group">
+            <label for="postalCode">Postal Code</label>
+            <input required type="text" id="postalCode" name="postalCode">
+          </div>
+
+          <div class="input-group">
+            <label for="city">
+              City
+            </label>
+
+            <input required type="text" id="city" name="city">
+          </div>
+
+          <div class="input-group">
+            <label for="province">Province</label>
+            <input readonly type="text" id="province" value="British Columbia" name="province">
+          </div>
+
+          <div class="input-group address-input">
+            <label for="address">Address</label>
+            <input required type="text" id="address" name="address">
+          </div>
+
+          <div id="job-post-map"></div>
+
+          <div class="action-btn-wrapper">
+            <button class="secondary-button back-btn">
+              <span class="icon back-icon"></span>
+              Back
+            </button>
+
+            <button type="submit" class="primary-button">
+              Save
+            </button>
+          </div>
+        </form>
+      </section>
+    </section>
+  </div>
+</div>

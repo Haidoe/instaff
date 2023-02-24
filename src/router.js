@@ -1,3 +1,4 @@
+import globalState from "./classes/GlobalState";
 import { getParams, pathToRegex } from "./js/utils";
 
 //Will hold the class instance of the active page
@@ -31,6 +32,11 @@ const routes = [
   },
   {
     path: "/post",
+    page: () =>
+      import(/* webpackChunkName: "JobPost" */ `./pages/JobPostingV2`),
+  },
+  {
+    path: "/old-post",
     page: () =>
       import(/* webpackChunkName: "JobPosting" */ `./pages/JobPosting`),
   },
@@ -73,9 +79,18 @@ const routes = [
         /* webpackChunkName: "RatingAndFeedback" */ `./pages/RatingAndFeedback`
       ),
   },
+  {
+    path: "/dashboard",
+    page: () => import(/* webpackChunkName: "Dashboard" */ `./pages/Dashboard`),
+  },
 ];
 
 export const router = async () => {
+  if (globalState.preventPopState) {
+    globalState.preventPopState = false;
+    return;
+  }
+
   //This is where you unsubscribe things from the previous active page
   if (activePage) {
     activePage.close();

@@ -1,0 +1,40 @@
+.input-group {
+  position: relative;
+  padding: 0;
+  padding-top: 1rem;
+
+  label {
+    position: absolute;
+    font-size: 0.75rem;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0 0.25rem;
+    background-color: white;
+  }
+
+  select,
+  textarea,
+  input {
+    width: 100%;
+    padding: 0.75rem;
+    outline: none;
+    border: 1px solid #000;
+    border-radius: 4px;
+    background-color: white;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .pre {
+    position: absolute;
+    top: 1rem;
+    padding: 0.75rem;
+    color: #999999;
+
+    & + input {
+      padding-left: 1.5rem;
+    }
+  }
+}
