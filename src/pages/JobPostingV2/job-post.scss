@@ -13,6 +13,45 @@
     display: grid;
     gap: 1rem;
 
+    .banner-field {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 36/12.8;
+      border: 1px solid #000;
+      position: relative;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      input {
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      button {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        background-color: white;
+        border-radius: 50%;
+        outline: 0;
+        border: none;
+
+        .icon {
+          width: 1.5rem;
+          height: 1.5rem;
+          scale: 0.8;
+        }
+      }
+    }
+
     #job-post-map {
       width: 100%;
       height: auto;

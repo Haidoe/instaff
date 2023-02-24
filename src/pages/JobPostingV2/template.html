@@ -5,12 +5,32 @@
       <h2>Part 1: Job Detail</h2>
 
       <div class="content">
+        <div class="banner-field">
+          <label for="postingBanner" class="visually-hidden">
+            Upload Image
+          </label>
+
+          <input required type="file" id="postingBanner">
+
+          <button id="uploadImgBtn" disabled>
+            <div class="icon image-icon">
+              <span class="visually-hidden">Upload Image Button</span>
+            </div>
+          </button>
+
+          <span class="info">
+            Click here to upload a banner.
+          </span>
+        </div>
+
         <div class="input-group">
           <label for="positionTitle">
             Position Title
           </label>
 
           <input required type="text" id="positionTitle">
+
+
         </div>
 
         <div class="input-group">

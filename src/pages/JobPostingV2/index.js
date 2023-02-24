@@ -1,6 +1,7 @@
 import EmployerPage from "../../classes/EmployerPage";
 import template from "./template.html";
 import "./job-post.scss";
+import { readURL } from "../../js/utils";
 
 class JobPosting extends EmployerPage {
   constructor() {
@@ -69,8 +70,31 @@ class JobPosting extends EmployerPage {
     });
   }
 
+  imageListener() {
+    const imageContainer = document.querySelector(".banner-field");
+    const postingBanner = document.querySelector("#postingBanner");
+    const postingBannerInfo = document.querySelector(".banner-field .info");
+
+    postingBanner.addEventListener("change", async (e) => {
+      e.preventDefault();
+      this.image = e.target.files[0];
+
+      console.log(this.image);
+
+      if (this.image) {
+        const imgUrl = await readURL(this.image);
+        imageContainer.style.backgroundImage = `url(${imgUrl})`;
+        postingBannerInfo.style.display = "none";
+      } else {
+        postingBannerInfo.style.display = "unset";
+        imageContainer.style.backgroundImage = "none";
+      }
+    });
+  }
+
   mounted() {
     this.initMap();
+    this.imageListener();
   }
 }
 
