@@ -1,8 +1,27 @@
 <div class="job-post-page">
-  <aside></aside>
 
   <div class="container">
-    <aside></aside>
+    <aside>
+      <ul>
+        <li class="active" id="part1">
+          <span>
+            Part 1: Information Detail
+          </span>
+        </li>
+
+        <li id="part2">
+          <span>
+            Part 2: Job Description
+          </span>
+        </li>
+
+        <li id="part3">
+          <span>
+            Part 3: Company Details
+          </span>
+        </li>
+      </ul>
+    </aside>
 
     <section>
       <section class="partition-1">
@@ -88,7 +107,7 @@
         <h2>Part 2: Job Detail</h2>
 
         <form id="form2" class="content">
-          <div class="input-group">
+          <div class="input-group description-input">
             <label for="description">
               Description
             </label>
@@ -96,7 +115,7 @@
             <textarea required id="description" name="description" rows="8"></textarea>
           </div>
 
-          <div class="input-group">
+          <div class="input-group additionalInfo-input">
             <label for="additionalInfo">
               Additional Information
             </label>
@@ -130,8 +149,8 @@
           </div>
 
           <div class="input-group">
-            <label for="address">Address</label>
-            <input required type="text" id="address" name="address">
+            <label for="postalCode">Postal Code</label>
+            <input required type="text" id="postalCode" name="postalCode">
           </div>
 
           <div class="input-group">
@@ -147,9 +166,9 @@
             <input readonly type="text" id="province" value="British Columbia" name="province">
           </div>
 
-          <div class="input-group">
-            <label for="postalCode">Postal Code</label>
-            <input required type="text" id="postalCode" name="postalCode">
+          <div class="input-group address-input">
+            <label for="address">Address</label>
+            <input required type="text" id="address" name="address">
           </div>
 
           <div id="job-post-map"></div>

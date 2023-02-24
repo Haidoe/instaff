@@ -112,6 +112,10 @@ class JobPosting extends EmployerPage {
     const back1 = document.querySelector(".partition-2 .back-btn");
     const back2 = document.querySelector(".partition-3 .back-btn");
 
+    const asideList1 = document.querySelector("#part1");
+    const asideList2 = document.querySelector("#part2");
+    const asideList3 = document.querySelector("#part3");
+
     form1.addEventListener("submit", (e) => {
       e.preventDefault();
       const formData = new FormData(form1);
@@ -125,6 +129,9 @@ class JobPosting extends EmployerPage {
 
       partition1.style.display = "none";
       partition2.style.display = "block";
+
+      asideList2.classList.add("active");
+      asideList1.classList.remove("active");
     });
 
     form2.addEventListener("submit", (e) => {
@@ -140,6 +147,11 @@ class JobPosting extends EmployerPage {
 
       partition2.style.display = "none";
       partition3.style.display = "block";
+
+      asideList3.classList.add("active");
+      asideList2.classList.remove("active");
+
+      this.map.resize();
     });
 
     form3.addEventListener("submit", (e) => {
@@ -160,12 +172,18 @@ class JobPosting extends EmployerPage {
       e.preventDefault();
       partition1.style.display = "block";
       partition2.style.display = "none";
+
+      asideList1.classList.add("active");
+      asideList2.classList.remove("active");
     });
 
     back2.addEventListener("click", (e) => {
       e.preventDefault();
       partition2.style.display = "block";
       partition3.style.display = "none";
+
+      asideList2.classList.add("active");
+      asideList3.classList.remove("active");
     });
   }
 
@@ -226,10 +244,15 @@ class JobPosting extends EmployerPage {
   }
 
   mounted() {
+    document.querySelector("body").classList.add("job-post-body");
     this.initMap();
     this.imageListener();
     this.formListener();
     this.addressListener();
+  }
+
+  close() {
+    document.querySelector("body").classList.remove("job-post-body");
   }
 }
 

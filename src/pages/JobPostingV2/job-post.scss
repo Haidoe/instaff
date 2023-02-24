@@ -1,10 +1,29 @@
 @import "../../css/variables";
+@import "../../css/gradientText";
 
 .job-post-page {
+  aside {
+    display: none;
+    border-right: 1px solid $borderColor;
+
+    li {
+      padding: 1rem;
+
+      &.active {
+        background-color: $mainBgColor;
+
+        span {
+          @extend .gradient-text;
+        }
+      }
+    }
+  }
+
   h2 {
     color: $colorGray;
     margin-bottom: 1rem;
   }
+
   .content {
     background: white;
     margin-left: -$sidePadding;
@@ -99,5 +118,74 @@
   .partition-2,
   .partition-3 {
     display: none;
+  }
+
+  @media screen and (min-width: 768px) {
+    .container {
+      display: grid;
+      grid-template-columns: 2fr 5fr;
+      max-width: $maxWidthContainer;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    aside {
+      display: block;
+      ul {
+        padding-top: 3rem;
+      }
+    }
+
+    section > section {
+      padding-top: 2rem;
+    }
+
+    h2 {
+      display: none;
+    }
+
+    .content {
+      margin-left: 0;
+      margin-right: 0;
+      padding: 1rem 3rem;
+      grid-template-columns: 1fr 1fr;
+
+      .banner-field,
+      .action-btn-wrapper,
+      .description-input,
+      .additionalInfo-input,
+      .address-input,
+      #job-post-map {
+        grid-column: 1/-1;
+      }
+
+      .banner-field {
+        aspect-ratio: 66/23.5;
+      }
+
+      #job-post-map {
+        aspect-ratio: 66/34;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .job-post-body {
+    background-color: white;
+
+    #app {
+      display: flex;
+      padding: 0 $sidePadding;
+    }
+
+    .job-post-page {
+      flex-grow: 1;
+      display: flex;
+    }
+
+    .container {
+      flex-grow: 1;
+    }
   }
 }
