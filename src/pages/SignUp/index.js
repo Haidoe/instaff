@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 
 import { getFirestore, doc, setDoc } from "firebase/firestore";
+import pubsub from "../../classes/PubSub";
 
 class SignUp extends Page {
   constructor() {
@@ -67,6 +68,7 @@ class SignUp extends Page {
 
   async mounted() {
     document.querySelector("body").classList.add("sign-up-body");
+    pubsub.publish("hideMainHeader");
 
     const auth = getAuth();
     const db = getFirestore();
@@ -116,6 +118,7 @@ class SignUp extends Page {
 
   close() {
     document.querySelector("body").classList.remove("sign-up-body");
+    pubsub.publish("showMainHeader");
   }
 }
 
