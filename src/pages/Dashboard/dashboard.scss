@@ -363,6 +363,20 @@
         padding: 1rem;
         gap: 3rem;
       }
+
+      .job-details {
+        justify-content: unset;
+        flex-direction: column;
+        gap: 1rem;
+
+        & > div:last-child {
+          text-align: unset;
+        }
+      }
+
+      #jpTitle {
+        color: $colorPink;
+      }
     }
   }
 }

@@ -203,6 +203,9 @@ class MainHeader {
       }
 
       itemAnchor.addEventListener("click", () => {
+        //Making sure that no one can stop the popstate event
+        globalState.preventPopState = false;
+
         this.hamburger.classList.remove("open");
         this.nav.classList.remove("nav--open");
         const prevActiveMenu = document.querySelector(".active-menu-item");
