@@ -1,19 +1,14 @@
-
 .sign-up-page {
   color: white;
   height: 100vh;
-  background: linear-gradient(180deg, #FF005D 0%, #391865 100%);
+  background: linear-gradient(180deg, #ff005d 0%, #391865 100%);
   position: relative;
 
-  .home-body #app {
-  padding: 0rem;
-} 
-
-  .left-col img{
+  .left-col img {
     display: none;
   }
 
-  form{
+  form {
     max-width: 360px;
     margin: auto;
     display: grid;
@@ -21,7 +16,7 @@
     font-size: 17px;
   }
 
- .logo {
+  .logo {
     max-width: 208px;
     margin: 0 auto;
     padding-top: 136px;
@@ -30,7 +25,7 @@
 
   h1 {
     font-size: 37px;
-    font-weight: normal;  
+    font-weight: normal;
   }
 
   .center-form {
@@ -83,7 +78,7 @@
 
     &:active {
       background: #717171;
-    color: #fff;
+      color: #fff;
     }
   }
 
@@ -96,4 +91,8 @@
     bottom: 36px;
     cursor: pointer;
   }
+}
+
+.sign-up-body #app {
+  padding: 0rem;
 }

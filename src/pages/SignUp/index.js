@@ -13,7 +13,7 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 class SignUp extends Page {
   constructor() {
     super("SignUp");
-  }     
+  }
 
   async load() {
     return `
@@ -65,17 +65,13 @@ class SignUp extends Page {
     `;
   }
 
-  
-  
   async mounted() {
-    document.querySelector("body").classList.add(".home-body");
-
+    document.querySelector("body").classList.add("sign-up-body");
 
     const auth = getAuth();
     const db = getFirestore();
     const submitBtn = document.querySelector("#submitData");
     const form = document.querySelector("#signUpForm");
-
 
     form.addEventListener("submit", (e) => {
       let email = document.querySelector("#email").value;
@@ -86,22 +82,20 @@ class SignUp extends Page {
       //display "loading" on submit button when clicked
       e.preventDefault();
       submitBtn.innerHTML = `<div>Loading...</div>`;
-    
 
       createUserWithEmailAndPassword(auth, email, password)
-        
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
 
           // ...
           console.log(user);
-        
+
           sendEmailVerification(auth.currentUser).then(() => {
             console.log("Email sent");
-                     pageTransition("/verification")
+            pageTransition("/verification");
           });
-          
+
           //calling the collection
           const userCol = doc(db, "users", user.uid);
 
@@ -121,7 +115,7 @@ class SignUp extends Page {
   }
 
   close() {
-    document.querySelector("body").classList.remove(".home-body");
+    document.querySelector("body").classList.remove("sign-up-body");
   }
 }
 
