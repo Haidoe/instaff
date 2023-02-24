@@ -6,7 +6,6 @@
   label {
     position: absolute;
     font-size: 0.75rem;
-    background-color: red;
     top: 0.5rem;
     left: 0.5rem;
     padding: 0 0.25rem;
@@ -21,6 +20,7 @@
     outline: none;
     border: 1px solid #000;
     border-radius: 4px;
+    background-color: white;
   }
 
   textarea {
@@ -32,9 +32,9 @@
     top: 1rem;
     padding: 0.75rem;
     color: #999999;
-  }
 
-  .pre + input {
-    padding-left: 1.5rem;
+    & + input {
+      padding-left: 1.5rem;
+    }
   }
 }
