@@ -166,6 +166,11 @@
       #job-post-map {
         aspect-ratio: 66/34;
       }
+
+      .action-btn-wrapper {
+        background: $mainBgColor;
+        padding: 1rem;
+      }
     }
   }
 }
