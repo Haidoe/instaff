@@ -1,0 +1,65 @@
+@import "../../css/variables.scss";
+@import "../../css/gradientBg.scss";
+@import "../../css/signupsigninform.scss";
+@import "../../css/buttonWhite.scss";
+
+.sign-in-page {
+  .inner-wrapper {
+    height: 100vh;
+  }
+
+  .left-col, .right-col {
+    padding: 0 1rem;
+  }
+
+  .left-col {
+    display: none;
+  }
+
+  .logo {
+    max-width: 208px;
+    margin: 0 auto;
+    padding-top: 20vh;
+    padding-bottom: 36px;
+  }
+
+  h1 {
+    font-size: 37px;
+    font-weight: normal;
+  }
+
+
+  .input-group-2cols {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    justify-content: space-between;
+    text-align: left;
+  }
+  
+
+  @media screen and (min-width: $mediumLarge) {
+    .inner-wrapper{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "left-col right-col";
+        
+        .left-col{
+          display: block;
+          background-color: white;
+          grid-area: left-col;
+
+          background-image: url("../../static/images/signup-left-col.png");
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+    
+    }
+  }
+}
+
+
+.home-body #app {
+  padding: 0rem;
+}
