@@ -20,7 +20,7 @@ class Login extends Page {
             <img src="./static/instaff-logo-light-full-text.svg" alt="instaff logo" class="logo">
             <form action="#" id="signInForm" class= "signup-signin-form">
               <div class="container center-form">
-              <h1>Log In</h1>
+  
 
                     <div class="group input-group-2cols">
                       <label for="email">Email address</label>
@@ -37,6 +37,8 @@ class Login extends Page {
             
                     <button type="submit" id="submitData" name="submitData" class="button-white">Log In</button>
 
+                    <div class="output">
+                    </div>
                     <div class="group">
                       <p>Forgot password? <a href="">Reset password.</a></p>
                     </div>
@@ -67,41 +69,53 @@ class Login extends Page {
   }
 
   async mounted() {
-    document.querySelector("body").classList.add("home-body");
+    document.querySelector("body").classList.add("sign-in-body");
     pubsub.publish("hideMainHeader");
     const auth = getAuth();
     const db = getFirestore();
     const form = document.getElementById("signInForm");
+    const submitData = document.getElementById("submitData");
+    const output = document.querySelector(".output");
     
     
 
     form.addEventListener("submit", async (e) => {
 
       e.preventDefault();
+      //show loading in button
+      
+      submitData.innerHTML = `<div>Loading...</div>`;
+
+
       const email = document.getElementById("email").value;
       const password = document.getElementById("psw").value;
       
 
       // log in user
       signInWithEmailAndPassword(auth, email, password)
-      .then(async (userCredential) => {
-          // Signed in
-        const user = userCredential.user;
-        
-        if (user.emailVerified) {
-          pageTransition("/");
-          console.log("email is verified: sign in successfully");
-          return;
-          } else {
-            console.log("email is not verified.");
-            pageTransition("/verification");
-        }
-      })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
-        }
+        .then(async (userCredential) => {
+            // Signed in
+          const user = userCredential.user;
+          
+          if (user.emailVerified) {
+
+
+            
+            pageTransition("/");
+            console.log("email is verified: sign in successfully");
+            return;
+            } else {
+              console.log("email is not verified.");
+              pageTransition("/verification");
+          }
+        })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode);
+            output.innerHTML = `<div class="error">The username or password you entered is incorrect.</div>`;
+            submitData.innerHTML = `<div>Log In</div>`;
+          }
       );
       return false;
     });
@@ -127,8 +141,8 @@ class Login extends Page {
   }
 
   close() {
-    document.querySelector("body").classList.remove("home-body");
-    pubsub.publish("hideMainHeader");
+    document.querySelector("body").classList.remove("sign-in-body");
+    pubsub.publish("showMainHeader");
   }
 }
 
