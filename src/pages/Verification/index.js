@@ -72,9 +72,17 @@ class Verification extends Page {
       sendEmailVerification(auth.currentUser).then(() => {
         const output = document.querySelector("#output");
 
+        //loadind
+        btnResend.innerHTML = `<div>Sending...</div>`;
+
+
+
         // Email verification sent!
         output.innerHTML = `<em>Email Verification sent! Check your mail box.</em>`;
         // ...
+
+        btnResend.innerHTML = `<div>Resend Email</div>`;
+
       });
     });
   }
