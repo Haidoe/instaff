@@ -15,54 +15,49 @@ class SignUp extends Page {
 
   async load() {
     return `
-      <div class="sign-up">
-      <form action="#" id="signUpForm">
-      <div class="container">
-      <h1>Sign Up</h1>
-      <p>Please fill in this form to create an account.</p>
-      <hr>
+      <div class="sign-up gradient-bg">
+      <img src="./static/instaff-logo-white.svg" alt="instaff logo" class="logo">
+      <form action="#" id="signUpForm" class= "center-form">
+      <div class="container center-form">
+      <h1>Create an account </h1>
+ 
     
-      <div class="group">
-        <label for="displayname"><b>Name</b></label>
+      <div class="group ">
+        <label for="displayname">Name</label>
         <input type="text" placeholder="Enter Display Name" name="displayname" id="displayname" required>
       </div>
 
       <div class="group">
-        <label for="email"><b>Email</b></label>
+        <label for="email">Email</label>
         <input type="text" placeholder="Enter Email" name="email" id="email" required>
       </div>
 
       <div class="group">
-        <label for="psw"><b>Password</b></label>
+        <label for="psw">Password</label>
         <input type="password" name="psw" id="psw" required>
       </div>
 
       <div class="group">
-        <label for="typeOfUser"><b>Purpose</b></label>
+        <label for="typeOfUser">Purpose</label>
         <select name="typeOfUser" id="typeOfUser">
           <option value="employee">I want to find a job.</option>
           <option value="employer">I want to hire staffs.</option>
         </select>
       </div>
 
-
-      <hr>
-      <p>By creating an account you agree to our <a href="#" id="termsandprivacy">Terms & Privacy</a>.</p>
-
-      <button type="submit" id="submitData" name="submitData" class="registerbtn">Register</button>
+      <button type="submit" id="submitData" name="submitData" class="button-white lock-bottom">Register</button>
       </div>
       <div class="group">
         <p id="output"></p>
       </div>
 
-      <div class="container signin">
-      <p>Already have an account? <a href="/sign-in">Sign in</a>.</p>
-    </div>
   </form>
 </div>
     `;
   }
 
+  
+  
   async mounted() {
     const auth = getAuth();
     const db = getFirestore();

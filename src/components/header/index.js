@@ -1,4 +1,6 @@
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import globalState from "../../classes/GlobalState";
+import pubsub from "../../classes/PubSub";
 import { getUserDetails } from "../../js/users";
 import { pageTransition } from "../../router";
 import "./main-header.scss";
@@ -16,9 +18,27 @@ class MainHeader {
 
     this.headingWrapper = document.createElement("div");
     this.headingWrapper.className = "heading-wrapper";
+
+    this.backBtn = document.createElement("button");
+    this.backBtn.className = "icon back-icon hidden";
+    this.backBtn.setAttribute("aria-label", "Back Button");
+
+    this.backBtn.addEventListener("click", () => {
+      pubsub.publish("mainHeaderBackBtnClicked", null);
+    });
+
+    pubsub.subscribe("mainHeaderShowBackBtn", () => {
+      this.backBtn.classList.remove("hidden");
+    });
+
+    pubsub.subscribe("mainHeaderHideBackBtn", () => {
+      this.backBtn.classList.add("hidden");
+    });
+
+    this.headingWrapper.appendChild(this.backBtn);
+
     this.hamburger = document.createElement("button");
     this.hamburger.setAttribute("aria-label", "Menu");
-
     this.hamburger.className = "hamburger ";
     // hamburger--collapse
     const spanBar = document.createElement("span");
@@ -143,6 +163,30 @@ class MainHeader {
     this.header.appendChild(this.headingWrapper);
     this.navWrapper.appendChild(this.nav);
     this.header.appendChild(this.navWrapper);
+
+    this.logoImg.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      //Making sure that no one can stop the popstate event redirecting to the home page
+      globalState.preventPopState = false;
+
+      this.hamburger.classList.remove("open");
+      this.nav.classList.remove("nav--open");
+
+      const prevActiveMenu = document.querySelector(".active-menu-item");
+
+      if (prevActiveMenu) {
+        prevActiveMenu.classList.remove("active-menu-item");
+      }
+    });
+
+    pubsub.subscribe("showMainHeader", () => {
+      this.header.style.display = "flex";
+    });
+
+    pubsub.subscribe("hideMainHeader", () => {
+      this.header.style.display = "none";
+    });
   }
 
   loadNavs(ul, navList) {
@@ -167,6 +211,9 @@ class MainHeader {
       }
 
       itemAnchor.addEventListener("click", () => {
+        //Making sure that no one can stop the popstate event
+        globalState.preventPopState = false;
+
         this.hamburger.classList.remove("open");
         this.nav.classList.remove("nav--open");
         const prevActiveMenu = document.querySelector(".active-menu-item");
