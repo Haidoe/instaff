@@ -1,83 +1,86 @@
-/*-----------------------------------*\ 
- * #Reset
-\*-----------------------------------*/
+@import "../../css/variables.scss";
+@import "../../css/gradientBg.scss";
+@import "../../css/signupsigninform.scss";
+@import "../../css/buttonWhite.scss";
 
-#app {
-  padding: 0;
+.sign-up-page {
+  .inner-wrapper {
+     height: 100vh;
+  }
+
+  .left-col, .right-col {
+    padding: 0 1rem;
+  }
+
+  .left-col {
+    display: none;
+  }
+
+  .logo {
+    max-width: 208px;
+    margin: 0 auto;
+    padding-top: 20vh;
+    padding-bottom: 36px;
+  }
+
+  h1 {
+    font-size: 37px;
+    font-weight: normal;
+  }
+
+
+  .input-group-2cols {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  
+  //  style input autocomplete
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    textarea:-webkit-autofill:active,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus,
+    select:-webkit-autofill:active {
+      border: 1px solid white;
+      -webkit-text-fill-color: white;
+      background-color: transparent;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+
+
+  @media screen and (min-width: $mediumLarge) {
+
+    .inner-wrapper{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "left-col right-col";
+
+      .left-col{
+        display: block;
+        background-color: white;
+        grid-area: left-col;
+  
+        background-image: url("../../static/images/signup-left-col.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+  
+  }
 }
 
-h1 {
-  font-size: 37px;
-  font-weight: normal;
 }
 
-.logo {
-  width: 60%;
-  margin: 0 auto;
-  padding-top: 8vh;
-}
-
-.sign-up {
-  color: white;
-  height: 100vh;
-  width: 100vw;
-}
-
-.gradient-bg {
-  background: linear-gradient(180deg, #FF005D 0%, #391865 100%);
-}
-
-.center-form {
-  display: grid;
-  text-align: center;
-  padding: 1rem;
-  row-gap: 3vh;
-}
-
-.group {
-  display: grid;
-  grid-template-columns: 30% 70%;
-  justify-content: left;
-  text-align: left;
-}
-
-input[type="text"],
-select {
-  width: 100%;
-  padding-bottom: 0.5rem;
-  background: none;
-  border: none;
-  border-bottom: 1px solid white;
-}
-
-.button-white {
-  font: inherit;
-  width: 288px;
-  height: 55px;
-  border-radius: 5px;
-  background: white;
-  color: black;
-  margin: 0 auto;
-  border: none;
-  cursor: pointer;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-}
-
-::placeholder {
-  color: white;
-  opacity: 0.8;
-}
-
-select option {
-  color: black;
-}
-
-.lock-bottom {
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  bottom: 5vh;
-  cursor: pointer;
+.sign-up-body #app {
+  padding: 0rem;
 }

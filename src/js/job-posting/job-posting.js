@@ -15,6 +15,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 
+//TODO - Delete this.
 // Add a job posting
 export const setJobPosting = async (initialJobPosting) => {
   const db = getFirestore();

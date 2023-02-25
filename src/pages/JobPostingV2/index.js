@@ -2,12 +2,14 @@ import EmployerPage from "../../classes/EmployerPage";
 import template from "./template.html";
 import "./job-post.scss";
 import { readURL } from "../../js/utils";
+import addJobPosting from "../../js/job-posting/addJobPosting";
 import {
   convertCoordinatesToAddress,
   convertAddressToCoordinates,
 } from "../../js/map-util";
+import Modal from "../../components/modal";
 import { uploadFile } from "../../js/upload-files/upload-image";
-
+import { pageTransition } from "../../router";
 class JobPosting extends EmployerPage {
   constructor() {
     super("Job Posting");
@@ -165,7 +167,14 @@ class JobPosting extends EmployerPage {
         ...data,
       };
 
-      console.log("SUBMIT!!", this.jobPosting);
+      const ConfirmModal = new Modal("Would you like to post this job?");
+
+      ConfirmModal.handleConfirm = () => {
+        ConfirmModal.close();
+        this.handleSubmit();
+      };
+
+      ConfirmModal.open();
     });
 
     back1.addEventListener("click", (e) => {
@@ -210,37 +219,56 @@ class JobPosting extends EmployerPage {
   }
 
   async handleSubmit() {
-    // const from = new Date(`${shiftDate.value} ${fromTime.value}`);
-    // const to = new Date(`${shiftDate.value} ${fromTime.value}`);
-    // to.setHours(to.getHours() + Number(hoursOfShift.value));
+    const submitBtn = document.querySelector(".partition-3 .submit-btn");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Posting...";
 
-    const jobPosting = {
-      companyName: companyName.value,
-      positionTitle: positionTitle.value,
-      shiftDate: new Date(shiftDate.value),
+    const from = new Date(
+      `${this.jobPosting.shiftDate} ${this.jobPosting.fromTime}`
+    );
+    const to = new Date(
+      `${this.jobPosting.shiftDate} ${this.jobPosting.fromTime}`
+    );
+
+    to.setHours(to.getHours() + Number(this.jobPosting.hoursOfShift));
+
+    const data = {
+      companyName: this.jobPosting.companyName,
+      positionTitle: this.jobPosting.positionTitle,
+      shiftDate: new Date(this.jobPosting.shiftDate),
       time: { from, to },
-      wageRate: Number(wage.value),
-      positionAvailable: Number(positionAvailable.value),
-      description: description.value,
-      additionalInfo: additionalInfo.value,
-      city: city.value,
-      address: address.value,
+      wageRate: Number(this.jobPosting.wage),
+      positionAvailable: Number(this.jobPosting.positionAvailable),
+      description: this.jobPosting.description,
+      additionalInfo: this.jobPosting.additionalInfo,
+      city: this.jobPosting.city,
+      address: this.jobPosting.address,
       userId: this.currentUser.uid,
-      postalCode: postalCode.value,
-      hoursOfShift: Number(hoursOfShift.value),
+      postalCode: this.jobPosting.postalCode,
+      hoursOfShift: Number(this.jobPosting.hoursOfShift),
+      status: "published",
+      paymentType: "Cash",
+      province: "British Columbia",
     };
 
     if (this.coordinates) {
-      jobPosting.coordinates = this.coordinates;
+      data.coordinates = this.coordinates;
     }
 
-    // jobPosting.bannerImageUrl = await uploadFile(this.image, "jobPostings");
+    try {
+      data.bannerImageUrl = await uploadFile(this.image, "jobPostings");
+      const id = await addJobPosting(data);
 
-    // const id = await setJobPosting(jobPosting);
-
-    // if (id) {
-    //   pageTransition(`/post/draft/${id}`);
-    // }
+      if (id) {
+        pageTransition(`/dashboard`);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Save";
+      console.log(data);
+    }
   }
 
   mounted() {
