@@ -1,25 +1,25 @@
-.sign-up-page {
-  color: white;
-  height: 100vh;
-  background: linear-gradient(180deg, #ff005d 0%, #391865 100%);
-  position: relative;
+@import "../../css/variables.scss";
+@import "../../css/gradientBg.scss";
+@import "../../css/signupsigninform.scss";
+@import "../../css/buttonWhite.scss";
 
-  .left-col img {
-    display: none;
+.sign-up-page {
+  .inner-wrapper {
+     height: 100vh;
   }
 
-  form {
-    max-width: 360px;
-    margin: auto;
-    display: grid;
-    gap: 1rem;
-    font-size: 17px;
+  .left-col, .right-col {
+    padding: 0 1rem;
+  }
+
+  .left-col {
+    display: none;
   }
 
   .logo {
     max-width: 208px;
     margin: 0 auto;
-    padding-top: 136px;
+    padding-top: 20vh;
     padding-bottom: 36px;
   }
 
@@ -28,69 +28,79 @@
     font-weight: normal;
   }
 
-  .center-form {
+  .signup-signin-form {
+    color: white;
+    max-width: 360px;
+    margin: auto;
     display: grid;
-    text-align: center;
-    row-gap: 1rem;
+    gap: 2rem;
+    font-size: 17px;
+
+    .center-form {
+      display: grid;
+      text-align: center;
+      row-gap: 1rem;
+    }
+
+    .password-container {
+      display: flex;
+        .eye {
+            width: 24px;
+            border-bottom: 1px solid white;
+          }
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding-bottom: 0.5rem;
+      background: none;
+      border: none;
+      border-bottom: 1px solid white;
+    }
+
+    ::placeholder {
+      color: white;
+      opacity: 0.8;
+    }
+
+    select option {
+      color: black;
+    }
+
   }
 
   .input-group-2cols {
     display: grid;
-    grid-template-columns: auto 236px;
+    grid-template-columns: 30% 70%;
     justify-content: space-between;
     text-align: left;
   }
 
-  input[type="text"],
-  input[type="password"],
-  select {
-    width: 100%;
-    padding-bottom: 0.5rem;
-    background: none;
-    border: none;
-    border-bottom: 1px solid white;
+  
+
+  @media screen and (min-width: $mediumLarge) {
+
+    .inner-wrapper{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "left-col right-col";
+
+      .left-col{
+        display: block;
+        background-color: white;
+        grid-area: left-col;
+  
+        background-image: url("../../static/images/signup-left-col.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+  
   }
+}
 
-  ::placeholder {
-    color: white;
-    opacity: 0.8;
-  }
-
-  select option {
-    color: black;
-  }
-
-  .button-white {
-    font: inherit;
-    width: 288px;
-    height: 55px;
-    border-radius: 5px;
-    background: white;
-    color: black;
-    margin: 0 auto;
-    border: none;
-    cursor: pointer;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-
-    &:hover {
-      background: #f2f2f2;
-    }
-
-    &:active {
-      background: #717171;
-      color: #fff;
-    }
-  }
-
-  .lock-bottom {
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    bottom: 36px;
-    cursor: pointer;
-  }
 }
 
 .sign-up-body #app {
