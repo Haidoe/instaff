@@ -13,10 +13,14 @@
     }
 
     .password-container {
+      position: relative;
       display: flex;
         .eye {
-            width: 24px;
-            border-bottom: 1px solid white;
+            width: 22px;
+            position: absolute;
+            cursor: pointer;
+            left: 220px;
+            top: 6px;
           }
     }
 
