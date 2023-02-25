@@ -77,6 +77,14 @@ class Modal {
   close() {
     this.wrapper.removeChild(this.modal);
   }
+
+  hideMeta() {
+    this.modalMeta.style.display = "none";
+  }
+
+  addContainerClass(className) {
+    this.modalContainer.classList.add(className);
+  }
 }
 
 export default Modal;
