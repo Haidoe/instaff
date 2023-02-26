@@ -210,13 +210,14 @@ class JobPosting extends EmployerPage {
         if (trimCity && trimAddress) {
           const query = `${trimAddress}, ${trimCity}, BC, Canada`;
           const position = await convertAddressToCoordinates(query);
+
           this.coordinates = {
             lat: position.lat,
             lng: position.lon,
           };
 
-          this.map.easeTo({ center: position });
-          this.marker.setLngLat(position).addTo(this.map);
+          this.map.easeTo({ center: this.coordinates });
+          this.marker.setLngLat(this.coordinates).addTo(this.map);
         }
       });
   }

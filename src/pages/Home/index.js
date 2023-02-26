@@ -71,7 +71,7 @@ class Home extends Pages {
   }
 
   close() {
-    document.querySelector("body").classList.remove("home-body");
+    document.querySelector("body").classList.remove("new-home-body");
   }
 }
 
