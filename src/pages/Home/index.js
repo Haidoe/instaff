@@ -37,34 +37,29 @@ class Home extends Pages {
     const response = await getAllActiveJobPostings();
 
     for (let job of response) {
-      if (job.coordinates.lat && job.coordinates.lon) {
-        const coordinates = {
-          lat: job.coordinates.lat,
-          lng: job.coordinates.lon,
-        };
+      // console.log(job, job.coordinates);
 
-        const marker = new tt.Marker().setLngLat(coordinates).addTo(this.map);
+      const marker = new tt.Marker().setLngLat(job.coordinates).addTo(this.map);
 
-        marker.getElement().addEventListener("click", () => {
-          //Open the modal here.
-          const modal = new Modal();
-          modal.wrapper = document.querySelector(".new-home-page");
+      marker.getElement().addEventListener("click", () => {
+        //Open the modal here.
+        const modal = new Modal();
+        modal.wrapper = document.querySelector(".new-home-page");
 
-          //If this will be massive, create a new html for this.
-          //But it will be easier to maintain if you create a javascript class element for this.
-          //Just like modal ---- check components/modal/index.js
-          modal.modalContent.innerHTML = `
+        //If this will be massive, create a new html for this.
+        //But it will be easier to maintain if you create a javascript class element for this.
+        //Just like modal ---- check components/modal/index.js
+        modal.modalContent.innerHTML = `
             <div class="your-own-modal-css">
               ${job.positionTitle} - ${job.companyName}
             </div>
           `;
 
-          //Hide Action Buttons
-          modal.hideMeta();
+        //Hide Action Buttons
+        modal.hideMeta();
 
-          modal.open();
-        });
-      }
+        modal.open();
+      });
     }
   }
 
