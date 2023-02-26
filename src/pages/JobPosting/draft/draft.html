@@ -36,12 +36,20 @@
 
     <div class="form-group">
       <label for="fromTime">
-        Time:
+        Start Time:
       </label>
-      <input readonly type="text" id="fromTime">
-      <span>to</span>
-      <input readonly type="text" id="toTime">
+
+      <input readonly type="time" id="fromTime">
     </div>
+
+    <div class="form-group">
+      <label for="hoursOfShift">
+        Hours of shift:
+      </label>
+
+      <input readonly type="number" id="hoursOfShift">
+    </div>
+
 
     <div class="form-group">
       <label for="wage">Wage ($)</label>
@@ -70,6 +78,14 @@
     </div>
 
     <div class="form-group">
+      <label for="province">
+        Province
+      </label>
+
+      <input readonly type="text" id="province" value="British Columbia">
+    </div>
+
+    <div class="form-group">
       <label for="city">
         City
       </label>
@@ -81,6 +97,13 @@
       <label for="address">Address</label>
       <input readonly type="text" id="address">
     </div>
+
+    <div class="form-group">
+      <label for="postalCode">Postal Code</label>
+      <input readonly type="text" id="postalCode">
+    </div>
+
+    <div id="job-posting-map"></div>
 
     <button type="submit">Publish</button>
   </form>

@@ -1,6 +1,8 @@
 <div class="job-posting-page details-page">
   <header>
     <h2> Edit View Summary </h2>
+
+    <button id="cancel-job-posting-summary"> Cancel </button>
   </header>
 
   <div class="loading">
@@ -38,11 +40,18 @@
 
     <div class="form-group">
       <label for="fromTime">
-        Time:
+        Start Time:
       </label>
-      <input required type="text" id="fromTime">
-      <span>to</span>
-      <input required type="text" id="toTime">
+
+      <input required type="time" id="fromTime">
+    </div>
+
+    <div class="form-group">
+      <label for="hoursOfShift">
+        Hours of shift:
+      </label>
+
+      <input required type="number" id="hoursOfShift">
     </div>
 
     <div class="form-group">
@@ -83,6 +92,13 @@
       <label for="address">Address</label>
       <input required type="text" id="address">
     </div>
+
+    <div class="form-group">
+      <label for="postalCode">Postal Code</label>
+      <input required type="text" id="postalCode">
+    </div>
+
+    <div id="job-posting-map"></div>
 
     <button type="submit">Save</button>
   </form>

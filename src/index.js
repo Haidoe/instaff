@@ -1,5 +1,6 @@
 import { initialize } from "./firebase.js";
 import { router, pageTransition } from "./router";
+import MainHeader from "./components/header";
 import "./css/normalize.css";
 import "./css/global.scss";
 
@@ -24,12 +25,31 @@ if (process.env.INSTAFF_MODE !== "development") {
 
 //This is For Router
 document.body.addEventListener("click", (e) => {
-  if (e.target.matches("[data-link]")) {
+  //Avoid redirecting to the same page
+  if (e.target.href && e.target.href === window.location.href) {
     e.preventDefault();
-    pageTransition(e.target.href);
+    return;
+  }
+
+  //This is to avoid the logo image redirection
+  if (e.target.matches("[alt='Instaff Logo']")) {
+    e.preventDefault();
+    if (window.location.pathname === "/") return;
+  }
+
+  //This is for the sign out button
+  if (e.target.matches("[data-signout]")) {
+    e.preventDefault();
+  } else if (e.target.matches("[data-link]")) {
+    e.preventDefault();
+    pageTransition(e.target.href || "/");
   }
 });
 
 window.addEventListener("popstate", router);
 
 router();
+
+const mainHeader = new MainHeader();
+mainHeader.wrapper = document.querySelector("body");
+mainHeader.render();

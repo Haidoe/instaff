@@ -1,7 +1,6 @@
 import Pages from "../classes/Page";
 import Template from "./home.html";
 import "./home.scss";
-import { convertAddressToCoordinates } from "../js/job-posting/job-posting";
 class Home extends Pages {
   constructor() {
     super("Home");
@@ -12,20 +11,25 @@ class Home extends Pages {
   }
 
   async mounted() {
-    // TODO - Remove this in the future
-    // This is just temporary
-    const temp = document.querySelector("#temp");
-    temp.innerHTML = "";
+    document.querySelector("body").classList.add("home-body");
 
-    const user = await this.getCurrentUser();
-    if (user) {
-      const button = document.createElement("button");
-      button.textContent = "Sign out";
-      button.onclick = this.signOutUser;
-      temp.appendChild(button);
-    }
+    const defaultCenter = {
+      lat: 49.23512376137244,
+      lng: -123.03851521512506,
+    };
 
-    console.log("Home mounted", process.env.INSTAFF_MAP_KEY);
+    let defaultZoom = 15;
+
+    this.map = tt.map({
+      key: process.env.INSTAFF_MAP_KEY,
+      container: "home-page",
+      center: defaultCenter,
+      zoom: defaultZoom,
+    });
+  }
+
+  close() {
+    document.querySelector("body").classList.remove("home-body");
   }
 }
 

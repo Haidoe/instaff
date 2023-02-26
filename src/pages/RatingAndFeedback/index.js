@@ -1,5 +1,7 @@
 import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import "./ratingandfeedback.scss";
+
+
 import { getUserDetails } from "../../js/users";
 import { getJobPostingDetail } from "../../js/job-posting/job-posting";
 import { addRatingAndFeedback } from "../../js/ratingandfeedback";
@@ -88,7 +90,6 @@ class RatingAndFeedback extends AuthenticatedPage {
     //get "users" collection from
     const userData = await getUserDetails(this.currentUser.uid);
 
-    //get current job posting data from firebase
 
     //create job posting id static
     const staticId = "qx34OUbaBrLnz1UWSsPP";
@@ -98,7 +99,6 @@ class RatingAndFeedback extends AuthenticatedPage {
     //populate job posting data
     const populateCompany = document.querySelector(".company-name");
     populateCompany.innerHTML = jobPostingsData.companyName;
-
     const populatePosition = document.querySelector(".position-title");
     populatePosition.innerHTML = jobPostingsData.positionTitle;
 

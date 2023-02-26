@@ -1,0 +1,26 @@
+.icon {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: #000;
+
+  &.back-icon {
+    -webkit-mask: url(../static/icons/arrow-left.svg) no-repeat center;
+    mask: url(../static/icons/arrow-left.svg) no-repeat center;
+  }
+
+  &.image-icon {
+    -webkit-mask: url(../static/icons/image.svg) no-repeat center;
+    mask: url(../static/icons/image.svg) no-repeat center;
+  }
+
+  &.close-icon {
+    -webkit-mask: url(../static/icons/close.svg) no-repeat center;
+    mask: url(../static/icons/close.svg) no-repeat center;
+  }
+
+  &.star-icon {
+    -webkit-mask: url(../static/icons/star.svg) no-repeat center;
+    mask: url(../static/icons/star.svg) no-repeat center;
+  }
+}

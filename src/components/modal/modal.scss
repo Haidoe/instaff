@@ -1,0 +1,91 @@
+@import "../../css/variables";
+
+.main-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 1rem $sidePadding;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .modal-container {
+    background: $mainBgColor;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    position: relative;
+
+    .modal-content {
+      padding: 2rem 0 1rem;
+    }
+
+    .modal-meta {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 0.5rem;
+
+      & > button {
+        flex: 1;
+        border-radius: 6px;
+        border-image-source: unset;
+        font-size: 0.8rem;
+        padding: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1.25px;
+      }
+    }
+
+    .close-btn {
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      position: absolute;
+      top: 0.15rem;
+      right: 0.15rem;
+      background-color: $mainBgColor;
+
+      span.icon {
+        display: flex;
+        scale: 0.8;
+      }
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      &:focus {
+        outline: none;
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      padding: 2rem;
+
+      .modal-content {
+        padding: 1rem 0;
+      }
+
+      .modal-meta {
+        flex-direction: row;
+        gap: 1.5rem;
+
+        button {
+          padding: 0.5rem;
+        }
+      }
+
+      .close-btn {
+        top: 0.5rem;
+        right: 0.5rem;
+      }
+    }
+  }
+}

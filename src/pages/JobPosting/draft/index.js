@@ -1,14 +1,14 @@
-import AuthenticatedPage from "../../../classes/AuthenticatedPage";
+import EmployerPage from "../../../classes/EmployerPage";
 import {
   getJobPostingDetail,
   publishJobPosting,
 } from "../../../js/job-posting/job-posting";
-import { formatDate } from "../../../js/utils";
+import { extractTime, formatDate } from "../../../js/utils";
 import Template from "./draft.html";
 import "../job-posting.scss";
 import { pageTransition } from "../../../router";
 
-class DraftJobPosting extends AuthenticatedPage {
+class DraftJobPosting extends EmployerPage {
   constructor({ id }) {
     super("Draft Job Posting");
     this.id = id;
@@ -23,7 +23,7 @@ class DraftJobPosting extends AuthenticatedPage {
     const positionTitle = document.getElementById("positionTitle");
     const shiftDate = document.getElementById("shiftDate");
     const fromTime = document.getElementById("fromTime");
-    const toTime = document.getElementById("toTime");
+    const hoursOfShift = document.getElementById("hoursOfShift");
     const wage = document.getElementById("wage");
     const positionAvailable = document.getElementById("positionAvailable");
     const description = document.getElementById("description");
@@ -31,6 +31,7 @@ class DraftJobPosting extends AuthenticatedPage {
     const companyName = document.getElementById("companyName");
     const city = document.getElementById("city");
     const address = document.getElementById("address");
+    const postalCode = document.getElementById("postalCode");
     const parsedDate = this.data.shiftDate.toDate().toDateString();
 
     bannerImg.src = this.data.bannerImageUrl;
@@ -38,14 +39,29 @@ class DraftJobPosting extends AuthenticatedPage {
     companyName.value = this.data.companyName;
     positionTitle.value = this.data.positionTitle;
     shiftDate.value = formatDate(parsedDate);
-    fromTime.value = this.data.time.from;
-    toTime.value = this.data.time.to;
+    fromTime.value = extractTime(this.data.time.from);
+    hoursOfShift.value = this.data.hoursOfShift;
     wage.value = this.data.wageRate;
     positionAvailable.value = this.data.positionAvailable;
     description.value = this.data.description;
     additionalInfo.value = this.data.additionalInfo;
     city.value = this.data.city;
     address.value = this.data.address;
+    postalCode.value = this.data.postalCode;
+    this.initMap(this.data.coordinates);
+  }
+
+  initMap(coordinates) {
+    let defaultZoom = 16;
+
+    const map = tt.map({
+      key: process.env.INSTAFF_MAP_KEY,
+      container: "job-posting-map",
+      center: coordinates,
+      zoom: defaultZoom,
+    });
+
+    const marker = new tt.Marker().setLngLat(coordinates).addTo(map);
   }
 
   async mounted() {
@@ -71,14 +87,14 @@ class DraftJobPosting extends AuthenticatedPage {
 
       const response = await publishJobPosting(this.data.id);
       if (response) {
-        pageTransition(`/job-posting/${this.data.id}`);
+        pageTransition(`/post/${this.data.id}`);
       }
     });
 
     const editBtn = document.querySelector("#edit-job-posting-summary");
 
     editBtn.addEventListener("click", () => {
-      pageTransition(`/job-posting/edit/${this.data.id}`);
+      pageTransition(`/post/edit/${this.data.id}`);
     });
   }
 }

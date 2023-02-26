@@ -1,4 +1,3 @@
-import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import { readURL } from "../../js/utils";
 import { uploadFile } from "../../js/upload-files/upload-image";
 import { setJobPosting } from "../../js/job-posting/job-posting";
@@ -9,7 +8,8 @@ import {
   convertAddressToCoordinates,
   convertCoordinatesToAddress,
 } from "../../js/map-util";
-class JobPosting extends AuthenticatedPage {
+import EmployerPage from "../../classes/EmployerPage";
+class JobPosting extends EmployerPage {
   constructor() {
     super("Job Posting");
     this.image = null;
@@ -41,32 +41,35 @@ class JobPosting extends AuthenticatedPage {
     this.marker = new tt.Marker().setLngLat(defaultCenter).addTo(this.map);
 
     navigator.geolocation.getCurrentPosition(async (position) => {
-      const pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
+      try {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
 
-      this.coordinates = pos;
+        this.coordinates = pos;
 
-      this.map.easeTo({ center: pos });
-      this.marker.setLngLat(pos).addTo(this.map);
+        this.map.easeTo({ center: pos });
+        this.marker.setLngLat(pos).addTo(this.map);
 
-      // convertCoordinatesToAddress
-      const response = await convertCoordinatesToAddress(pos.lat, pos.lng);
+        // convertCoordinatesToAddress
+        const response = await convertCoordinatesToAddress(pos.lat, pos.lng);
 
-      console.log(response);
+        if (response.municipality) {
+          document.querySelector("#city").value = response.municipality;
+        }
 
-      if (response.municipality) {
-        document.querySelector("#city").value = response.municipality;
-      }
+        if (response.streetNameAndNumber) {
+          document.querySelector("#address").value =
+            response.streetNameAndNumber;
+        }
 
-      if (response.streetNameAndNumber) {
-        document.querySelector("#address").value = response.streetNameAndNumber;
-      }
-
-      if (response.extendedPostalCode) {
-        document.querySelector("#postalCode").value =
-          response.extendedPostalCode;
+        if (response.extendedPostalCode) {
+          document.querySelector("#postalCode").value =
+            response.extendedPostalCode;
+        }
+      } catch (error) {
+        console.log("Unable to do autocomplete.");
       }
     });
   }
@@ -120,7 +123,7 @@ class JobPosting extends AuthenticatedPage {
       const id = await setJobPosting(jobPosting);
 
       if (id) {
-        pageTransition(`/job-posting/draft/${id}`);
+        pageTransition(`/post/draft/${id}`);
       }
     } catch (error) {
       console.log("ERROR", error);
