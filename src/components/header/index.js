@@ -1,4 +1,6 @@
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import globalState from "../../classes/GlobalState";
+import pubsub from "../../classes/PubSub";
 import { getUserDetails } from "../../js/users";
 import { pageTransition } from "../../router";
 import "./main-header.scss";
@@ -14,11 +16,33 @@ class MainHeader {
     this.header = document.createElement("header");
     this.header.className = "main-header";
 
+    this.headerContainer = document.createElement("div");
+    this.headerContainer.className = "main-header-container";
+    this.header.appendChild(this.headerContainer);
+
     this.headingWrapper = document.createElement("div");
     this.headingWrapper.className = "heading-wrapper";
+
+    this.backBtn = document.createElement("button");
+    this.backBtn.className = "icon back-icon hidden";
+    this.backBtn.setAttribute("aria-label", "Back Button");
+
+    this.backBtn.addEventListener("click", () => {
+      pubsub.publish("mainHeaderBackBtnClicked", null);
+    });
+
+    pubsub.subscribe("mainHeaderShowBackBtn", () => {
+      this.backBtn.classList.remove("hidden");
+    });
+
+    pubsub.subscribe("mainHeaderHideBackBtn", () => {
+      this.backBtn.classList.add("hidden");
+    });
+
+    this.headingWrapper.appendChild(this.backBtn);
+
     this.hamburger = document.createElement("button");
     this.hamburger.setAttribute("aria-label", "Menu");
-
     this.hamburger.className = "hamburger ";
     // hamburger--collapse
     const spanBar = document.createElement("span");
@@ -39,7 +63,7 @@ class MainHeader {
     this.hiddenLogoText.className = "visually-hidden";
 
     this.logoImg = document.createElement("img");
-    this.logoImg.src = "/static/instaff-logo-v2.svg";
+    this.logoImg.src = "/static/logo/instaff-no-space.svg";
     this.logoImg.alt = "Instaff Logo";
     this.logoImg.setAttribute("data-link", "");
 
@@ -140,9 +164,33 @@ class MainHeader {
     this.h1.appendChild(this.h1Anchor);
     this.headingWrapper.appendChild(this.h1);
     this.headingWrapper.appendChild(this.hamburger);
-    this.header.appendChild(this.headingWrapper);
+    this.headerContainer.appendChild(this.headingWrapper);
     this.navWrapper.appendChild(this.nav);
-    this.header.appendChild(this.navWrapper);
+    this.headerContainer.appendChild(this.navWrapper);
+
+    this.logoImg.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      //Making sure that no one can stop the popstate event redirecting to the home page
+      globalState.preventPopState = false;
+
+      this.hamburger.classList.remove("open");
+      this.nav.classList.remove("nav--open");
+
+      const prevActiveMenu = document.querySelector(".active-menu-item");
+
+      if (prevActiveMenu) {
+        prevActiveMenu.classList.remove("active-menu-item");
+      }
+    });
+
+    pubsub.subscribe("showMainHeader", () => {
+      this.headerContainer.classList.remove("main-header-hidden");
+    });
+
+    pubsub.subscribe("hideMainHeader", () => {
+      this.headerContainer.classList.add("main-header-hidden");
+    });
   }
 
   loadNavs(ul, navList) {
@@ -167,6 +215,9 @@ class MainHeader {
       }
 
       itemAnchor.addEventListener("click", () => {
+        //Making sure that no one can stop the popstate event
+        globalState.preventPopState = false;
+
         this.hamburger.classList.remove("open");
         this.nav.classList.remove("nav--open");
         const prevActiveMenu = document.querySelector(".active-menu-item");
