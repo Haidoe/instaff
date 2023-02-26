@@ -2,14 +2,14 @@
 
 .main-header {
   background: white;
-}
-
-.main-header-container {
-  background-color: white;
 
   &.main-header-hidden {
     display: none;
   }
+}
+
+.main-header-container {
+  background-color: white;
 
   .heading-wrapper {
     position: relative;

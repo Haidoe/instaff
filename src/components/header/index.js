@@ -185,11 +185,11 @@ class MainHeader {
     });
 
     pubsub.subscribe("showMainHeader", () => {
-      this.headerContainer.classList.remove("main-header-hidden");
+      this.header.classList.remove("main-header-hidden");
     });
 
     pubsub.subscribe("hideMainHeader", () => {
-      this.headerContainer.classList.add("main-header-hidden");
+      this.header.classList.add("main-header-hidden");
     });
   }
 
