@@ -16,6 +16,10 @@ class MainHeader {
     this.header = document.createElement("header");
     this.header.className = "main-header";
 
+    this.headerContainer = document.createElement("div");
+    this.headerContainer.className = "main-header-container";
+    this.header.appendChild(this.headerContainer);
+
     this.headingWrapper = document.createElement("div");
     this.headingWrapper.className = "heading-wrapper";
 
@@ -59,7 +63,7 @@ class MainHeader {
     this.hiddenLogoText.className = "visually-hidden";
 
     this.logoImg = document.createElement("img");
-    this.logoImg.src = "/static/instaff-logo-v2.svg";
+    this.logoImg.src = "/static/logo/instaff-no-space.svg";
     this.logoImg.alt = "Instaff Logo";
     this.logoImg.setAttribute("data-link", "");
 
@@ -160,9 +164,9 @@ class MainHeader {
     this.h1.appendChild(this.h1Anchor);
     this.headingWrapper.appendChild(this.h1);
     this.headingWrapper.appendChild(this.hamburger);
-    this.header.appendChild(this.headingWrapper);
+    this.headerContainer.appendChild(this.headingWrapper);
     this.navWrapper.appendChild(this.nav);
-    this.header.appendChild(this.navWrapper);
+    this.headerContainer.appendChild(this.navWrapper);
 
     this.logoImg.addEventListener("click", (e) => {
       e.preventDefault();
@@ -181,11 +185,11 @@ class MainHeader {
     });
 
     pubsub.subscribe("showMainHeader", () => {
-      this.header.style.display = "flex";
+      this.headerContainer.classList.remove("main-header-hidden");
     });
 
     pubsub.subscribe("hideMainHeader", () => {
-      this.header.style.display = "none";
+      this.headerContainer.classList.add("main-header-hidden");
     });
   }
 
