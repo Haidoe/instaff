@@ -1,8 +1,16 @@
 @import "../../css/variables";
-@import "../../css/gradientText";
 
 .main-header {
+  background: white;
+}
+
+.main-header-container {
   background-color: white;
+
+  &.main-header-hidden {
+    display: none;
+  }
+
   .heading-wrapper {
     position: relative;
     padding: 1rem $sidePadding;
@@ -16,7 +24,7 @@
       flex-grow: 1;
 
       img {
-        width: 100px;
+        width: 60px;
         margin: auto;
       }
     }
@@ -51,10 +59,12 @@
 
   nav {
     z-index: 50;
-    position: absolute;
+    position: fixed;
     right: 0;
-    top: 0;
-    background-color: #f1f1f1;
+    top: 72px;
+    left: 0;
+    bottom: 0;
+    background-color: white;
     transform: translateY(-110%);
     transition: 0.3s;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
@@ -66,20 +76,20 @@
     ul {
       li {
         display: block;
-        border-bottom: 1px solid #a0a0a0;
+        // border-bottom: 1px solid #a0a0a0;
       }
 
       a {
+        position: relative;
         display: block;
         text-align: center;
         padding: 1.25rem 3rem;
+        font-size: 1.25rem;
 
-        &:hover {
-          @extend .gradient-text;
-        }
-
+        &:hover,
         &.active-menu-item {
-          @extend .gradient-text;
+          font-weight: bold;
+          color: $colorPink;
         }
       }
     }
@@ -127,10 +137,17 @@
 
 @media screen and (min-width: $mediumSmall) {
   .main-header {
+    border-bottom: 2px solid #d2d2d2;
+  }
+
+  .main-header-container {
     display: flex;
     align-items: center;
-    padding: 1rem $sidePadding;
-    border-bottom: 2px solid #d2d2d2;
+    padding: 0 $sidePadding;
+
+    width: 100%;
+    max-width: $maxWidthContainer;
+    margin: 0 auto;
 
     .heading-wrapper {
       padding: unset;
@@ -139,7 +156,7 @@
       h1 {
         flex-grow: unset;
         img {
-          width: 150px;
+          width: 80px;
         }
       }
 
@@ -160,6 +177,8 @@
       background-color: #fff;
       transform: translateY(0);
       box-shadow: unset;
+      transition: unset;
+      top: 0;
       // justify-content: flex-end;
 
       ul {
@@ -171,7 +190,20 @@
           a {
             display: block;
             text-align: center;
-            padding: 0.5rem 1rem;
+            padding: 1.5rem 1rem;
+            font-size: 1rem;
+
+            &.active-menu-item::before {
+              background-color: $colorPink;
+              content: "";
+              display: block;
+              width: 80%;
+              height: 4px;
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translateX(-50%) translateY(2px);
+            }
           }
         }
 
@@ -179,6 +211,30 @@
           margin-left: auto;
         }
       }
+    }
+  }
+}
+
+@media screen and (min-width: $large) {
+  .main-header-container {
+    padding: 0;
+
+    h1 {
+      position: absolute;
+      top: -1.5rem;
+      width: 80px;
+      transform: translateX(calc(-100%));
+    }
+  }
+}
+
+@media screen and (min-width: $extraLarge) {
+  .main-header-container {
+    h1 {
+      position: absolute;
+      top: -1.5rem;
+      width: 80px;
+      transform: translateX(calc(-120%));
     }
   }
 }
