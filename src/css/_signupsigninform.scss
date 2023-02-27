@@ -19,7 +19,7 @@
             width: 22px;
             position: absolute;
             cursor: pointer;
-            left: 220px;
+            right: 8px;
             top: 6px;
           }
     }
@@ -41,5 +41,14 @@
     select option {
       color: black;
     }
+
+    
+  .input-group-2cols {
+    display: grid;
+    grid-template-columns: 35% 65%;
+    justify-content: space-between;
+    text-align: left;
+  }
+  
 
   }
