@@ -1,5 +1,5 @@
 import Pages from "../../classes/Page";
-import Modal from "../../components/modal";
+import Modal from "../../components/modal/job-posting-detail";
 import getAllActiveJobPostings from "../../js/job-posting/getAllActiveJobPostings";
 import Template from "./home.html";
 import "./home.scss";
@@ -45,19 +45,84 @@ class Home extends Pages {
         //Open the modal here.
         const modal = new Modal();
         modal.wrapper = document.querySelector(".new-home-page");
+        console.log(modal.wrapper);
 
         //If this will be massive, create a new html for this.
         //But it will be easier to maintain if you create a javascript class element for this.
         //Just like modal ---- check components/modal/index.js
         modal.modalContent.innerHTML = `
-            <div class="your-own-modal-css">
-              ${job.positionTitle} - ${job.companyName}
-            </div>
+
+              <header>
+                <img src="${job.bannerImageUrl}" alt="job posting banner" />
+
+                <h2>${job.companyName}</h2>
+              </header>
+
+              <div class="modal-meta">
+                <button class="primary-button">
+                  Apply for this job!
+                </button>
+              </div>
+
+              <div class="modal-body">
+                <nav>
+                  <ul>
+                    <li class="active">
+                      <a href="#">Details</a>
+                    </li>
+
+                    <li> 
+                      <a href="#">Rating</a> 
+                    </li>
+                  </ul>
+                </nav>
+
+                <section className="details">
+                  <div class="info-group">
+                    <div class="prop">
+                      Position:
+                    </div>
+
+                    <div class="value">
+                      ${job.positionTitle}
+                    </div>
+                  </div>
+
+                  <div class="info-group">
+                    <div class="prop">
+                      Address:
+                    </div>
+
+                    <div class="value">
+                      ${job.address}, ${job.city}, ${job.province}, ${job.postalCode}
+                    </div>
+                  </div>
+
+                  <div class="info-group">
+                    <div class="prop">
+                      Description:
+                    </div>
+
+                    <div class="value">
+                      ${job.description}
+                    </div>
+                  </div>
+
+                  <div class="info-group">
+                    <div class="prop">
+                      Schedule:
+                    </div>
+
+                    <div class="value">
+                      ${job.shiftDate}
+                    </div>
+                  </div>
+                </section>
+              </div>
+
           `;
 
-        //Hide Action Buttons
-        modal.hideMeta();
-
+        console.log("TEST", modal.modalContent);
         modal.open();
       });
     }
