@@ -1,13 +1,15 @@
 import Page from "../../classes/Page";
 import "./signup.scss";
+import { pageTransition } from "../../router";
+
 import {
   createUserWithEmailAndPassword,
   getAuth,
   sendEmailVerification,
-  onAuthStateChanged,
 } from "firebase/auth";
 
 import { getFirestore, doc, setDoc } from "firebase/firestore";
+import pubsub from "../../classes/PubSub";
 
 class SignUp extends Page {
   constructor() {
@@ -16,64 +18,75 @@ class SignUp extends Page {
 
   async load() {
     return `
-      <div class="sign-up">
-      <form>
-      <div class="container">
-      <h1>Sign Up</h1>
-      <p>Please fill in this form to create an account.</p>
-      <hr>
-    
-      <div class="group">
-        <label for="displayname"><b>Name</b></label>
-        <input type="text" placeholder="Enter Display Name" name="displayname" id="displayname" required>
+      <div class="sign-up-page">
+        <div class="inner-wrapper  gradient-bg">
+          <div class="left-col">
+          </div>
+          <div class="right-col">
+                <img src="./static/instaff-logo-light-full-text.svg" alt="instaff logo" class="logo">
+          <form action="#" id="signUpForm" class= "signup-signin-form">
+              <div class="container center-form">
+              <h1>Create an account </h1>
+        
+            
+              <div class="group input-group-2cols">
+                <label for="displayname">Name</label>
+                <input type="text" placeholder="Enter Display Name" name="displayname" id="displayname" required>
+              </div>
+
+              <div class="group input-group-2cols">
+                <label for="email">Email address</label>
+                <input type="text" placeholder="Enter Email" name="email" id="email" required>
+              </div>
+
+              <div class="group input-group-2cols">
+                <label for="psw">Password</label>
+                <div class="password-container">
+                <input type="password" name="psw" id="psw" required>
+                <img src="./static/icons/eye.svg" alt="eye" class="eye">
+                </div>
+              </div>
+
+              <div class="group input-group-2cols">
+                <label for="typeOfUser">Purpose</label>
+                <select name="typeOfUser" id="typeOfUser">
+                  <option value="employee">I am looking for job.</option>
+                  <option value="employer">I want to hire staffs.</option>
+                </select>
+              </div>
+
+              <button type="submit" id="submitData" name="submitData" class="button-white lock-bottom">Next</button>
+              </div>
+              <div class="group">
+                <p id="output"></p>
+              </div>
+
+          </form>
+          </div>
+        </div>
+
       </div>
-
-      <div class="group">
-        <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" id="email" required>
-      </div>
-
-      <div class="group">
-        <label for="psw"><b>Password</b></label>
-        <input type="password" name="psw" id="psw" required>
-      </div>
-
-      <div class="group">
-        <label for="typeOfUser"><b>Purpose</b></label>
-        <select name="typeOfUser" id="typeOfUser">
-          <option value="employee">I want to find a job.</option>
-          <option value="employer">I want to hire staffs.</option>
-        </select>
-      </div>
-
-
-      <hr>
-      <p>By creating an account you agree to our <a href="#" id="termsandprivacy">Terms & Privacy</a>.</p>
-
-      <button type="button" id="submitData" name="submitData" class="registerbtn">Register</button>
-      </div>
-      <div class="group">
-        <p id="output"></p>
-      </div>
-
-      <div class="container signin">
-      <p>Already have an account? <a href="/sign-in">Sign in</a>.</p>
-    </div>
-  </form>
-</div>
     `;
   }
 
   async mounted() {
+    document.querySelector("body").classList.add("sign-up-body");
+    pubsub.publish("hideMainHeader");
+
     const auth = getAuth();
     const db = getFirestore();
     const submitBtn = document.querySelector("#submitData");
+    const form = document.querySelector("#signUpForm");
 
-    submitBtn.addEventListener("click", (e) => {
+    form.addEventListener("submit", (e) => {
       let email = document.querySelector("#email").value;
       let password = document.querySelector("#psw").value;
       let typeOfUser = document.querySelector("#typeOfUser").value;
       let displayName = document.querySelector("#displayname").value;
+
+      //display "loading" on submit button when clicked
+      e.preventDefault();
+      submitBtn.innerHTML = `<div>Loading...</div>`;
 
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -82,12 +95,10 @@ class SignUp extends Page {
 
           // ...
           console.log(user);
-          sendEmailVerification(auth.currentUser).then(() => {
-            output.innerHTML = `<div>Welcome to Instaff.</div>
-            <div>We're happy you signed up.</div>
-            <div>start exploring the app, please confirm your email address.</div>`;
 
+          sendEmailVerification(auth.currentUser).then(() => {
             console.log("Email sent");
+            pageTransition("/verification");
           });
 
           //calling the collection
@@ -106,6 +117,25 @@ class SignUp extends Page {
           alert(errorMessage);
         });
     });
+    
+
+    //toggle password visibility
+    const eye = document.querySelector(".eye");
+    const password = document.querySelector("#psw");
+    eye.addEventListener("click", () => {
+      if (password.type === "password") {
+        password.type = "text";
+        eye.src = "./static/icons/eye-slash.svg";
+      } else {
+        password.type = "password";
+        eye.src = "./static/icons/eye.svg";
+      }
+    })
+  }
+
+  close() {
+    document.querySelector("body").classList.remove("sign-up-body");
+    pubsub.publish("showMainHeader");
   }
 }
 

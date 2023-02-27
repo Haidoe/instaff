@@ -1,3 +1,4 @@
+import globalState from "./classes/GlobalState";
 import { getParams, pathToRegex } from "./js/utils";
 
 //Will hold the class instance of the active page
@@ -15,13 +16,20 @@ const routes = [
     page: () => import(/* webpackChunkName: "Home"  */ `./pages/Home`),
   },
   {
+    path: "/old-home",
+    page: () => import(/* webpackChunkName: "Home"  */ `./pages/HomeOld/Home`),
+  },
+
+  {
     path: "/sign-in",
     page: () => import(/* webpackChunkName: "Signin" */ `./pages/Signin`),
   },
+
   {
     path: "/sign-up",
     page: () => import(/* webpackChunkName: "Signup" */ `./pages/SignUp`),
   },
+
   {
     path: "/verification",
     page: () =>
@@ -29,43 +37,18 @@ const routes = [
         /* webpackChunkName: "EmailVerification" */ `./pages/Verification`
       ),
   },
+
   {
-    path: "/job-posting",
+    path: "/post",
     page: () =>
-      import(/* webpackChunkName: "JobPosting" */ `./pages/JobPosting`),
+      import(/* webpackChunkName: "JobPost" */ `./pages/JobPostingV2`),
   },
-  {
-    path: "/job-posting/edit/:id",
-    page: () =>
-      import(
-        /* webpackChunkName: "JobPostingEdit" */ `./pages/JobPosting/edit`
-      ),
-  },
-  {
-    path: "/job-posting/draft/:id",
-    page: () =>
-      import(
-        /* webpackChunkName: "JobPostingDraft" */ `./pages/JobPosting/draft`
-      ),
-  },
-  {
-    path: "/job-posting/:id",
-    page: () =>
-      import(
-        /* webpackChunkName: "JobPostingDetail" */ `./pages/JobPosting/detail`
-      ),
-  },
-  {
-    path: "/job-postings",
-    page: () =>
-      import(
-        /* webpackChunkName: "JobPostingList" */ `./pages/JobPosting/list`
-      ),
-  },
+
   {
     path: "/profile",
     page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
   },
+
   {
     path: "/rating-and-feedback",
     page: () =>
@@ -73,9 +56,19 @@ const routes = [
         /* webpackChunkName: "RatingAndFeedback" */ `./pages/RatingAndFeedback`
       ),
   },
+
+  {
+    path: "/dashboard",
+    page: () => import(/* webpackChunkName: "Dashboard" */ `./pages/Dashboard`),
+  },
 ];
 
 export const router = async () => {
+  if (globalState.preventPopState) {
+    globalState.preventPopState = false;
+    return;
+  }
+
   //This is where you unsubscribe things from the previous active page
   if (activePage) {
     activePage.close();
