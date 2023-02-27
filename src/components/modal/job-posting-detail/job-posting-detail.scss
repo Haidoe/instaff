@@ -24,6 +24,8 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 1rem;
     position: relative;
+    max-height: 95vh;
+    overflow-y: auto;
 
     .modal-content {
       display: flex;
@@ -114,6 +116,38 @@
 
         section {
           padding: 1rem;
+          font-size: 17px;
+          display: grid;
+          gap: 1rem;
+          margin-top: 1rem;
+
+          .info-group {
+            display: flex;
+            letter-spacing: 0.5px;
+
+            & > div:first-of-type {
+              flex-grow: 0;
+              flex-shrink: 0;
+              flex-basis: 120px;
+            }
+
+            & > div:last-of-type {
+              flex-grow: 1;
+              flex-shrink: 1;
+              flex-basis: 0;
+              padding-bottom: 0.5rem;
+            }
+
+            &:not(:last-of-type) {
+              & > div:last-of-type {
+                border-bottom: 1px solid $borderColor;
+              }
+            }
+          }
+
+          &.hidden {
+            display: none;
+          }
         }
       }
     }
