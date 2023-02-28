@@ -85,10 +85,11 @@
         text-align: center;
         padding: 1.25rem 3rem;
         font-size: 1.25rem;
+        font-weight: bold;
+        text-transform: uppercase;
 
         &:hover,
         &.active-menu-item {
-          font-weight: bold;
           color: $colorPink;
         }
       }
@@ -155,9 +156,6 @@
 
       h1 {
         flex-grow: unset;
-        img {
-          width: 80px;
-        }
       }
 
       button {
