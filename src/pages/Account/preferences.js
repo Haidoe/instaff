@@ -18,6 +18,7 @@ class Preferences extends EmployeePage {
                 <li><span class="logo"></span><span class="text"><a href="/account/typeOfWork">Type of work</a></span></li>
                 <li><span class="logo"></span><span class="text"><a href="/account/availability">Availability</a></span></li>
                 <li><span class="logo"></span><span class="text"><a href="/account/lengthOfShift">Length of shift</a></span></li>
+                
             </ul>
         </div>
       </div> 

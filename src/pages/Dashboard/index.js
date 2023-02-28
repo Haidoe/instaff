@@ -90,6 +90,7 @@ class Dashboard extends EmployerPage {
       const recentJob = RecentJob(item);
 
       recentJob.addEventListener("click", () => {
+        console.log("event 1");
         this.loadJobListingDetails(item);
         pubsub.publish("mainHeaderShowBackBtn");
         const mainPageContainer = document.querySelector(".dashboard-page");

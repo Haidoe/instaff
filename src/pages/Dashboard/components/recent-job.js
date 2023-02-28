@@ -4,6 +4,7 @@ const recentJobs = (obj) => {
 
   anchorWrapper.addEventListener("click", (e) => {
     e.preventDefault();
+    console.log("event 2");
 
     if (window.innerWidth < 768) {
       const url = new URL(window.location);

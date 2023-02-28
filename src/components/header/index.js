@@ -84,6 +84,10 @@ class MainHeader {
           text: "My Jobs",
           href: "/my-jobs",
         },
+        {
+          text: "Account",
+          href: "/account-employee",
+        },
       ],
 
       employer: [
@@ -95,6 +99,10 @@ class MainHeader {
           text: "Post",
           href: "/post",
         },
+        {
+          text: "Account",
+          href: "/account-employer",
+        },
       ],
     };
 
@@ -102,10 +110,6 @@ class MainHeader {
       {
         text: "Inbox",
         href: "/inbox",
-      },
-      {
-        text: "Account",
-        href: "/account",
       },
     ];
 

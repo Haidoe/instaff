@@ -17,7 +17,7 @@ class Account extends EmployeePage {
             <ul class="menu">
                 <li><span class="logo"></span><span class="text"><a href="/profile">Profile</a></span></li>
                 <li><span class="logo"></span><span class="text"><a href="/account/preferences">Preferences</a></span></li>
-                <li><span class="logo"></span><span class="text">Setting</span></li>
+                <li><span class="logo"></span><span class="text"><a href="/account/setting">Settings</a></span></li>
                
             </ul>
         </div>
@@ -36,6 +36,8 @@ class Account extends EmployeePage {
       this.data.imageURL !== ""
     ) {
       profileImg.src = this.data.imageURL;
+    } else {
+      profileImg.src = "../static/images/sample.jpg";
     }
   }
 

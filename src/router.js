@@ -73,6 +73,11 @@ const routes = [
     page: () => import(/* webpackChunkName: "Account" */ `./pages/Account`),
   },
   {
+    path: "/account-employee",
+    page: () =>
+      import(/* webpackChunkName: "Account" */ `./pages/Account-Employee`),
+  },
+  {
     path: "/account/preferences",
     page: () =>
       import(/* webpackChunkName: "Account" */ `./pages/Account/Preferences`),
@@ -93,8 +98,19 @@ const routes = [
       import(/* webpackChunkName: "Account" */ `./pages/Account/lengthOfShift`),
   },
   {
+    path: "/account/setting",
+    page: () =>
+      import(/* webpackChunkName: "Profile" */ `./pages/Account/setting`),
+  },
+
+  {
     path: "/profile",
     page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
+  },
+  {
+    path: "/account-employer",
+    page: () =>
+      import(/* webpackChunkName: "Profile" */ `./pages/Account-Employer`),
   },
   {
     path: "/rating-and-feedback",

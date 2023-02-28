@@ -15,7 +15,7 @@ import {
 // Profile =======================
 export const setProfileInfo = async (initialProfileInfo) => {
   const db = getFirestore();
-  console.log("saving......");
+  console.log("saving......", initialProfileInfo);
   const docRef = doc(db, "users", initialProfileInfo.id);
 
   updateDoc(docRef, initialProfileInfo)
