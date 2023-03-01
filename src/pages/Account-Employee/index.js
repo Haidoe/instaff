@@ -84,6 +84,7 @@ class AccountEmployee extends EmployeePage {
     const address = document.getElementById("address");
     const contactNumber = document.getElementById("contactNumber");
     const postalCode = document.getElementById("postalCode");
+    const emailAddress = document.getElementById("emailAddress");
     const submitBtn = document.getElementById("submitBtn");
     console.log(this.data);
     if (
@@ -96,10 +97,19 @@ class AccountEmployee extends EmployeePage {
       profileImage.children[3].style.display = "None";
       profileImage.style.backgroundImage = `url("${this.data.imageURL}")`;
       bannerImage.style.backgroundImage = `url("${this.data.imageURL}")`;
+      this.profileImageToUpload = this.data.imageURL;
     } else {
       //profileImage.src = "../../static/images/sample.jpg";
+      profileImage.children[3].style.display = "None";
+      profileImage.style.backgroundImage = `url(../../static/images/sample.jpg)`;
+      bannerImage.style.backgroundImage = `url(../../static/images/sample.jpg)`;
     }
-
+    if (
+      typeof this.data.uploadProfURL !== "undefined" &&
+      this.data.imageURL !== ""
+    ) {
+      this.uploadProfURL = this.data.uploadProfURL;
+    }
     displayName.value = this.data.displayName;
     profileName.innerHTML = this.data.displayName;
     dateOfBirth.value =
@@ -114,6 +124,10 @@ class AccountEmployee extends EmployeePage {
         : "";
     postalCode.value =
       typeof this.data.postalCode !== "undefined" ? this.data.postalCode : "";
+    emailAddress.value =
+      typeof this.data.emailAddress !== "undefined"
+        ? this.data.emailAddress
+        : "";
   }
 
   popStateListener(e) {
@@ -193,6 +207,7 @@ class AccountEmployee extends EmployeePage {
     const address = document.getElementById("address");
     const contactNumber = document.getElementById("contactNumber");
     const postalCode = document.getElementById("postalCode");
+    const emailAddress = document.getElementById("emailAddress");
     const data = {
       id: this.currentUser.uid, //this.profileId,
       //   userUID: this.currentUser.uid, //this.profileId,
@@ -203,6 +218,7 @@ class AccountEmployee extends EmployeePage {
       address: address.value,
       contactNumber: contactNumber.value,
       postalCode: postalCode.value,
+      emailAddress: emailAddress.value,
     };
     if (this.coordinates) {
       data.coordinates = this.coordinates;

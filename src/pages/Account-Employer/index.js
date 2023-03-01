@@ -1,9 +1,8 @@
 import EmployerPage from "../../classes/EmployerPage";
 import template from "./account-employer.html";
+import { formatDate, readURL } from "../../js/utils";
 import { getProfile, setProfileInfo } from "../../js/account-setting/account";
 import { uploadFile } from "../../js/upload-files/upload-image";
-import { formatDate, readURL } from "../../js/utils";
-import { pageTransition } from "../../router";
 import "./account-employer.scss";
 import {
   convertCoordinatesToAddress,
@@ -79,8 +78,12 @@ class AccountEmployer extends EmployerPage {
     const bannerImage = document.querySelector(".banner-image");
     const displayName = document.querySelector("#displayName");
     const profileName = document.querySelector(".profile-name");
+    const dateOfBirth = document.getElementById("dateOfBirth");
+    const companyName = document.getElementById("companyName");
     const address = document.getElementById("address");
     const contactNumber = document.getElementById("contactNumber");
+    const businessNumber = document.getElementById("businessNumber");
+    const emailAddress = document.getElementById("emailAddress");
     const postalCode = document.getElementById("postalCode");
     const submitBtn = document.getElementById("submitBtn");
     console.log(this.data);
@@ -94,12 +97,27 @@ class AccountEmployer extends EmployerPage {
       profileImage.children[3].style.display = "None";
       profileImage.style.backgroundImage = `url("${this.data.imageURL}")`;
       bannerImage.style.backgroundImage = `url("${this.data.imageURL}")`;
+      this.profileImageToUpload = this.data.imageURL;
     } else {
       //profileImage.src = "../../static/images/sample.jpg";
+      profileImage.children[3].style.display = "None";
+      profileImage.style.backgroundImage = `url(../../static/images/sample.jpg)`;
+      bannerImage.style.backgroundImage = `url(../../static/images/sample.jpg)`;
     }
-
+    if (
+      typeof this.data.uploadProfURL !== "undefined" &&
+      this.data.uploadProfURL !== ""
+    ) {
+      console.log("account-emp", this.data);
+      this.uploadProfURL = this.data.uploadProfURL;
+    }
     displayName.value = this.data.displayName;
     profileName.innerHTML = this.data.displayName;
+    dateOfBirth.value =
+      typeof this.data.dateOfBirth !== "undefined"
+        ? formatDate(this.data.dateOfBirth.toDate().toDateString())
+        : "";
+    companyName.value !== "undefined" ? this.data.companyName : "";
     address.value =
       typeof this.data.address !== "undefined" ? this.data.address : "";
     contactNumber.value =
@@ -108,6 +126,14 @@ class AccountEmployer extends EmployerPage {
         : "";
     postalCode.value =
       typeof this.data.postalCode !== "undefined" ? this.data.postalCode : "";
+    businessNumber.value =
+      typeof this.data.businessNumber !== "undefined"
+        ? this.data.businessNumber
+        : "";
+    emailAddress.value =
+      typeof this.data.emailAddress !== "undefined"
+        ? this.data.emailAddress
+        : "";
   }
 
   popStateListener(e) {
@@ -179,34 +205,40 @@ class AccountEmployer extends EmployerPage {
     e.preventDefault();
     submitBtn.innerHTML = "Saving...";
     const displayName = document.getElementById("displayName");
-
+    const dateOfBirth = document.getElementById("dateOfBirth");
+    const companyName = document.getElementById("companyName");
     const address = document.getElementById("address");
     const contactNumber = document.getElementById("contactNumber");
+    const businessNumber = document.getElementById("businessNumber");
+    const emailAddress = document.getElementById("emailAddress");
     const postalCode = document.getElementById("postalCode");
-    const profile = {
+    const data = {
       id: this.currentUser.uid, //this.profileId,
       displayName: displayName.value,
+      dateOfBirth:
+        dateOfBirth.value !== null ? new Date(dateOfBirth.value) : "",
+      companyName: companyName.value,
       province: "BC",
       address: address.value,
       contactNumber: contactNumber.value,
+      businessNumber: businessNumber.value,
+      emailAddress: emailAddress.value,
       postalCode: postalCode.value,
     };
-
+    if (this.coordinates) {
+      data.coordinates = this.coordinates;
+    }
     try {
-      uploadProfURL.imageURL =
+      data.uploadProfURL =
         this.uploadProfURL !== null
           ? await uploadFile(this.uploadProfURL, "users")
           : "";
 
-      profile.imageURL =
+      data.imageURL =
         postingProfileImage !== null
           ? await uploadFile(this.profileImageToUpload, "users")
           : "";
-      console.log(this.profileImageToUpload);
-      console.log(profile.imageURL);
-      profile.uploadProfURL = uploadProfURL.imageURL;
-      console.log(profile);
-      setProfileInfo(profile);
+      setProfileInfo(data);
     } catch (error) {
       console.log("ERROR", error);
     } finally {

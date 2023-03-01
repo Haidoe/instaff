@@ -13,12 +13,18 @@ import {
 } from "firebase/firestore";
 
 // Profile =======================
-export const setProfileInfo = async (initialProfileInfo) => {
+export const setProfileInfo = async (data) => {
   const db = getFirestore();
-  console.log("saving......", initialProfileInfo);
-  const docRef = doc(db, "users", initialProfileInfo.id);
 
-  updateDoc(docRef, initialProfileInfo)
+  const profile = {
+    ...data,
+    created: serverTimestamp(),
+    updated: serverTimestamp(),
+    deleted: null,
+  };
+  const docRef = doc(db, "users", profile.id);
+
+  updateDoc(docRef, profile)
     .then((ref) => console.log("Document written with ID "))
     .catch((error) => console.error(error));
 };
