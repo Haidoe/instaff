@@ -40,9 +40,11 @@ class Home extends Pages {
     for (let job of response) {
       const marker = new tt.Marker().setLngLat(job.coordinates).addTo(this.map);
 
+      const modal = new Modal(job);
+
+      modal.wrapper = document.querySelector(".new-home-page");
+
       marker.getElement().addEventListener("click", () => {
-        const modal = new Modal(job);
-        modal.wrapper = document.querySelector(".new-home-page");
         modal.open();
       });
     }
