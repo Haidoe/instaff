@@ -210,10 +210,14 @@ class JobPosting extends EmployerPage {
         if (trimCity && trimAddress) {
           const query = `${trimAddress}, ${trimCity}, BC, Canada`;
           const position = await convertAddressToCoordinates(query);
-          this.coordinates = position;
 
-          this.map.easeTo({ center: position });
-          this.marker.setLngLat(position).addTo(this.map);
+          this.coordinates = {
+            lat: position.lat,
+            lng: position.lon,
+          };
+
+          this.map.easeTo({ center: this.coordinates });
+          this.marker.setLngLat(this.coordinates).addTo(this.map);
         }
       });
   }
@@ -275,11 +279,11 @@ class JobPosting extends EmployerPage {
     document.querySelector("body").classList.add("job-post-body");
 
     //Just to make sure Active Menu is set to Dashboard
-    const dashboardMenu = document.querySelector(
+    const jobPostingMenu = document.querySelector(
       ".main-header a[href='/post']"
     );
 
-    dashboardMenu.classList.add("active-menu-item");
+    jobPostingMenu.classList.add("active-menu-item");
 
     this.initMap();
     this.imageListener();
@@ -289,6 +293,13 @@ class JobPosting extends EmployerPage {
 
   close() {
     document.querySelector("body").classList.remove("job-post-body");
+
+    //Just to make sure Active Menu is set to Dashboard
+    const jobPostingMenu = document.querySelector(
+      ".main-header a[href='/post']"
+    );
+
+    jobPostingMenu.classList.remove("active-menu-item");
   }
 }
 

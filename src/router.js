@@ -16,13 +16,20 @@ const routes = [
     page: () => import(/* webpackChunkName: "Home"  */ `./pages/Home`),
   },
   {
+    path: "/old-home",
+    page: () => import(/* webpackChunkName: "Home"  */ `./pages/HomeOld/Home`),
+  },
+
+  {
     path: "/sign-in",
     page: () => import(/* webpackChunkName: "Signin" */ `./pages/Signin`),
   },
+
   {
     path: "/sign-up",
     page: () => import(/* webpackChunkName: "Signup" */ `./pages/SignUp`),
   },
+
   {
     path: "/verification",
     page: () =>
@@ -30,44 +37,13 @@ const routes = [
         /* webpackChunkName: "EmailVerification" */ `./pages/Verification`
       ),
   },
+
   {
     path: "/post",
     page: () =>
       import(/* webpackChunkName: "JobPost" */ `./pages/JobPostingV2`),
   },
-  {
-    path: "/old-post",
-    page: () =>
-      import(/* webpackChunkName: "JobPosting" */ `./pages/JobPosting`),
-  },
-  {
-    path: "/post/edit/:id",
-    page: () =>
-      import(
-        /* webpackChunkName: "JobPostingEdit" */ `./pages/JobPosting/edit`
-      ),
-  },
-  {
-    path: "/post/draft/:id",
-    page: () =>
-      import(
-        /* webpackChunkName: "JobPostingDraft" */ `./pages/JobPosting/draft`
-      ),
-  },
-  {
-    path: "/post/:id",
-    page: () =>
-      import(
-        /* webpackChunkName: "JobPostingDetail" */ `./pages/JobPosting/detail`
-      ),
-  },
-  {
-    path: "/postings",
-    page: () =>
-      import(
-        /* webpackChunkName: "JobPostingList" */ `./pages/JobPosting/list`
-      ),
-  },
+
   {
     path: "/account",
     page: () => import(/* webpackChunkName: "Account" */ `./pages/Account`),
@@ -107,6 +83,7 @@ const routes = [
     path: "/profile",
     page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
   },
+
   {
     path: "/account-employer",
     page: () =>
@@ -119,6 +96,7 @@ const routes = [
         /* webpackChunkName: "RatingAndFeedback" */ `./pages/RatingAndFeedback`
       ),
   },
+
   {
     path: "/dashboard",
     page: () => import(/* webpackChunkName: "Dashboard" */ `./pages/Dashboard`),

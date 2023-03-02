@@ -1,32 +1,30 @@
 import {
   getFirestore,
+  Timestamp,
   collection,
   query,
   where,
   getDocs,
   orderBy,
-  limit,
-  Timestamp,
 } from "firebase/firestore";
 
-const getPostingHistoryByUser = async (userId) => {
+const getAllActiveJobPostings = async () => {
   const db = getFirestore();
   const col = collection(db, "jobPostings");
-
   const q = query(
     col,
-    where("userId", "==", userId),
-    where("time.to", "<", Timestamp.now()),
-    orderBy("time.to", "desc"),
-    limit(3)
+    where("time.from", ">", Timestamp.now()),
+    orderBy("time.from", "desc")
   );
 
   try {
     const response = await getDocs(q);
+
     const data = response.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
+
     return data;
   } catch (error) {
     console.log(error);
@@ -34,4 +32,4 @@ const getPostingHistoryByUser = async (userId) => {
   }
 };
 
-export default getPostingHistoryByUser;
+export default getAllActiveJobPostings;

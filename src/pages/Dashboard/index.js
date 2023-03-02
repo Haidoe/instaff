@@ -2,8 +2,6 @@ import EmployerPage from "../../classes/EmployerPage";
 import {
   getActiveTotalApplicantsByUser,
   getActiveTotalEmployeeToPayByUser,
-  getActiveTotalJobPostingsByUser,
-  getAllActiveJobPostingsByUser,
 } from "../../js/job-posting/job-posting";
 import template from "./dashboard.html";
 import RecentJob from "./components/recent-job";
@@ -15,6 +13,8 @@ import {
   getTotalApplicantsByPostId,
 } from "../../js/applicants";
 import getPostingHistoryByUser from "../../js/job-posting/getPostingHistoryByUser";
+import getAllActiveJobPostingByUser from "../../js/job-posting/getAllActiveJobPostingByUser";
+import getTotalActiveJobPostingByUser from "../../js/job-posting/getTotalActiveJobPostingByUser";
 import pubsub from "../../classes/PubSub";
 import globalState from "../../classes/GlobalState";
 
@@ -28,7 +28,7 @@ class Dashboard extends EmployerPage {
   }
 
   loadBoardData() {
-    getActiveTotalJobPostingsByUser(this.currentUser.uid)
+    getTotalActiveJobPostingByUser(this.currentUser.uid)
       .then((total) => {
         const boxPostedJobs = document.querySelector("#box-posted-jobs p");
         boxPostedJobs.textContent = total;
@@ -75,7 +75,7 @@ class Dashboard extends EmployerPage {
 
   async loadRecentJobsPosting() {
     const container = document.querySelector("section.recent");
-    const recent = await getAllActiveJobPostingsByUser(this.currentUser.uid);
+    const recent = await getAllActiveJobPostingByUser(this.currentUser.uid);
 
     for (const item of recent) {
       const totalApplicants = await getTotalApplicantsByPostId(item.id);
