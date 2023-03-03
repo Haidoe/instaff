@@ -35,9 +35,18 @@ class Home extends Pages {
 
   async fetchAllActiveJobPostings() {
     const response = await getAllActiveJobPostings();
-
+    console.log(response);
     for (let job of response) {
-      const marker = new tt.Marker().setLngLat(job.coordinates).addTo(this.map);
+      const customMarker = document.createElement("div");
+      customMarker.className = "custom-marker";
+
+      const markerImg = document.createElement("img");
+      markerImg.src = "/static/icons/colored-pin.svg";
+      customMarker.appendChild(markerImg);
+
+      const marker = new tt.Marker({ element: customMarker })
+        .setLngLat(job.coordinates)
+        .addTo(this.map);
 
       const modal = new Modal(job);
 
@@ -45,6 +54,8 @@ class Home extends Pages {
 
       marker.getElement().addEventListener("click", () => {
         modal.open();
+
+        const item = marker.getElement();
       });
     }
   }
