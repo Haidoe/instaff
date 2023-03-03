@@ -115,7 +115,13 @@ class SignUp extends Page {
           const errorMessage = error.message;
           // ..
           alert(errorMessage);
+        })
+
+        .finally(() => {
+          submitBtn.innerHTML = `Next`;
         });
+           
+      
     });
     
 
