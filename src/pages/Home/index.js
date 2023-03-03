@@ -1,7 +1,6 @@
 import Pages from "../../classes/Page";
 import Modal from "../../components/modal/job-posting-detail";
 import getAllActiveJobPostings from "../../js/job-posting/getAllActiveJobPostings";
-import { extractTime, formatDate } from "../../js/utils";
 import Template from "./home.html";
 import "./home.scss";
 
