@@ -278,6 +278,10 @@ class JobPosting extends EmployerPage {
   mounted() {
     document.querySelector("body").classList.add("job-post-body");
 
+    //Added Minimum Date for Shift Date
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("shiftDate").setAttribute("min", today);
+
     //Just to make sure Active Menu is set to Dashboard
     const jobPostingMenu = document.querySelector(
       ".main-header a[href='/post']"
@@ -294,12 +298,14 @@ class JobPosting extends EmployerPage {
   close() {
     document.querySelector("body").classList.remove("job-post-body");
 
-    //Just to make sure Active Menu is set to Dashboard
-    const jobPostingMenu = document.querySelector(
-      ".main-header a[href='/post']"
-    );
+    try {
+      //Just to make sure Active Menu is set to Dashboard
+      const jobPostingMenu = document.querySelector(
+        ".main-header a[href='/post']"
+      );
 
-    jobPostingMenu.classList.remove("active-menu-item");
+      jobPostingMenu.classList.remove("active-menu-item");
+    } catch (error) {}
   }
 }
 

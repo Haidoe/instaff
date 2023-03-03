@@ -10,6 +10,7 @@
 
 .main-header-container {
   background-color: white;
+  min-height: 70px;
 
   .heading-wrapper {
     position: relative;
@@ -84,11 +85,12 @@
         display: block;
         text-align: center;
         padding: 1.25rem 3rem;
-        font-size: 1.25rem;
+        font-size: 15px;
+        font-weight: bold;
+        text-transform: uppercase;
 
         &:hover,
         &.active-menu-item {
-          font-weight: bold;
           color: $colorPink;
         }
       }
@@ -155,9 +157,6 @@
 
       h1 {
         flex-grow: unset;
-        img {
-          width: 80px;
-        }
       }
 
       button {
@@ -191,7 +190,6 @@
             display: block;
             text-align: center;
             padding: 1.5rem 1rem;
-            font-size: 1rem;
 
             &.active-menu-item::before {
               background-color: $colorPink;
@@ -221,8 +219,7 @@
 
     h1 {
       position: absolute;
-      top: -1.5rem;
-      width: 80px;
+      width: 60px;
       transform: translateX(calc(-100%));
     }
   }
@@ -232,8 +229,7 @@
   .main-header-container {
     h1 {
       position: absolute;
-      top: -1.5rem;
-      width: 80px;
+      width: 60px;
       transform: translateX(calc(-120%));
     }
   }
