@@ -67,14 +67,47 @@ class Dashboard extends EmployerPage {
           ".postings nav li.active"
         );
         previousActiveMenu.classList.remove("active");
-
         e.target.parentElement.classList.add("active");
+
+        // Check if the same menu is clicked
+        if (
+          previousActiveMenu.children[0].dataset.submenu ===
+          e.target.dataset.submenu
+        ) {
+          return;
+        }
+
+        console.log("ITS NOT THE SAME");
+
+        const pageContentRecent = document.querySelector(
+          ".page-contents section.recent-job-posting-content"
+        );
+        const pageContentHistory = document.querySelector(
+          ".page-contents section.history"
+        );
+        const pageContentCompleted = document.querySelector(
+          ".page-contents section.completed"
+        );
+
+        if (e.target.dataset.submenu === "active-jobs") {
+          pageContentRecent.classList.remove("hidden");
+          pageContentHistory.classList.add("hidden");
+          pageContentCompleted.classList.add("hidden");
+        } else if (e.target.dataset.submenu === "completed-jobs") {
+          pageContentRecent.classList.add("hidden");
+          pageContentHistory.classList.add("hidden");
+          pageContentCompleted.classList.remove("hidden");
+        } else {
+          pageContentRecent.classList.add("hidden");
+          pageContentHistory.classList.remove("hidden");
+          pageContentCompleted.classList.add("hidden");
+        }
       }
     });
   }
 
   async loadRecentJobsPosting() {
-    const container = document.querySelector("section.recent");
+    const container = document.querySelector("aside .recent");
     const recent = await getAllActiveJobPostingByUser(this.currentUser.uid);
 
     for (const item of recent) {
@@ -108,12 +141,11 @@ class Dashboard extends EmployerPage {
     if (recent.length) {
       const data = recent[0];
       this.loadJobListingDetails(data);
+      this.loadApplicants();
 
       const jobDetailsContainer = document.querySelector(
-        "section.job-posting-details"
+        "section.recent-job-posting-content section.content"
       );
-
-      this.loadApplicants();
 
       jobDetailsContainer.classList.add("show");
     }
@@ -137,7 +169,7 @@ class Dashboard extends EmployerPage {
     jpPositionAvailable.textContent = data.positionAvailable;
 
     const previousActiveJob = document.querySelector(
-      "section.recent article.active"
+      "aside .recent article.active"
     );
 
     if (previousActiveJob) {
@@ -153,7 +185,9 @@ class Dashboard extends EmployerPage {
     const total = await getPostingHistoryByUser(this.currentUser.uid);
 
     if (total.length > 0) {
-      const container = document.querySelector(".postings aside");
+      const container = document.querySelector(
+        "section.recent-job-posting-content"
+      );
 
       const history = document.createElement("section");
       history.className = "history";
@@ -197,9 +231,11 @@ class Dashboard extends EmployerPage {
   }
 
   async mounted() {
+    document.querySelector("#app").classList.add("dashboard-app");
+
     this.loadBoardData();
     this.loadRecentJobsPosting();
-    this.loadPostingHistory();
+
     //Add event listeners for Submenu
     this.subMenuEvent();
 
@@ -216,6 +252,7 @@ class Dashboard extends EmployerPage {
   }
 
   close() {
+    document.querySelector("#app").classList.remove("dashboard-app");
     pubsub.publish("mainHeaderHideBackBtn");
     window.removeEventListener("popstate", this.popStateListener);
     pubsub.unsubscribe("mainHeaderBackBtnClicked");

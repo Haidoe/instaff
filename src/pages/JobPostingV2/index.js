@@ -197,29 +197,39 @@ class JobPosting extends EmployerPage {
   }
 
   addressListener() {
-    document
-      .getElementById("address")
-      .addEventListener("focusout", async (e) => {
-        e.preventDefault();
-        const city = document.getElementById("city");
-        const address = document.getElementById("address");
+    let timer = null;
+    const typingInterval = 1500;
+    const addressInput = document.getElementById("address");
 
-        const trimCity = city.value.trim();
-        const trimAddress = address.value.trim();
+    addressInput.addEventListener("keyup", async (e) => {
+      e.preventDefault();
+      clearTimeout(timer);
+      timer = setTimeout(this.handleChangeAddress.bind(this), typingInterval);
+    });
 
-        if (trimCity && trimAddress) {
-          const query = `${trimAddress}, ${trimCity}, BC, Canada`;
-          const position = await convertAddressToCoordinates(query);
+    addressInput.addEventListener("keydown", (e) => {
+      clearTimeout(timer);
+    });
+  }
 
-          this.coordinates = {
-            lat: position.lat,
-            lng: position.lon,
-          };
+  async handleChangeAddress() {
+    const city = document.getElementById("city");
+    const address = document.getElementById("address");
+    const trimCity = city.value.trim();
+    const trimAddress = address.value.trim();
 
-          this.map.easeTo({ center: this.coordinates });
-          this.marker.setLngLat(this.coordinates).addTo(this.map);
-        }
-      });
+    if (trimCity && trimAddress) {
+      const query = `${trimAddress}, ${trimCity}, BC, Canada`;
+      const position = await convertAddressToCoordinates(query);
+
+      this.coordinates = {
+        lat: position.lat,
+        lng: position.lon,
+      };
+
+      this.map.easeTo({ center: this.coordinates });
+      this.marker.setLngLat(this.coordinates).addTo(this.map);
+    }
   }
 
   async handleSubmit() {
@@ -250,9 +260,11 @@ class JobPosting extends EmployerPage {
       userId: this.currentUser.uid,
       postalCode: this.jobPosting.postalCode,
       hoursOfShift: Number(this.jobPosting.hoursOfShift),
+      contactNumber: this.jobPosting.contactNumber,
       status: "published",
       paymentType: "Cash",
       province: "British Columbia",
+      numOfCandidates: 0,
     };
 
     if (this.coordinates) {
