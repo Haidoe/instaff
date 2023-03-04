@@ -48,13 +48,10 @@ class Home extends Pages {
         .setLngLat(job.coordinates)
         .addTo(this.map);
 
-      const modal = new Modal(job);
-
-      modal.wrapper = document.querySelector(".new-home-page");
-
       marker.getElement().addEventListener("click", () => {
+        const modal = new Modal(job);
+        modal.wrapper = document.querySelector(".new-home-page");
         modal.open();
-
         const item = marker.getElement();
       });
     }
