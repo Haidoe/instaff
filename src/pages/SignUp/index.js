@@ -107,6 +107,7 @@ class SignUp extends Page {
           setDoc(userCol, {
             typeOfUser: typeOfUser,
             displayName: displayName,
+            emailAddress: email,
           });
         })
 
