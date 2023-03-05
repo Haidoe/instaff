@@ -4,11 +4,11 @@
 @import "input-group";
 
 * {
+  font-family: "Source Sans Pro", sans-serif;
   box-sizing: border-box;
 }
 
 body {
-  font-family: "Source Sans Pro", sans-serif;
   display: flex;
   flex-direction: column;
   min-height: 100vh;

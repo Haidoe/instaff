@@ -107,6 +107,7 @@ class SignUp extends Page {
           setDoc(userCol, {
             typeOfUser: typeOfUser,
             displayName: displayName,
+            emailAddress: email,
           });
         })
 
@@ -115,7 +116,13 @@ class SignUp extends Page {
           const errorMessage = error.message;
           // ..
           alert(errorMessage);
+        })
+
+        .finally(() => {
+          submitBtn.innerHTML = `Next`;
         });
+           
+      
     });
     
 

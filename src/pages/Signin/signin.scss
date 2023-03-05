@@ -4,6 +4,8 @@
 @import "../../css/buttonWhite.scss";
 
 .sign-in-page {
+letter-spacing: 0.5px;
+
   .inner-wrapper {
     height: 100vh;
   }
@@ -54,13 +56,6 @@
     }
 
 
-  .input-group-2cols {
-    display: grid;
-    grid-template-columns: 30% 70%;
-    justify-content: space-between;
-    text-align: left;
-  }
-  
 
   @media screen and (min-width: $mediumLarge) {
     .inner-wrapper{

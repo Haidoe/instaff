@@ -3,13 +3,15 @@
 @import "../../css/buttonWhite.scss";
 
 .verification-page {
+  letter-spacing: 0.5px;
 
- .inner-wrapper {
+  .inner-wrapper {
     height: 100vh;
     color: white;
   }
 
-  .left-col, .right-col {
+  .left-col,
+  .right-col {
     padding: 0 1rem;
   }
 
@@ -36,30 +38,26 @@
     font-weight: normal;
   }
 
-
   @media screen and (min-width: $mediumLarge) {
-
-    .inner-wrapper{
+    .inner-wrapper {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr;
       grid-template-areas: "left-col right-col";
-        
-        .left-col{
-          display: block;
-          background-color: white;
-          grid-area: left-col;
 
-          background-image: url("../../static/images/signup-left-col.png");
-          background-size: contain;
-          background-repeat: no-repeat;
-          background-position: center;
-        }
-    
+      .left-col {
+        display: block;
+        background-color: white;
+        grid-area: left-col;
+
+        background-image: url("../../static/images/signup-left-col.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
     }
   }
 }
-
 
 .verification-body #app {
   padding: 0rem;

@@ -4,6 +4,8 @@
 @import "../../css/buttonWhite.scss";
 
 .sign-up-page {
+letter-spacing: 0.5px;
+
   .inner-wrapper {
      height: 100vh;
   }
@@ -26,14 +28,6 @@
   h1 {
     font-size: 37px;
     font-weight: normal;
-  }
-
-
-  .input-group-2cols {
-    display: grid;
-    grid-template-columns: 30% 70%;
-    justify-content: space-between;
-    text-align: left;
   }
 
   

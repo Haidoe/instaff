@@ -42,4 +42,13 @@
       color: black;
     }
 
+    
+  .input-group-2cols {
+    display: grid;
+    grid-template-columns: 35% 65%;
+    justify-content: space-between;
+    text-align: left;
+  }
+  
+
   }

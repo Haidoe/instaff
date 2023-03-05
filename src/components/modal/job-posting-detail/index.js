@@ -1,12 +1,29 @@
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import addApplicant from "../../../js/applicants/addApplicant";
+import deleteApplicationRecord from "../../../js/applicants/deleteApplicationRecord";
+import isAlreadyApplied from "../../../js/applicants/isAlreadyApplied";
+import { getUserDetails } from "../../../js/users";
 import { extractTime } from "../../../js/utils";
+import ConfirmModal from "../index";
 import "./job-posting-detail.scss";
 
 class Modal {
   constructor(data) {
     this.data = data;
+
+    //Will have a value if the user has already applied for the job posting.
+    this.applicationId = null;
+    this.userId = null;
+    this.userDetail = null;
+
     //This is where the modal get rendered.
     this.wrapper = document.querySelector("body");
 
+    //This is where the modal elements get rendered.
+    this.init();
+  }
+
+  init() {
     this.modal = document.createElement("div");
     this.modal.classList.add("jp-detail-main-modal");
     this.modal.classList.add("default");
@@ -57,14 +74,7 @@ class Modal {
     this.modalContentHeaderTitle.textContent = this.data.companyName;
     this.modalContentHeader.appendChild(this.modalContentHeaderTitle);
 
-    this.modalContentMeta = document.createElement("div");
-    this.modalContentMeta.classList.add("modal-meta");
-    this.modalContent.appendChild(this.modalContentMeta);
-
-    this.modalContentMetaButton = document.createElement("button");
-    this.modalContentMetaButton.classList.add("primary-button");
-    this.modalContentMetaButton.textContent = "Apply for this job!";
-    this.modalContentMeta.appendChild(this.modalContentMetaButton);
+    this.initMeta();
 
     this.modalContentBody = document.createElement("div");
     this.modalContentBody.classList.add("modal-body");
@@ -204,6 +214,101 @@ class Modal {
       this.modalContentBodySectionRating.classList.remove("hidden");
       this.modalContentBodySectionDetails.classList.add("hidden");
     });
+  }
+
+  initMeta() {
+    const auth = getAuth();
+    this.modalContentMeta = document.createElement("div");
+    this.modalContentMeta.classList.add("modal-meta");
+    this.modalContent.appendChild(this.modalContentMeta);
+
+    this.modalContentMetaButtonApply = document.createElement("button");
+    this.modalContentMetaButtonApply.classList.add("primary-button");
+    this.modalContentMetaButtonApply.textContent = "Apply for this job!";
+    this.modalContentMetaButtonApply.addEventListener(
+      "click",
+      this.handleApplyButton.bind(this)
+    );
+
+    this.modalContentMetaButtonCancel = document.createElement("button");
+    this.modalContentMetaButtonCancel.classList.add("secondary-button");
+    this.modalContentMetaButtonCancel.textContent = "Cancel Application";
+    this.modalContentMetaButtonCancel.addEventListener(
+      "click",
+      this.handleCancelApplication.bind(this)
+    );
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        this.userId = user.uid;
+
+        //Prevent Employers to Apply.
+        this.userDetail = await getUserDetails(user.uid);
+
+        if (this.userDetail.typeOfUser === "employer") return;
+
+        const jobId = this.data.id;
+
+        this.applicationId = await isAlreadyApplied(jobId, user.uid);
+
+        if (this.applicationId === false) {
+          this.modalContentMeta.appendChild(this.modalContentMetaButtonApply);
+        } else {
+          this.modalContentMeta.appendChild(this.modalContentMetaButtonCancel);
+        }
+      }
+    });
+  }
+
+  handleApplyButton() {
+    const confirm = new ConfirmModal();
+    confirm.addContainerClass("job-posting-detail-confirm-modal");
+    confirm.modalContent.innerHTML = `
+        You are about to apply for this shift. 
+        Please confirm the application. Please, check our <a href="javascript:void(0)">terms and conditions</a>.
+      `;
+    confirm.open();
+
+    confirm.handleConfirm = async () => {
+      const application = {
+        userId: this.userId,
+        jobPostingId: this.data.id,
+        status: "pending",
+        userDisplayName: this.userDetail.displayName,
+      };
+
+      try {
+        this.applicationId = await addApplicant(application).catch((err) => {
+          console.log(err);
+        });
+
+        this.modalContentMeta.innerHTML = "";
+        this.modalContentMeta.appendChild(this.modalContentMetaButtonCancel);
+
+        confirm.close();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  }
+
+  handleCancelApplication() {
+    const confirm = new ConfirmModal();
+    confirm.addContainerClass("job-posting-detail-confirm-modal");
+    confirm.modalContent.innerHTML = ` Are you sure you want to cancel your application?`;
+    confirm.open();
+
+    confirm.handleConfirm = () => {
+      deleteApplicationRecord(this.applicationId, this.data.id).catch((err) => {
+        console.log(err);
+      });
+
+      this.applicationId = null;
+      this.modalContentMeta.innerHTML = "";
+      this.modalContentMeta.appendChild(this.modalContentMetaButtonApply);
+
+      confirm.close();
+    };
   }
 
   open() {

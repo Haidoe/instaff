@@ -33,7 +33,7 @@
               Upload Image
             </label>
 
-            <input required type="file" id="postingBanner" name="postingBanner">
+            <input required type="file" id="postingBanner" name="postingBanner" accept="image/png, image/jpeg">
 
             <button id="uploadImgBtn" disabled>
               <div class="icon image-icon">
@@ -80,20 +80,22 @@
           </div>
 
           <div class="input-group">
-            <label for="wage">Wage</label>
+            <label for="wage">Wage (per hour)</label>
             <span class="pre"> $ </span>
 
             <input required type="number" id="wage" name="wage" step="any">
           </div>
 
           <div class="input-group">
-            <label for="positionAvailable">Position Available</label>
+            <label for="positionAvailable">Number of Positions Available</label>
             <input required type="number" id="positionAvailable" name="positionAvailable">
           </div>
 
           <div class="input-group">
             <label for="paymentType">Payment Type</label>
-            <input readonly type="text" id="paymentType" name="paymentType" value="Cash">
+            <select name="paymentType" id="paymentType">
+              <option value="Cash" selected>Cash</option>
+            </select>
           </div>
 
           <div class="action-btn-wrapper center">
@@ -121,7 +123,7 @@
               Additional Information
             </label>
 
-            <textarea required id="additionalInfo" name="additionalInfo" rows="4"></textarea>
+            <textarea id="additionalInfo" name="additionalInfo" rows="4"></textarea>
           </div>
 
           <div class="action-btn-wrapper">
@@ -147,6 +149,11 @@
             </label>
 
             <input required type="text" id="companyName" name="companyName">
+          </div>
+
+          <div class="input-group">
+            <label for="contactNumber">Contact Number</label>
+            <input required type="text" id="contactNumber" name="contactNumber">
           </div>
 
           <div class="input-group">

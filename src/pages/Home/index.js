@@ -1,7 +1,6 @@
 import Pages from "../../classes/Page";
 import Modal from "../../components/modal/job-posting-detail";
 import getAllActiveJobPostings from "../../js/job-posting/getAllActiveJobPostings";
-import { extractTime, formatDate } from "../../js/utils";
 import Template from "./home.html";
 import "./home.scss";
 
@@ -36,14 +35,24 @@ class Home extends Pages {
 
   async fetchAllActiveJobPostings() {
     const response = await getAllActiveJobPostings();
-
+    console.log(response);
     for (let job of response) {
-      const marker = new tt.Marker().setLngLat(job.coordinates).addTo(this.map);
+      const customMarker = document.createElement("div");
+      customMarker.className = "custom-marker";
+
+      const markerImg = document.createElement("img");
+      markerImg.src = "/static/icons/colored-pin.svg";
+      customMarker.appendChild(markerImg);
+
+      const marker = new tt.Marker({ element: customMarker })
+        .setLngLat(job.coordinates)
+        .addTo(this.map);
 
       marker.getElement().addEventListener("click", () => {
         const modal = new Modal(job);
         modal.wrapper = document.querySelector(".new-home-page");
         modal.open();
+        const item = marker.getElement();
       });
     }
   }

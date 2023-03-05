@@ -1,15 +1,24 @@
 @import "../../css/variables";
 @import "../../css/gradientText";
 @import "../../css/gradientBg";
+.dashboard-app {
+  display: flex;
+  flex-direction: column;
+}
 
 .dashboard-page {
+  flex: 1;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: $maxWidthContainer;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: -1rem;
 
   h2 {
     font-weight: normal;
     font-size: 3rem;
-    max-width: $maxWidthContainer;
-    margin: auto;
     margin-bottom: 1rem;
   }
 
@@ -48,8 +57,6 @@
       border-radius: unset;
 
       gap: 2rem;
-      max-width: $maxWidthContainer;
-      margin: auto;
       padding: 1rem 0;
 
       .box {
@@ -60,21 +67,23 @@
   }
 
   .postings {
-    margin: 0 -1rem;
+    margin: 0 -3%;
     background-color: #fff;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 
     nav ul {
       border-bottom: 2px solid $borderColor;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       text-align: center;
 
       .active {
-        @extend .gradient-text;
+        color: $colorPink;
         position: relative;
 
         a::before {
-          @extend .gradient-bg;
           content: "";
           display: block;
           width: 50%;
@@ -83,6 +92,7 @@
           bottom: 0;
           left: 50%;
           transform: translateX(-50%) translateY(2px);
+          background-color: $colorPink;
         }
       }
 
@@ -92,18 +102,15 @@
         padding: 1rem;
 
         &:hover {
-          @extend .gradient-text;
+          color: $colorPink;
         }
       }
     }
 
     @media screen and (min-width: 768px) {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      margin: 0 0;
 
       nav {
-        grid-column: 1 / -1;
-
         ul {
           display: flex;
           gap: 2rem;
@@ -121,10 +128,157 @@
       }
     }
 
-    @media screen and (min-width: 1024px) {
-      grid-template-columns: 400px 1fr;
-      max-width: $maxWidthContainer;
-      margin: auto;
+    .page-contents {
+      flex: 1;
+      display: flex;
+
+      & > section {
+        flex: 1;
+
+        @media screen and (min-width: 768px) {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+
+        @media screen and (min-width: 1024px) {
+          grid-template-columns: 400px 1fr;
+        }
+
+        &.hidden {
+          display: none;
+        }
+
+        //Content Section
+        section.content {
+          display: none;
+          padding: 1rem;
+
+          @media screen and (min-width: 768px) {
+            display: block;
+          }
+
+          &.show {
+            display: block;
+          }
+
+          h3 {
+            font-size: 1.5rem;
+          }
+
+          .job-details {
+            display: flex;
+            justify-content: space-between;
+
+            & > div:first-child {
+              p:first-of-type {
+                span {
+                  color: black;
+                }
+              }
+            }
+
+            & > div:last-child {
+              text-align: right;
+
+              p {
+                span:first-of-type {
+                  @extend .gradient-text;
+                }
+              }
+            }
+
+            p {
+              color: $colorGray;
+            }
+          }
+
+          .applicants {
+            margin-top: 2rem;
+            display: grid;
+            text-align: center;
+            gap: 1rem;
+            @media screen and (min-width: 1024px) {
+              grid-template-columns: repeat(2, 1fr);
+            }
+
+            img {
+              display: block;
+              object-fit: cover;
+              border-radius: 50%;
+              aspect-ratio: 1 / 1;
+              width: 35%;
+              margin: auto;
+            }
+
+            h4 {
+              font-size: 1.5rem;
+            }
+
+            .stars {
+              margin: 0.5rem 0;
+              i {
+                font-size: 0.75rem;
+                padding: 0.25rem;
+                background: $colorLightGray;
+                border-radius: 50%;
+                color: white;
+
+                &.active {
+                  background: $colorYellow;
+                }
+              }
+
+              span {
+                color: $colorGray;
+              }
+            }
+
+            p {
+              font-size: 1.25rem;
+            }
+
+            .content {
+              box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+              border-radius: 5px 5px 13px 13px;
+              overflow: hidden;
+              padding-top: 3rem;
+              margin-top: -3rem;
+              background-color: white;
+            }
+
+            .meta {
+              .action-btns {
+                display: flex;
+
+                button {
+                  flex: 1;
+                  padding: 0.5rem 1rem;
+                  text-transform: uppercase;
+                }
+              }
+
+              .hire {
+                border-bottom-right-radius: 13px;
+              }
+
+              a {
+                padding: 0.5rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 1.25rem;
+              }
+            }
+
+            .no-applicants {
+              grid-column: 1 / -1;
+              font-size: 2rem;
+              color: $colorPink;
+            }
+          }
+        }
+      }
     }
 
     aside {
@@ -212,171 +366,57 @@
         }
       }
     }
-
-    & > section {
-      display: none;
-      padding: 1rem;
-
-      @media screen and (min-width: 768px) {
-        &.show {
-          display: unset;
-        }
-      }
-
-      h3 {
-        font-size: 1.5rem;
-      }
-
-      .job-details {
-        display: flex;
-        justify-content: space-between;
-
-        & > div:first-child {
-          p:first-of-type {
-            span {
-              color: black;
-            }
-          }
-        }
-
-        & > div:last-child {
-          text-align: right;
-
-          p {
-            span:first-of-type {
-              @extend .gradient-text;
-            }
-          }
-        }
-
-        p {
-          color: $colorGray;
-        }
-      }
-
-      .applicants {
-        margin-top: 2rem;
-        display: grid;
-        text-align: center;
-        gap: 1rem;
-        @media screen and (min-width: 1024px) {
-          grid-template-columns: repeat(2, 1fr);
-        }
-
-        img {
-          display: block;
-          object-fit: cover;
-          border-radius: 50%;
-          aspect-ratio: 1 / 1;
-          width: 35%;
-          margin: auto;
-        }
-
-        h4 {
-          font-size: 1.5rem;
-        }
-
-        .stars {
-          margin: 0.5rem 0;
-          i {
-            font-size: 0.75rem;
-            padding: 0.25rem;
-            background: $colorLightGray;
-            border-radius: 50%;
-            color: white;
-
-            &.active {
-              background: $colorYellow;
-            }
-          }
-
-          span {
-            color: $colorGray;
-          }
-        }
-
-        p {
-          font-size: 1.25rem;
-        }
-
-        .content {
-          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-          border-radius: 5px 5px 13px 13px;
-          overflow: hidden;
-          padding-top: 3rem;
-          margin-top: -3rem;
-          background-color: white;
-        }
-
-        .meta {
-          .action-btns {
-            display: flex;
-
-            button {
-              flex: 1;
-              padding: 0.5rem 1rem;
-              text-transform: uppercase;
-            }
-          }
-
-          .hire {
-            border-bottom-right-radius: 13px;
-          }
-
-          a {
-            padding: 0.5rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.25rem;
-          }
-        }
-
-        .no-applicants {
-          grid-column: 1 / -1;
-          font-size: 2rem;
-          color: $colorPink;
-        }
-      }
-    }
   }
 }
 
-.db-page-mobile .postings {
+.db-page-mobile .page-contents > section > section.content {
   @media screen and (max-width: 767px) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: -1rem calc($sidePadding * -1);
+    padding: 1rem;
+    height: 100%;
     background-color: $mainBgColor;
-
-    .job-posting-details {
-      display: unset;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      margin: -1rem;
-      background-color: $mainBgColor;
-      padding: 1rem;
-      height: 100%;
-
-      .applicants {
-        padding: 1rem;
-        gap: 3rem;
-      }
-
-      .job-details {
-        justify-content: unset;
-        flex-direction: column;
-        gap: 1rem;
-
-        & > div:last-child {
-          text-align: unset;
-        }
-      }
-
-      #jpTitle {
-        color: $colorPink;
-      }
-    }
   }
 }
+
+// .db-page-mobile .postings {
+//   @media screen and (max-width: 767px) {
+//     background-color: $mainBgColor;
+
+//     .job-posting-details {
+//       display: unset;
+//       position: absolute;
+//       top: 0;
+//       bottom: 0;
+//       right: 0;
+//       left: 0;
+//       margin: -1rem;
+//       background-color: $mainBgColor;
+//       padding: 1rem;
+//       height: 100%;
+
+//       .applicants {
+//         padding: 1rem;
+//         gap: 3rem;
+//       }
+
+//       .job-details {
+//         justify-content: unset;
+//         flex-direction: column;
+//         gap: 1rem;
+
+//         & > div:last-child {
+//           text-align: unset;
+//         }
+//       }
+
+//       #jpTitle {
+//         color: $colorPink;
+//       }
+//     }
+//   }
+// }
