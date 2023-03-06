@@ -3,6 +3,7 @@ import Modal from "../../components/modal/job-posting-detail";
 import getAllActiveJobPostings from "../../js/job-posting/getAllActiveJobPostings";
 import JobPosting from "../JobPostingV2";
 import isAlreadyApplied from "../../js/applicants/isAlreadyApplied";
+import InfoHint from "../../assets/js/info-hint"
 import { getUserDetails } from "../../js/users";
 import Template from "./home.html";
 import "./home.scss";
@@ -29,6 +30,9 @@ class Home extends Pages {
     this.map = null;
     this.marker = null;
     this.userId = null;
+    this.infoHint = null;
+    this.errorHint = null;
+
   }
 
   async load() {
@@ -56,12 +60,20 @@ class Home extends Pages {
     });
 
     this.map.addControl(new tt.NavigationControl());
+    
+    //Added for getting location
+    this.map.addControl(new tt.FullscreenControl());
 
     searchBtn.addEventListener('click', this.jobFilter.bind(this));
     resetBtn.addEventListener('click', this.mapReset.bind(this));
 
 
     this.map.on("moveend", this.updateList.bind(this));
+  }
+
+  addSearch() {
+    this.infoHint = new InfoHint('info', 'bottom-center', 5000).addTo(document.getElementById('map'));
+    this.errorHint = new InfoHint('error', 'bottom-center', 5000).addTo(document.getElementById('map'));
   }
 
   removeDuplicates(arr) {
@@ -332,10 +344,12 @@ class Home extends Pages {
     this.updateList();
   }
   
+
   async mounted() {
     document.querySelector("body").classList.add("new-home-body");
     this.initMap();
     this.showJobs();
+    this.addSearch();
   }
 
   close() {
