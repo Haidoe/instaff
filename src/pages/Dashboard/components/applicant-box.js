@@ -12,8 +12,7 @@ class ApplicantBox {
     this.wrapper.className = "applicant";
 
     const img = document.createElement("img");
-    // img.src = this.data.profileImageUrl;
-    img.src = DefaultImage;
+    img.src = this.data.profileImageUrl;
     img.alt = "Applicant Image";
 
     this.wrapper.appendChild(img);
@@ -22,8 +21,9 @@ class ApplicantBox {
     content.className = "content";
 
     const title = document.createElement("h4");
-    // title.textContent = this.data.name;
-    title.textContent = "Justina Ha";
+
+    title.textContent = this.data.userDisplayName;
+
     content.appendChild(title);
 
     const stars = document.createElement("div");
@@ -46,9 +46,9 @@ class ApplicantBox {
 
     content.appendChild(stars);
 
-    const p = document.createElement("p");
-    p.textContent = '" Willing to work part time! "';
-    content.appendChild(p);
+    // const p = document.createElement("p");
+    // p.textContent = '" Willing to work part time! "';
+    // content.appendChild(p);
 
     const meta = document.createElement("div");
     meta.className = "meta";

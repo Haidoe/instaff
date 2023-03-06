@@ -6,7 +6,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 
-const getTotalApplicantsByPostId = async (id) => {
+const getApplicantsByPostId = async (id) => {
   const db = getFirestore();
   const applicantsCol = collection(db, "applicants");
   const applicantsQuery = query(applicantsCol, where("jobPostingId", "==", id));
@@ -28,4 +28,4 @@ const getTotalApplicantsByPostId = async (id) => {
   }
 };
 
-export default getTotalApplicantsByPostId;
+export default getApplicantsByPostId;

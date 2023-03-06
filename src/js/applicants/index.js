@@ -1,4 +1,8 @@
 import getTotalApplicantsByPostId from "./getTotalApplicantsByPostId";
 import getTotalAcceptedApplicantsByPostId from "./getTotalAcceptedApplicantsByPostId";
-
-export { getTotalApplicantsByPostId, getTotalAcceptedApplicantsByPostId };
+import getApplicantsByPostId from "./getApplicantsByPostId";
+export {
+  getTotalApplicantsByPostId,
+  getTotalAcceptedApplicantsByPostId,
+  getApplicantsByPostId,
+};
