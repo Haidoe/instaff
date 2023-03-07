@@ -41,6 +41,13 @@ class StarRating {
     for (let i = 0; i < 5; i++) {
       this.wrapper.appendChild(this.createStar(i));
     }
+
+    if (this.suffix) {
+      const span = document.createElement("span");
+      span.className = "star-suffix";
+      span.textContent = this.suffix;
+      this.wrapper.appendChild(span);
+    }
   }
 
   toElement() {
@@ -51,16 +58,7 @@ class StarRating {
       this.wrapper.classList.add("read-only");
     }
 
-    for (let i = 0; i < 5; i++) {
-      this.wrapper.appendChild(this.createStar(i));
-    }
-
-    if (this.suffix) {
-      const span = document.createElement("span");
-      span.className = "star-suffix";
-      span.textContent = this.suffix;
-      this.wrapper.appendChild(span);
-    }
+    this.rerender();
 
     return this.wrapper;
   }
