@@ -1,3 +1,4 @@
+import StarRating from "../../../components/star-rating";
 class ApplicantBox {
   constructor(obj) {
     this.data = obj;
@@ -25,29 +26,16 @@ class ApplicantBox {
 
     content.appendChild(title);
 
-    const stars = document.createElement("div");
-    stars.className = "stars";
+    //For JB's reference
+    const stars = new StarRating(3, false);
+    stars.suffix = "( 4 )";
 
-    for (let i = 0; i < 5; i++) {
-      const star = document.createElement("i");
-      star.className = "fas fa-star";
+    stars.handleStarClick = (index) => {
+      stars.rating = index;
+      stars.rerender();
+    };
 
-      if (i < 4) {
-        star.classList.add("active");
-      }
-
-      stars.appendChild(star);
-    }
-
-    const span = document.createElement("span");
-    span.textContent = "( 4 )";
-    stars.appendChild(span);
-
-    content.appendChild(stars);
-
-    // const p = document.createElement("p");
-    // p.textContent = '" Willing to work part time! "';
-    // content.appendChild(p);
+    content.appendChild(stars.toElement());
 
     const meta = document.createElement("div");
     meta.className = "meta";
