@@ -1,4 +1,3 @@
-import DefaultImage from "../../../static/images/sample.jpg";
 class ApplicantBox {
   constructor(obj) {
     this.data = obj;
@@ -12,7 +11,7 @@ class ApplicantBox {
     this.wrapper.className = "applicant";
 
     const img = document.createElement("img");
-    img.src = this.data.profileImageUrl;
+    img.src = this.data.userProfileImageUrl ?? "/static/images/anonymous.svg";
     img.alt = "Applicant Image";
 
     this.wrapper.appendChild(img);

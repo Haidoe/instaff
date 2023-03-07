@@ -274,7 +274,8 @@ class Modal {
         userId: this.userId,
         jobPostingId: this.data.id,
         status: "pending",
-        userDisplayName: this.userDetail.displayName,
+        userDisplayName: this.userDetail?.displayName,
+        userProfileImageUrl: this.userDetail.imageURL ?? null,
       };
 
       try {
