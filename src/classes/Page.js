@@ -33,7 +33,6 @@ class Page {
 
   getCurrentUser() {
     const auth = getAuth();
-
     return new Promise((resolve, reject) => {
       auth.onAuthStateChanged((user) => {
         resolve(user);

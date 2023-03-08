@@ -1,15 +1,13 @@
-import { async } from "@firebase/util";
-import { getFirestore, getDoc, doc, collection } from "firebase/firestore";
-import AuthenticatedPage from "../../classes/AuthenticatedPage";
-import { setProfileInfo, getProfile } from "../../js/profile-setting/profile";
+import EmployeePage from "../../classes/EmployeePage";
+import { setProfileInfo, getProfile } from "../../js/account-setting/account";
 import { uploadFile } from "../../js/upload-files/upload-image";
 import { formatDate, readURL } from "../../js/utils";
 import "./profile.scss";
-class Profile extends AuthenticatedPage {
+class Profile extends EmployeePage {
   constructor() {
     super("Profie Setup");
     this.profileImageToUpload = null;
-    this.proofOfWork = null;
+    this.uploadProfURL = null;
   }
 
   async load() {
@@ -19,7 +17,7 @@ class Profile extends AuthenticatedPage {
         <form action="#" id="profileSetupForm">
         <div class="form-group profile-image">
             <img src="" alt="profile image" class="formImg" id="profileImg"/>
-            <label for="profileImage">Upload Your Profie Pitcture</label>
+            <label id="profileImage">Upload Your Profie Pitcture</label>
             <input type="file" id="postingProfileImage">
           </div>
           <div class="form-group">
@@ -33,34 +31,10 @@ class Profile extends AuthenticatedPage {
             <label for="dateOfBirth">Date of Birth</label>
             <input required type="date" id="dateOfBirth">
           </div>
+          
           <div class="form-group">
-            <label for="User Type">
-              Employee or Employer
-            </label>
-        
-            <select id="selectUserType" name="selectUserType">
-              <option value="">--Please choose an option--</option>
-              <option value="employee">Employee</option>
-              <option value="employer">Employer</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="Province">
-              Province
-            </label>
-        
-            <select id="selectProvince">
-              <option value="">--Please choose an option--</option>
-              <option value="AB">Alberta</option>
-              <option value="BC">British Coloumbia</option>
-              <option value="MB">Manitoba</option>
-              <option value="NB">New Brunswick</option>
-              
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="zipCode">Zip Code</label>
-            <input required type="text" id="zipCode">
+            <label for="postalCode">Postal Code</label>
+            <input required type="text" id="postalCode">
             
 
           </div>
@@ -74,8 +48,8 @@ class Profile extends AuthenticatedPage {
           </div>
           <div class="form-group">
             
-            <label for="proofOfWork">Proof to work</label>
-            <input type="file" id="proofOfWork">
+            <label for="uploadProfURL">Proof to work</label>
+            <input type="file" id="uploadProfURL">
           </div>
 
           <button type="submit" id="submitBtn">Submit</button>
@@ -89,26 +63,36 @@ class Profile extends AuthenticatedPage {
     const displayName = document.querySelector("#displayName");
     const dateOfBirth = document.querySelector("#dateOfBirth");
     const selectUserType = document.getElementById("selectUserType");
-    const selectProvince = document.getElementById("selectProvince");
     const addressLine = document.getElementById("addressLine");
     const contactNumber = document.getElementById("contactNumber");
-    const zipCode = document.getElementById("zipCode");
+    const postalCode = document.getElementById("postalCode");
     const submitBtn = document.getElementById("submitBtn");
 
     console.log(this.data.imageURL);
-    if (typeof this.data.imageURL !== 'undefined' && this.data.imageURL !== "") {
+    if (
+      typeof this.data.imageURL !== "undefined" &&
+      this.data.imageURL !== ""
+    ) {
+      document.getElementById("profileImage").innerHTML =
+        "Change profile photo";
       profileImg.src = this.data.imageURL;
     } else {
       profileImg.src = "../static/images/sample.jpg";
     }
 
     displayName.value = this.data.displayName;
-    dateOfBirth.value = typeof this.data.dateOfBirth !== 'undefined' ? formatDate(this.data.dateOfBirth.toDate().toDateString()) : "";
-    selectUserType.value = this.data.typeOfUser;
-    selectProvince.value = typeof this.data.province !== 'undefined' ? this.data.province : "";
-    addressLine.value = typeof this.data.addressLine !== 'undefined' ? this.data.addressLine : "";
-    contactNumber.value = typeof this.data.contactNumber !== 'undefined' ? this.data.contactNumber : "";
-    zipCode.value = typeof this.data.zipCode !== 'undefined' ? this.data.zipCode : "";
+    dateOfBirth.value =
+      typeof this.data.dateOfBirth !== "undefined"
+        ? formatDate(this.data.dateOfBirth.toDate().toDateString())
+        : "";
+    addressLine.value =
+      typeof this.data.addressLine !== "undefined" ? this.data.addressLine : "";
+    contactNumber.value =
+      typeof this.data.contactNumber !== "undefined"
+        ? this.data.contactNumber
+        : "";
+    postalCode.value =
+      typeof this.data.postalCode !== "undefined" ? this.data.postalCode : "";
   }
 
   async mounted() {
@@ -121,39 +105,44 @@ class Profile extends AuthenticatedPage {
     const form = document.querySelector("#profileSetupForm");
     const profileImage = document.getElementById("profileImage");
     const postingProfileImage = document.getElementById("postingProfileImage");
-    const proofOfWork = document.getElementById("proofOfWork");
+    const uploadProfURL = document.getElementById("uploadProfURL");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       submitBtn.innerHTML = "Saving...";
       const displayName = document.getElementById("displayName");
       const dateOfBirth = document.querySelector("#dateOfBirth");
-      const selectUserType = document.getElementById("selectUserType");
-      const selectProvince = document.getElementById("selectProvince");
       const addressLine = document.getElementById("addressLine");
       const contactNumber = document.getElementById("contactNumber");
-      const zipCode = document.getElementById("zipCode");
+      const postalCode = document.getElementById("postalCode");
       const profile = {
-        id: this.currentUser.uid, //this.profileId,
+        userUID: this.currentUser.uid, //this.profileId,
         displayName: displayName.value,
-        dateOfBirth: dateOfBirth.value !== null ? new Date(dateOfBirth.value) : "",
+        dateOfBirth:
+          dateOfBirth.value !== null ? new Date(dateOfBirth.value) : "",
         typeOfUser: selectUserType.value,
-        province: selectProvince.value,
+        province: "BC",
         addressLine: addressLine.value,
         contactNumber: contactNumber.value,
-        zipCode: zipCode.value,
+        postalCode: postalCode.value,
       };
       try {
         postingProfileImage.imageURL = await uploadFile(
           this.profileImageToUpload,
           "users"
         );
-        proofOfWork.imageURL = this.proofOfWork !== null ? await uploadFile(this.proofOfWork, "users") : "";
+        uploadProfURL.imageURL =
+          this.uploadProfURL !== null
+            ? await uploadFile(this.uploadProfURL, "users")
+            : "";
 
-        profile.imageURL = postingProfileImage !== null ? await uploadFile(this.profileImageToUpload, "users") : "";
+        profile.imageURL =
+          postingProfileImage !== null
+            ? await uploadFile(this.profileImageToUpload, "users")
+            : "";
         console.log(this.profileImageToUpload);
         console.log(profile.imageURL);
-        profile.proofOfWork = proofOfWork.imageURL;
+        profile.uploadProfURL = uploadProfURL.imageURL;
         console.log(profile);
         setProfileInfo(profile);
       } catch (error) {
@@ -190,10 +179,10 @@ class Profile extends AuthenticatedPage {
         profileImage.classList.remove("visible");
       }
     });
-    proofOfWork.addEventListener("change", async (e) => {
+    uploadProfURL.addEventListener("change", async (e) => {
       e.preventDefault();
-      const proofOfWork = document.getElementById("proofOfWork");
-      const isValid = _validate(proofOfWork, [
+      const uploadProfURL = document.getElementById("uploadProfURL");
+      const isValid = _validate(uploadProfURL, [
         ".png",
         ".jpg",
         ".jpeg",
@@ -203,7 +192,7 @@ class Profile extends AuthenticatedPage {
         ".pdf",
       ]);
       if (isValid) {
-        this.proofOfWork = e.target.files[0];
+        this.uploadProfURL = e.target.files[0];
       } else {
         alert("Invalid Proof of Work");
       }
