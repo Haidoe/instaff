@@ -45,10 +45,62 @@ const routes = [
   },
 
   {
+    path: "/account",
+    page: () => import(/* webpackChunkName: "AccountPage" */ `./pages/Account`),
+  },
+  {
+    path: "/account-employee",
+    page: () =>
+      import(
+        /* webpackChunkName: "AccountEmployee" */ `./pages/Account-Employee`
+      ),
+  },
+  {
+    path: "/account/preferences",
+    page: () =>
+      import(
+        /* webpackChunkName: "AccountPreference" */ `./pages/Account/preferences`
+      ),
+  },
+  {
+    path: "/account/typeOfWork",
+    page: () =>
+      import(
+        /* webpackChunkName: "AccountTypeOfWork" */ `./pages/Account/typeOfWork`
+      ),
+  },
+  {
+    path: "/account/availability",
+    page: () =>
+      import(
+        /* webpackChunkName: "AccountAvailability" */ `./pages/Account/availability`
+      ),
+  },
+  {
+    path: "/account/lengthOfShift",
+    page: () =>
+      import(
+        /* webpackChunkName: "AccountShift" */ `./pages/Account/lengthOfShift`
+      ),
+  },
+  {
+    path: "/account/setting",
+    page: () =>
+      import(/* webpackChunkName: "Profile" */ `./pages/Account/setting`),
+  },
+
+  {
     path: "/profile",
     page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
   },
 
+  {
+    path: "/account-employer",
+    page: () =>
+      import(
+        /* webpackChunkName: "ProfileEmployer" */ `./pages/Account-Employer`
+      ),
+  },
   {
     path: "/rating-and-feedback",
     page: () =>

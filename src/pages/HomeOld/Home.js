@@ -124,8 +124,10 @@ class Home extends Pages {
 
       const selectMark = document.getElementById(this.id);
 
+      console.log("Log clicked marker", selectMark);
+
       //TODO: Toggle it to be selected, doesn't work.
-      selectMark.style.backgroundColor = "black";
+      selectMark.classList.add("selected");
 
       //Issue: cannot you ID for checking exist popdiv.
       const pop_divs = document.getElementsByClassName("div_page");
