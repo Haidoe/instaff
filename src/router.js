@@ -46,32 +46,42 @@ const routes = [
 
   {
     path: "/account",
-    page: () => import(/* webpackChunkName: "Account" */ `./pages/Account`),
+    page: () => import(/* webpackChunkName: "AccountPage" */ `./pages/Account`),
   },
   {
     path: "/account-employee",
     page: () =>
-      import(/* webpackChunkName: "Account" */ `./pages/Account-Employee`),
+      import(
+        /* webpackChunkName: "AccountEmployee" */ `./pages/Account-Employee`
+      ),
   },
   {
     path: "/account/preferences",
     page: () =>
-      import(/* webpackChunkName: "Account" */ `./pages/Account/Preferences`),
+      import(
+        /* webpackChunkName: "AccountPreference" */ `./pages/Account/Preferences`
+      ),
   },
   {
     path: "/account/typeOfWork",
     page: () =>
-      import(/* webpackChunkName: "Account" */ `./pages/Account/typeOfWork`),
+      import(
+        /* webpackChunkName: "AccountTypeOfWork" */ `./pages/Account/typeOfWork`
+      ),
   },
   {
     path: "/account/availability",
     page: () =>
-      import(/* webpackChunkName: "Account" */ `./pages/Account/availability`),
+      import(
+        /* webpackChunkName: "AccountAvailability" */ `./pages/Account/availability`
+      ),
   },
   {
     path: "/account/lengthOfShift",
     page: () =>
-      import(/* webpackChunkName: "Account" */ `./pages/Account/lengthOfShift`),
+      import(
+        /* webpackChunkName: "AccountShift" */ `./pages/Account/lengthOfShift`
+      ),
   },
   {
     path: "/account/setting",
@@ -87,7 +97,9 @@ const routes = [
   {
     path: "/account-employer",
     page: () =>
-      import(/* webpackChunkName: "Profile" */ `./pages/Account-Employer`),
+      import(
+        /* webpackChunkName: "ProfileEmployer" */ `./pages/Account-Employer`
+      ),
   },
   {
     path: "/rating-and-feedback",
