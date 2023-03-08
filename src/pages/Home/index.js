@@ -18,6 +18,7 @@ class Home extends Pages {
   static showlist = [];
   static modalList = [];
   static focusedMarker;
+  static focusedItem=null;
   static defaultCenter = {
     lat: 49.23512376137244,
     lng: -123.03851521512506,
@@ -69,11 +70,6 @@ class Home extends Pages {
 
 
     this.map.on("moveend", this.updateList.bind(this));
-  }
-
-  addSearch() {
-    this.infoHint = new InfoHint('info', 'bottom-center', 5000).addTo(document.getElementById('map'));
-    this.errorHint = new InfoHint('error', 'bottom-center', 5000).addTo(document.getElementById('map'));
   }
 
   removeDuplicates(arr) {
@@ -174,6 +170,15 @@ class Home extends Pages {
           }
         })
   
+        if(Home.focusedItem!=null){
+          Home.focusedItem.classList.toggle("focus-article");
+        }
+        console.log("before toggle")
+        singleArticle.classList.toggle("focus-article");
+        console.log("after toggle")
+        Home.focusedItem = singleArticle;
+
+
       })
       JobInfoList.appendChild(singleArticle);
     });
@@ -233,6 +238,14 @@ class Home extends Pages {
           const item = marker.getElement();
           console.log(item);
           modal.open();
+
+
+          
+          // Home.markers.forEach(function(marker_temp){
+          //   if(this.marker==marker_temp){
+          //     console.log(marker_temp)
+          //   }
+          // })
         
           if (Home.focusedMarker) {
             const previousMarkerItem = Home.focusedMarker.getElement();
@@ -325,10 +338,40 @@ class Home extends Pages {
       marker.getElement().addEventListener("click", () => {
         console.log("marker clicked")
         console.log(marker._element)
+        // console.log(marker)
+
         modal.open();
+        
+        console.log(marker)
+
+        const articles = document.querySelectorAll("article");
+
+        let focusMarkerID = null;
+        //Get the element in the list styled
+        Home.markerIDRef.forEach(function(markerRef){
+          if(markerRef.markerObj==marker){
+            // console.log(markerRef.jobID)
+            focusMarkerID = markerRef.jobID;
+          }
+        })
+
+
+        articles.forEach(function(article){
+          if(article.firstChild.innerHTML==focusMarkerID){
+            if(!article.classList.contains("focus-article")){
+              if(Home.focusedItem!=null){
+                Home.focusedItem.classList.toggle("focus-article");
+              }
+              article.classList.toggle("focus-article");
+              Home.focusedItem = article;
+            }
+          }
+        })
+
+
 
         const item = marker.getElement();
-        console.log(Home.focusedMarker);
+        // console.log(Home.focusedMarker);
 
         if(Home.focusedMarker){
           const previousMarkerItem = Home.focusedMarker.getElement();
@@ -349,7 +392,6 @@ class Home extends Pages {
     document.querySelector("body").classList.add("new-home-body");
     this.initMap();
     this.showJobs();
-    this.addSearch();
   }
 
   close() {
