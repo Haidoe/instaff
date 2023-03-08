@@ -223,6 +223,29 @@ main {
     border: 1px solid #000;
     border-radius: 4px;
   }
+
+  .preference-menu .logo {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: $colorLightGray;
+    border-radius: 50%;
+  }
+  .preference-menu li {
+    display: flex;
+    text-align: left;
+    height: 80px;
+    padding-top: 20px;
+  }
+  .preference-menu li:last-child {
+    border-bottom: none;
+  }
+  .preference-menu li .text {
+    padding-left: 20px;
+    line-height: 40px;
+    height: 40px;
+  }
+
   .mobile-menu .logo {
     display: inline-block;
     width: 40px;
@@ -262,6 +285,14 @@ main {
     display: none;
   }
 
+  .preference-page {
+    display: none;
+  }
+
+  .typeofWork-page {
+    display: none;
+  }
+
   .form-wrapper {
     display: grid;
   }
@@ -277,6 +308,40 @@ main {
   }
   .profile-page {
     display: unset;
+  }
+}
+
+.preference-page-mobile {
+  .header {
+    display: none;
+  }
+  .account-setting {
+    display: none;
+  }
+  .preference-page {
+    display: unset;
+  }
+}
+
+.typeofWork-page {
+  .header {
+    display: none;
+  }
+  .account-setting {
+    display: none;
+  }
+  .preference-page {
+    display: none;
+  }
+
+  .typeofWork-page {
+    display: unset;
+  }
+  .form-group {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -420,6 +485,61 @@ main {
         grid-column: span 2;
         grid-row: 3;
       }
+    }
+    .account-setting {
+      display: unset;
+    }
+  }
+
+  .preference-wrapper-clicked {
+    .profile-page {
+      display: none;
+    }
+    .preference-page-mobile {
+      display: none;
+    }
+    .profile-page .form-wrapper {
+      display: none;
+    }
+    .preference-page {
+      display: unset;
+    }
+    .account-setting {
+      display: unset;
+    }
+    .preference-wrapper {
+      display: grid;
+      grid-template-columns: 30% 70%;
+      gap: 1rem;
+    }
+    .preference-page {
+      grid-column: 1;
+      grid-row: span 2;
+      border: 1px solid #e6e6e6;
+      padding: 1rem;
+      border-radius: 5px;
+      background-color: white;
+    }
+    .typeofWork-page {
+      grid-row: span 2;
+      border: 1px solid #e6e6e6;
+      padding: 1rem;
+      border-radius: 5px;
+      background-color: white;
+    }
+    .typeofWork-page {
+      display: unset;
+    }
+    .sideMenu-active {
+      border: 1px solid $borderColor;
+      border-radius: 20px;
+      background: lightgray;
+    }
+  }
+
+  .profile-page-clicked {
+    .account-setting {
+      display: unset;
     }
   }
 }

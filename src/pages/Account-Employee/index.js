@@ -1,6 +1,12 @@
 import template from "./account-employee.html";
 import EmployeePage from "../../classes/EmployeePage";
-import { setProfileInfo, getProfile } from "../../js/account-setting/account";
+import {
+  setProfileInfo,
+  getProfile,
+  getTypeOfWorkByUserId,
+  updatetypeOfWork,
+  setTypeOfWorkInfo,
+} from "../../js/account-setting/account";
 import { uploadFile } from "../../js/upload-files/upload-image";
 import { formatDate, readURL } from "../../js/utils";
 import pubsub from "../../classes/PubSub";
@@ -9,6 +15,8 @@ import {
   convertCoordinatesToAddress,
   convertAddressToCoordinates,
 } from "../../js/map-util";
+
+import globalState from "../../classes/GlobalState";
 
 class AccountEmployee extends EmployeePage {
   constructor() {
@@ -19,6 +27,7 @@ class AccountEmployee extends EmployeePage {
     this.map = null;
     this.marker = null;
     this.coordinates = null;
+    this.state = null;
   }
 
   async load() {
@@ -85,7 +94,7 @@ class AccountEmployee extends EmployeePage {
     const contactNumber = document.getElementById("contactNumber");
     const postalCode = document.getElementById("postalCode");
     const emailAddress = document.getElementById("emailAddress");
-    const submitBtn = document.getElementById("submitBtn");
+
     console.log(this.data);
     if (
       typeof this.data.imageURL !== "undefined" &&
@@ -130,10 +139,65 @@ class AccountEmployee extends EmployeePage {
         : "";
   }
 
+  async loadTypeOfWorkListingData() {
+    let results = await getTypeOfWorkByUserId(this.profileId);
+    const checkList = [
+      "Barista",
+      "Dishwasher",
+      "EventServer",
+      "Bartender",
+      "CounterStaff",
+      "EventSetup",
+      "WarehouseAssociate",
+      "Barback",
+      "Busser",
+      "Custodial",
+    ];
+    checkList.forEach((item) => {
+      let findItem = undefined;
+
+      if (results.length > 0) {
+        if (results[0].positionTitle !== undefined) {
+          findItem = results[0].positionTitle.find(
+            (e) => e.toLowerCase() == item.toLowerCase()
+          );
+        }
+      }
+      const inputCheckbox = document.createElement("input");
+      inputCheckbox.type = "checkbox";
+      inputCheckbox.className = "logo";
+      inputCheckbox.id = item.toLowerCase();
+      inputCheckbox.name = "workType";
+      inputCheckbox.value = item;
+      inputCheckbox.checked = findItem != undefined ? true : false;
+
+      const labelCheckboxFor = document.createElement("label");
+      labelCheckboxFor.innerHTML = item;
+
+      const typeOfWorkContainer = document.querySelector(".form-group");
+      typeOfWorkContainer.appendChild(inputCheckbox);
+      typeOfWorkContainer.appendChild(labelCheckboxFor);
+    });
+  }
+
   popStateListener(e) {
     const mainPageContainer = document.querySelector(".account-employee-page");
-    mainPageContainer.classList.remove("profile-page-mobile");
-    pubsub.publish("mainHeaderHideBackBtn");
+
+    if (mainPageContainer.classList.contains("profile-page-mobile")) {
+      mainPageContainer.classList.remove("profile-page-mobile");
+      pubsub.publish("mainHeaderHideBackBtn");
+    }
+
+    if (mainPageContainer.classList.contains("preference-page-mobile")) {
+      mainPageContainer.classList.remove("preference-page-mobile");
+      pubsub.publish("mainHeaderHideBackBtn");
+    }
+
+    if (mainPageContainer.classList.contains("typeofWork-page")) {
+      mainPageContainer.classList.remove("typeofWork-page");
+      mainPageContainer.classList.add("preference-page-mobile");
+      pubsub.publish("mainHeaderShowBackBtn");
+    }
   }
 
   async mounted() {
@@ -142,17 +206,30 @@ class AccountEmployee extends EmployeePage {
     const user = snap.data();
     this.data = user;
     this.init();
+    this.loadTypeOfWorkListingData();
 
-    const form = document.querySelector("#form1");
+    const profileForm = document.querySelector("#profileForm");
     const profileImage = document.getElementById("profileImage");
     const postingProfileImage = document.getElementById("postingProfileImage");
     const uploadProfURL = document.getElementById("uploadProfURL");
     const profileURL = document.getElementById("profileURL");
-    form.addEventListener("submit", this.handleFormSubmit.bind(this));
+    const preferenceURL = document.getElementById("preferenceURL");
+    const webPreferenceURL = document.getElementById("webPreferenceURL");
+    const webProfileURL = document.getElementById("webProfileURL");
+    const typeOfWorkURL = document.getElementById("typeOfWorkURL");
+
+    profileForm.addEventListener(
+      "submit",
+      this.handleProfileFormSubmit.bind(this)
+    );
+
+    // Profile image listener===========================
     postingProfileImage.addEventListener(
       "change",
       this.handleProfileImageChange.bind(this)
     );
+
+    // Begin: Profile URL listener===========================
     profileURL.addEventListener("click", (e) => {
       e.preventDefault();
 
@@ -168,10 +245,99 @@ class AccountEmployee extends EmployeePage {
       }
     });
 
+    webProfileURL.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const mainPageContainer = document.querySelector(
+        ".account-employee-page"
+      );
+      mainPageContainer.classList.add("profile-page-clicked");
+      mainPageContainer.classList.remove("preference-wrapper-clicked");
+      mainPageContainer.classList.remove("preference-page-mobile");
+      mainPageContainer.classList.remove("preference-page");
+      mainPageContainer.classList.remove("typeofWork-page");
+
+      // Set Active Link
+      const previousActiveMenu = document.querySelector(".web-menu li.active");
+      previousActiveMenu.classList.remove("active");
+      e.target.parentElement.classList.add("active");
+    });
+
+    // End: Profile URL Listener
+
+    // Preference URL listener===========================
+    preferenceURL.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const mainPageContainer = document.querySelector(
+        ".account-employee-page"
+      );
+      mainPageContainer.classList.add("preference-page-mobile");
+      pubsub.publish("mainHeaderShowBackBtn");
+
+      if (window.innerWidth < 768) {
+        window.scrollTo(0, 0);
+        globalState.preventPopState = true;
+      }
+    });
+
+    // Web =======================
+    webPreferenceURL.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log("hello from web page");
+
+      const mainPageContainer = document.querySelector(
+        ".account-employee-page"
+      );
+      mainPageContainer.classList.add("preference-wrapper-clicked");
+      mainPageContainer.classList.add("preference-page");
+      mainPageContainer.classList.remove("profile-page-clicked");
+
+      const previousActiveMenu = document.querySelector(".web-menu li.active");
+      previousActiveMenu.classList.remove("active");
+      e.target.parentElement.classList.add("active");
+
+      // Set Active Link
+      // const previousSideActiveMenu = document.querySelector(
+      //   ".preference-page nav li.sideMenu-active"
+      // );
+      //previousSideActiveMenu.classList.remove("sideMenu-active");
+      //e.target.parentElement.classList.add("sideMenu-active");
+    });
+
+    // Begin: Type of Work ===========================
+
+    const typeOfWorkForm = document.querySelector("#typeOfWorkForm");
+    typeOfWorkForm.addEventListener(
+      "submit",
+      this.handleTypeOfWorkFormSubmit.bind(this)
+    );
+
+    // const results = await getTypeOfWorkByUserId(this.profileId);
+    // console.log(results);
+
+    typeOfWorkURL.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const mainPageContainer = document.querySelector(
+        ".account-employee-page"
+      );
+      mainPageContainer.classList.add("typeofWork-page");
+      pubsub.publish("mainHeaderShowBackBtn");
+
+      if (window.innerWidth < 768) {
+        window.scrollTo(0, 0);
+        globalState.preventPopState = true;
+      }
+    });
+
+    // End: Type of Work ===========================
+
     //PubSub for Mobile Related Stuff
     pubsub.subscribe("mainHeaderBackBtnClicked", this.popStateListener);
     window.addEventListener("popstate", this.popStateListener);
 
+    // Begin: Profile Events Listener ===========================
     uploadProfURL.addEventListener(
       "change",
       this.uploadProfURLChange.bind(this)
@@ -199,7 +365,8 @@ class AccountEmployee extends EmployeePage {
         }
       });
   }
-  async handleFormSubmit(e) {
+
+  async handleProfileFormSubmit(e) {
     e.preventDefault();
     submitBtn.innerHTML = "Saving...";
     const displayName = document.getElementById("displayName");
@@ -291,6 +458,43 @@ class AccountEmployee extends EmployeePage {
       alert("Invalid Proof of Business Registration");
     }
   }
+  // End: Profile Events Listener ===========================
+
+  // Begin: Type of Work Events Listener ===========================
+
+  async handleTypeOfWorkFormSubmit(e) {
+    e.preventDefault();
+    submitBtnTypeOfWork.innerHTML = "Saving...";
+
+    let form = document.querySelector("#typeOfWorkForm");
+    let checkBoxes = form.querySelectorAll('input[type="checkbox"]');
+
+    const typeOfWork = {
+      userId: this.profileId,
+      positionTitle: [],
+    };
+
+    checkBoxes.forEach((item) => {
+      if (item.checked) {
+        typeOfWork.positionTitle.push(item.value); //stored the objects to result array
+      }
+    });
+
+    let results = await getTypeOfWorkByUserId(typeOfWork.userId);
+    try {
+      if (results.length > 0) {
+        await updatetypeOfWork(results[0].id, typeOfWork);
+      } else {
+        await setTypeOfWorkInfo(typeOfWork);
+      }
+    } catch (error) {
+      console.log("ERROR", error);
+    } finally {
+      submitBtnTypeOfWork.innerHTML = "Save";
+    }
+  }
+
+  // End: Type of Work Events Listener ===========================
 }
 
 function _validate(oInput, extensions) {

@@ -37,13 +37,15 @@
       </li>
     </ul>
     <ul class="web-menu">
-      <li class="active">Profile</li>
-      <li>Preferences</li>
+      <li class="active"><a href="#" id="webProfileURL"> Profile</a></li>
+      <li>
+        <a id="webPreferenceURL" href="#">Preferences</a>
+      </li>
       <li>Settings</li>
     </ul>
   </div>
   <div class="profile-page" id="profile-page">
-    <form id="form1" class="content">
+    <form id="profileForm" class="content">
       <div class="form-wrapper">
         <div class="profile-image-wrapper">
           <div class="profile-Image" id="profileImage">
@@ -119,5 +121,50 @@
         </div>
       </div>
     </form>
+  </div>
+  <div class="preference-wrapper">
+    <div class="preference-page" id="preference-page">
+      <nav>
+        <ul class="preference-menu">
+          <li>
+            <span class="logo"></span
+            ><span class="text"><a href="#">Student</a></span>
+          </li>
+          <li class="sideMenu-active">
+            <span class="logo"></span
+            ><span class="text"
+              ><a id="typeOfWorkURL" href="#">Type of work</a></span
+            >
+          </li>
+          <li>
+            <span class="logo"></span
+            ><span class="text"><a href="#">Availability</a></span>
+          </li>
+          <li>
+            <span class="logo"></span
+            ><span class="text"><a href="#">Length of shift</a></span>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="typeofWork-page">
+      <h2 id="displayName">What type of work are you interested in?</h2>
+      <form action="#" id="typeOfWorkForm" class="content">
+        <div class="form-wrapper">
+          <div class="form-group">
+            <!-- <input type="checkbox" class="logo" id="" name="workType" />
+          <label for="">Barista</label> -->
+          </div>
+          <div class="action-btn-wrapper center">
+            <button
+              type="submit"
+              id="submitBtnTypeOfWork"
+              class="primary-button submit-btn">
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
