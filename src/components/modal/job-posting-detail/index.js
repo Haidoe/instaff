@@ -274,7 +274,8 @@ class Modal {
         userId: this.userId,
         jobPostingId: this.data.id,
         status: "pending",
-        userDisplayName: this.userDetail.displayName,
+        userDisplayName: this.userDetail?.displayName,
+        userProfileImageUrl: this.userDetail.imageURL ?? null,
       };
 
       try {
@@ -295,11 +296,11 @@ class Modal {
   handleCancelApplication() {
     const confirm = new ConfirmModal();
     confirm.addContainerClass("job-posting-detail-confirm-modal");
-    confirm.modalContent.innerHTML = ` Are you sure you want to cancel your application? ${this.applicationId}`;
+    confirm.modalContent.innerHTML = ` Are you sure you want to cancel your application?`;
     confirm.open();
 
     confirm.handleConfirm = () => {
-      deleteApplicationRecord(this.applicationId).catch((err) => {
+      deleteApplicationRecord(this.applicationId, this.data.id).catch((err) => {
         console.log(err);
       });
 

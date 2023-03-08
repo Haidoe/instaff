@@ -4,6 +4,7 @@ const recentJobs = (obj) => {
 
   anchorWrapper.addEventListener("click", (e) => {
     e.preventDefault();
+    console.log("event 2");
 
     if (window.innerWidth < 768) {
       const url = new URL(window.location);
@@ -47,7 +48,9 @@ const recentJobs = (obj) => {
   meta.className = "article-meta";
 
   const applicants = document.createElement("p");
-  applicants.innerHTML = `Applied Candidates: <span>${obj.totalApplicants}</span>`;
+  applicants.innerHTML = `Applied Candidates: <span>${
+    obj.numOfCandidates ?? 0
+  }</span>`;
 
   const positions = document.createElement("p");
   positions.innerHTML = `Positions Available: <span>${obj.totalPositionAvailableLeft}</span> / <span>${obj.positionAvailable}</span>`;

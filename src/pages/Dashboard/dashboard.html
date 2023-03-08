@@ -8,7 +8,7 @@
     </div>
 
     <div class="box" id="box-applicants">
-      <h3> Waiting approval </h3>
+      <h3> Total Applicants </h3>
       <p> - </p>
     </div>
 
@@ -22,52 +22,78 @@
     <nav>
       <ul>
         <li class="active">
-          <a href="javascript:void(0)" data-submenu>
+          <a href="javascript:void(0)" data-submenu="active-jobs">
             Posted
           </a>
         </li>
 
         <li>
-          <a href="javascript:void(0)" data-submenu>
+          <a href="javascript:void(0)" data-submenu="completed-jobs">
             Payable
           </a>
         </li>
 
         <li>
-          <a href="javascript:void(0)" data-submenu>
+          <a href="javascript:void(0)" data-submenu="job-posted-history">
             History
           </a>
         </li>
       </ul>
     </nav>
 
-    <aside>
-      <section class="recent">
-        <h3> Recent Job(s)</h3>
+    <div class="page-contents">
+      <section class="recent-job-posting-content">
+
+        <aside>
+          <section class="recent">
+            <!-- <h3> Recent Job(s)</h3> -->
+          </section>
+        </aside>
+
+
+        <section class="content">
+          <h3 id="jpCompanyName"></h3>
+
+          <div class="job-details">
+            <div>
+              <p> Position: <span id="jpTitle"></span> </p>
+              <p> $<span id="jpWageRate"></span> / hr</p>
+            </div>
+
+            <div>
+              <p> Applied Candidates: <span id="jpTotalApplicants"></span> </p>
+              <p> Position Available: <span id="jpPositionAvailableLeft"></span> / <span
+                  id="jpPositionAvailable"></span>
+              </p>
+            </div>
+          </div>
+
+          <div class="applicants"></div>
+        </section>
       </section>
-    </aside>
 
-    <section class="job-posting-details">
-      <h3 id="jpCompanyName"></h3>
+      <section class="completed hidden">
+        <aside>
+          Aside here
+        </aside>
 
-      <div class="job-details">
-        <div>
-          <p> Position: <span id="jpTitle"></span> </p>
-          <p> $<span id="jpWageRate"></span> / hr</p>
-        </div>
 
-        <div>
-          <p> Applied Candidates: <span id="jpTotalApplicants"></span> </p>
-          <p> Position Available: <span id="jpPositionAvailableLeft"></span> / <span id="jpPositionAvailable"></span>
-          </p>
-        </div>
-      </div>
+        <section class="content">
+          completed
+        </section>
+      </section>
 
-      <div class="applicants"></div>
-    </section>
+      <section class="history hidden">
+        <aside>
+          Aside here
+        </aside>
 
-    <section>
-      <h3> Completed Jobs here! </h3>
-    </section>
+
+        <section class="content">
+          Content history
+        </section>
+      </section>
+    </div>
+
   </div>
 </div>
