@@ -28,7 +28,7 @@
   }
 
   .marker-normal {
-    background: orange;
+    background: hotpink;
     border: 2px solid black;
     border-radius: 50% 50% 50% 0;
     height: 35px;
@@ -40,8 +40,8 @@
     width: 35px;
   }
 
-  .marker-selected {
-    border: 3px solid red;
+  .selected {
+    border: 3px solid blue;
   }
 
   .marker-matched {
