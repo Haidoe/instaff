@@ -59,7 +59,7 @@ const routes = [
     path: "/account/preferences",
     page: () =>
       import(
-        /* webpackChunkName: "AccountPreference" */ `./pages/Account/Preferences`
+        /* webpackChunkName: "AccountPreference" */ `./pages/Account/preferences`
       ),
   },
   {
