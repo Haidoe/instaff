@@ -1,0 +1,41 @@
+.formImg {
+  width: 200px;
+  height: 200px;
+
+  border-radius: 50%;
+  border: 1px solid red;
+  padding: 8px 8px 8px 8px;
+  margin: auto;
+  display: block;
+}
+.account-page {
+  display: block;
+  width: 800px;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+}
+.profile {
+  text-align: center;
+}
+.menu .logo {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: darkgray;
+  border-radius: 50%;
+}
+.menu li {
+  display: flex;
+  text-align: left;
+  height: 80px;
+  padding-top: 20px;
+}
+.menu li:last-child {
+  border-bottom: none;
+}
+.menu li .text {
+  padding-left: 20px;
+  line-height: 40px;
+  height: 40px;
+}
