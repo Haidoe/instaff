@@ -45,50 +45,10 @@ const routes = [
   },
 
   {
-    path: "/account",
-    page: () => import(/* webpackChunkName: "Account" */ `./pages/Account`),
-  },
-  {
-    path: "/account-employee",
-    page: () =>
-      import(/* webpackChunkName: "Account" */ `./pages/Account-Employee`),
-  },
-  {
-    path: "/account/preferences",
-    page: () =>
-      import(/* webpackChunkName: "Account" */ `./pages/Account/Preferences`),
-  },
-  {
-    path: "/account/typeOfWork",
-    page: () =>
-      import(/* webpackChunkName: "Account" */ `./pages/Account/typeOfWork`),
-  },
-  {
-    path: "/account/availability",
-    page: () =>
-      import(/* webpackChunkName: "Account" */ `./pages/Account/availability`),
-  },
-  {
-    path: "/account/lengthOfShift",
-    page: () =>
-      import(/* webpackChunkName: "Account" */ `./pages/Account/lengthOfShift`),
-  },
-  {
-    path: "/account/setting",
-    page: () =>
-      import(/* webpackChunkName: "Profile" */ `./pages/Account/setting`),
-  },
-
-  {
     path: "/profile",
     page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
   },
 
-  {
-    path: "/account-employer",
-    page: () =>
-      import(/* webpackChunkName: "Profile" */ `./pages/Account-Employer`),
-  },
   {
     path: "/rating-and-feedback",
     page: () =>
