@@ -121,6 +121,14 @@ class Profile extends Modal {
       : "No Proof of Work Uploaded";
     infoProofOfWork.appendChild(infoProofOfWorkValue);
   }
+
+  open() {
+    super.open();
+
+    setTimeout(() => {
+      this.modalContainer.classList.add("open");
+    }, 100);
+  }
 }
 
 export default Profile;
