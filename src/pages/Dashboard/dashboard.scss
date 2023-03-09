@@ -216,8 +216,13 @@
             display: grid;
             text-align: center;
             gap: 1rem;
+
             @media screen and (min-width: 1024px) {
               grid-template-columns: repeat(2, 1fr);
+            }
+
+            .rejected {
+              filter: grayscale(100%);
             }
 
             img {

@@ -3,6 +3,7 @@ import getTotalAcceptedApplicantsByPostId from "./getTotalAcceptedApplicantsByPo
 import getApplicantsByPostId from "./getApplicantsByPostId";
 import hireApplicant from "./hireApplicant";
 import cancelHiredApplicant from "./cancelHiredApplicant";
+import rejectApplicant from "./rejectApplicant";
 
 export {
   getTotalApplicantsByPostId,
@@ -10,4 +11,5 @@ export {
   getApplicantsByPostId,
   hireApplicant,
   cancelHiredApplicant,
+  rejectApplicant,
 };
