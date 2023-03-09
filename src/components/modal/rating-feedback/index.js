@@ -114,10 +114,7 @@ class RatingFeedback extends Modal {
     }
 
     // calculate average rating
-    // const averageRating = (sumRating / getAllRating.length).toFixed(0);
-
-    const averageRating = 3;
-
+    const averageRating = (sumRating / getAllRating.length).toFixed(0);
     const stars = new StarRating( `${averageRating}`);
     stars.suffix = `${averageRating}` + "/" + 5;
     starsContainer.appendChild(stars.toElement());
