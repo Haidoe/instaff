@@ -39,12 +39,9 @@ class Login extends Page {
 
                     <div class="output">
                     </div>
-                    <div class="group">
-                      <p>Forgot password? <a href="">Reset password.</a></p>
-                    </div>
 
                     <div class="group">
-                      <p>Don't have an account? <span class="create-account">Create one.</a></p>
+                      <p>Don't have an account? <a href = "#" class="create-account">Create one.</a></p>
                     </div>
 
               </div>
