@@ -1,5 +1,6 @@
 import StarRating from "../../../components/star-rating";
 import Modal from "../../../components/modal";
+import ProfileModal from "../../../components/modal/profile";
 import { hireApplicant, cancelHiredApplicant } from "../../../js/applicants";
 class ApplicantBox {
   constructor(obj) {
@@ -46,6 +47,12 @@ class ApplicantBox {
     anchorViewProfile.href = "javascript:void(0)";
     anchorViewProfile.className = "gradient-text";
     anchorViewProfile.textContent = "View Profile";
+
+    anchorViewProfile.addEventListener("click", () => {
+      const modal = new ProfileModal(this.data);
+
+      modal.open();
+    });
 
     meta.appendChild(anchorViewProfile);
 
