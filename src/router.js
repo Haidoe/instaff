@@ -16,11 +16,6 @@ const routes = [
     page: () => import(/* webpackChunkName: "Home"  */ `./pages/Home`),
   },
   {
-    path: "/old-home",
-    page: () => import(/* webpackChunkName: "Home"  */ `./pages/HomeOld/Home`),
-  },
-
-  {
     path: "/sign-in",
     page: () => import(/* webpackChunkName: "Signin" */ `./pages/Signin`),
   },
