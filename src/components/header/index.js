@@ -82,7 +82,7 @@ class MainHeader {
       employee: [
         {
           text: "Search",
-          href: "/search",
+          href: "/",
         },
         {
           text: "My Jobs",
@@ -184,6 +184,7 @@ class MainHeader {
       const prevActiveMenu = document.querySelector(".active-menu-item");
 
       if (prevActiveMenu) {
+        if (prevActiveMenu.getAttribute("href") === "/") return;
         prevActiveMenu.classList.remove("active-menu-item");
       }
     });
