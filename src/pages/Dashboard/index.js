@@ -253,6 +253,13 @@ class Dashboard extends EmployerPage {
     //PubSub for Mobile Related Stuff
     pubsub.subscribe("mainHeaderBackBtnClicked", this.popStateListener);
     window.addEventListener("popstate", this.popStateListener);
+
+    //Event Listener for Floating Icon
+    const floatingIcon = document.querySelector(".floating-icon");
+    floatingIcon.addEventListener("click", () => {
+      //This is to make that no one can prevent the popstate event
+      globalState.preventPopState = false;
+    });
   }
 
   close() {
