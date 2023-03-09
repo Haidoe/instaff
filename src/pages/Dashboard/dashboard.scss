@@ -4,6 +4,25 @@
 .dashboard-app {
   display: flex;
   flex-direction: column;
+
+  .floating-icon {
+    @extend .gradient-bg;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 3.5rem;
+
+    @media screen and (min-width: $mediumSmall) {
+      display: none;
+    }
+  }
 }
 
 .dashboard-page {

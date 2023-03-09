@@ -260,6 +260,13 @@ class Dashboard extends EmployerPage {
     pubsub.publish("mainHeaderHideBackBtn");
     window.removeEventListener("popstate", this.popStateListener);
     pubsub.unsubscribe("mainHeaderBackBtnClicked");
+
+    //Just to make sure Active Menu is set to Dashboard
+    const dashboardMenu = document.querySelector(
+      ".main-header a[href='/dashboard']"
+    );
+
+    dashboardMenu?.classList.remove("active-menu-item");
   }
 }
 
