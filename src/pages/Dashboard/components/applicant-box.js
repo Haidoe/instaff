@@ -15,6 +15,19 @@ class ApplicantBox {
     this.initElements();
   }
 
+  get positionLeft() {
+    return parseInt(
+      document.querySelector("#jpPositionAvailableLeft").textContent
+    );
+  }
+
+  set positionLeft(value) {
+    document.querySelector("#jpPositionAvailableLeft").textContent = value;
+    document.querySelector(
+      `#jp-${this.data.jobPostingId} .article-meta p:last-of-type span`
+    ).textContent = value;
+  }
+
   async initElements() {
     this.wrapper = document.createElement("div");
     this.wrapper.className = "applicant";
@@ -141,6 +154,8 @@ class ApplicantBox {
         this.data.status = "hired";
         this.renderActionBtns();
         modal.close();
+
+        this.positionLeft = this.positionLeft - 1;
       };
 
       modal.open();
@@ -158,6 +173,7 @@ class ApplicantBox {
       `;
 
       modal.handleConfirm = () => {
+        this.positionLeft = this.positionLeft + 1;
         cancelHiredApplicant(this.data.id);
         this.data.status = "pending";
         this.renderActionBtns();

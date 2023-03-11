@@ -182,8 +182,6 @@ class Dashboard extends EmployerPage {
     container.innerHTML = "";
     const applicants = await getApplicantsByPostId(jobPostingId);
 
-    console.log(applicants);
-
     if (applicants.length) {
       for (const applicant of applicants) {
         const applicantBox = new ApplicantBox(applicant);
