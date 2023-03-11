@@ -85,11 +85,6 @@ const routes = [
   },
 
   {
-    path: "/profile",
-    page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
-  },
-
-  {
     path: "/account-employer",
     page: () =>
       import(
