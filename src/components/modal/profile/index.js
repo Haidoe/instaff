@@ -18,7 +18,6 @@ class Profile extends Modal {
 
   async getProfileInfo() {
     this.profile = await getUserDetails(this.data.userId);
-    console.log(this.profile);
     this.render();
   }
 
@@ -42,9 +41,12 @@ class Profile extends Modal {
 
     const subtitle = document.createElement("div");
     subtitle.className = "subtitle";
-    const star = new StarRating(3);
-    star.suffix = "( 10 )";
+    const star = new StarRating(0);
     subtitle.appendChild(star.toElement());
+
+    star.suffix = `(${this.data.total})`;
+    star.rating = Math.floor(this.data.rating);
+    star.prefix = this.data.rating || null;
     content.appendChild(subtitle);
 
     header.appendChild(content);

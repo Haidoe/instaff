@@ -1,6 +1,7 @@
 import StarRating from "../../../components/star-rating";
 import Modal from "../../../components/modal";
 import ProfileModal from "../../../components/modal/profile";
+import getFeedbackRatingByUser from "../../../js/ratingandfeedback/getFeedbackRatingByUser";
 import {
   hireApplicant,
   cancelHiredApplicant,
@@ -14,7 +15,7 @@ class ApplicantBox {
     this.initElements();
   }
 
-  initElements() {
+  async initElements() {
     this.wrapper = document.createElement("div");
     this.wrapper.className = "applicant";
 
@@ -37,16 +38,21 @@ class ApplicantBox {
 
     content.appendChild(title);
 
-    //For JB's reference
-    const stars = new StarRating(3, false);
-    stars.suffix = "( 4 )";
-
-    stars.handleStarClick = (index) => {
-      stars.rating = index;
-      stars.rerender();
-    };
-
+    const stars = new StarRating(0);
     content.appendChild(stars.toElement());
+
+    getFeedbackRatingByUser(this.data.userId).then(({ rating, total }) => {
+      this.data = {
+        ...this.data,
+        rating,
+        total,
+      };
+
+      stars.prefix = rating || null;
+      stars.suffix = `(${total})`;
+      stars.rating = Math.floor(rating);
+      stars.rerender();
+    });
 
     const meta = document.createElement("div");
     meta.className = "meta";
@@ -163,7 +169,6 @@ class ApplicantBox {
   }
 
   renderActionBtns() {
-    console.log(this.data);
     this.actionBtns.innerHTML = "";
 
     if (this.data.status === "hired") {
