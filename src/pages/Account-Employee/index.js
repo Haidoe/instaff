@@ -6,6 +6,12 @@ import {
   getTypeOfWorkByUserId,
   updatetypeOfWork,
   setTypeOfWorkInfo,
+  getAvailabilityByUserId,
+  updateAvailability,
+  setAvailability,
+  getLengthOfShiftByUserId,
+  setLengthOfShift,
+  updatelengthOfShift,
 } from "../../js/account-setting/account";
 import { uploadFile } from "../../js/upload-files/upload-image";
 import { formatDate, readURL } from "../../js/utils";
@@ -110,8 +116,8 @@ class AccountEmployee extends EmployeePage {
     } else {
       //profileImage.src = "../../static/images/sample.jpg";
       profileImage.children[3].style.display = "None";
-      profileImage.style.backgroundImage = `url(../../static/images/sample.jpg)`;
-      bannerImage.style.backgroundImage = `url(../../static/images/sample.jpg)`;
+      profileImage.style.backgroundImage = `url(../../static/images/anonymous.svg)`;
+      bannerImage.style.backgroundImage = `url(../../static/images/anonymous.svg)`;
     }
     if (
       typeof this.data.uploadProfURL !== "undefined" &&
@@ -163,20 +169,123 @@ class AccountEmployee extends EmployeePage {
           );
         }
       }
+      const checkboxContainer = document.createElement("label");
+      checkboxContainer.className = "checkbox-container";
+      checkboxContainer.innerHTML = item;
       const inputCheckbox = document.createElement("input");
       inputCheckbox.type = "checkbox";
-      inputCheckbox.className = "logo";
       inputCheckbox.id = item.toLowerCase();
       inputCheckbox.name = "workType";
       inputCheckbox.value = item;
       inputCheckbox.checked = findItem != undefined ? true : false;
 
-      const labelCheckboxFor = document.createElement("label");
-      labelCheckboxFor.innerHTML = item;
+      const labelCheckboxFor = document.createElement("span");
+      labelCheckboxFor.className = "checkmark";
+      checkboxContainer.appendChild(inputCheckbox);
+      checkboxContainer.appendChild(labelCheckboxFor);
+      const typeOfWorkContainer = document.querySelector(
+        ".form-group-typeOfWork"
+      );
+      typeOfWorkContainer.appendChild(checkboxContainer);
+    });
+  }
+  async loadAvailabilityListingData() {
+    let results = await getAvailabilityByUserId(this.profileId);
+    console.log(results);
+    const checkList = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    checkList.forEach((item) => {
+      let findItem = undefined;
 
-      const typeOfWorkContainer = document.querySelector(".form-group");
-      typeOfWorkContainer.appendChild(inputCheckbox);
-      typeOfWorkContainer.appendChild(labelCheckboxFor);
+      if (results.length > 0) {
+        if (results[0].days !== undefined) {
+          findItem = results[0].days.find(
+            (e) => e.toLowerCase() == item.toLowerCase()
+          );
+        }
+      }
+      const checkboxContainer = document.createElement("label");
+      checkboxContainer.className = "checkbox-container";
+      checkboxContainer.innerHTML = item;
+      const inputCheckbox = document.createElement("input");
+      inputCheckbox.type = "checkbox";
+      inputCheckbox.id = item.toLowerCase();
+      inputCheckbox.name = "availability";
+      inputCheckbox.value = item;
+      inputCheckbox.checked = findItem != undefined ? true : false;
+
+      const labelCheckboxFor = document.createElement("span");
+      labelCheckboxFor.className = "checkmark";
+      checkboxContainer.appendChild(inputCheckbox);
+      checkboxContainer.appendChild(labelCheckboxFor);
+
+      const availabilityContainer = document.querySelector(
+        ".form-group-availability"
+      );
+      availabilityContainer.appendChild(checkboxContainer);
+      //availabilityContainer.appendChild(labelCheckboxFor);
+    });
+  }
+
+  async loadLengthOfShiftListingData() {
+    const checkList = [];
+
+    //checkList.length = 5;
+    for (let i = 0; i < 5; i++) {
+      // let hour = i == 0 ? 12 : i > 12 ? i - 12 : i;
+      // let ampm = i > 12 ? "PM" : "AM";
+      checkList.push({
+        ctrlId: "checkbox_timeslot_" + i,
+        // value: hour + ":00 " + ampm + " - " + hour + ":59 " + ampm,
+        // text: hour + ":00 " + ampm,
+      });
+    }
+    let results = await getLengthOfShiftByUserId(this.profileId);
+    console.log(results);
+    checkList.forEach((item) => {
+      let findItem = undefined;
+      let idx = checkList.indexOf(item);
+
+      if (results.length) {
+        if (results[0].time != undefined && results[0].time.length > idx) {
+          findItem = results[0].time[idx];
+        }
+      }
+      const lengthOfShiftFormWrapper = document.querySelector(
+        ".form-wrapper-lengthOfShift"
+      );
+
+      const lengthOfShiftContainer = document.createElement("div");
+      lengthOfShiftContainer.className = "form-group-lengthOfShift";
+      const containerShift = document.createElement("div");
+      containerShift.innerHTML = `Shift ${idx + 1}`;
+      lengthOfShiftContainer.appendChild(containerShift);
+      // lengthOfShiftFormWrapper.appendChild(lengthOfShiftContainer);
+      const containerFromTime = document.createElement("div");
+      const inputFromTime = document.createElement("input");
+      inputFromTime.type = "time";
+      inputFromTime.id = `fromTime_${idx}`;
+      inputFromTime.name = `fromTime_${idx}`;
+      inputFromTime.value = `${findItem != undefined ? findItem.from : ""}`;
+      containerFromTime.appendChild(inputFromTime);
+      lengthOfShiftContainer.appendChild(containerFromTime);
+      lengthOfShiftFormWrapper.appendChild(lengthOfShiftContainer);
+
+      const containerToTime = document.createElement("div");
+      const inputToTime = document.createElement("input");
+      inputToTime.type = "time";
+      inputToTime.id = `toTime_${idx}`;
+      inputToTime.value = `${findItem != undefined ? findItem.to : ""}`;
+      containerToTime.appendChild(inputToTime);
+      lengthOfShiftContainer.appendChild(containerToTime);
+      lengthOfShiftFormWrapper.appendChild(lengthOfShiftContainer);
     });
   }
 
@@ -198,6 +307,16 @@ class AccountEmployee extends EmployeePage {
       mainPageContainer.classList.add("preference-page-mobile");
       pubsub.publish("mainHeaderShowBackBtn");
     }
+    if (mainPageContainer.classList.contains("availability-page")) {
+      mainPageContainer.classList.remove("availability-page");
+      mainPageContainer.classList.add("preference-page-mobile");
+      pubsub.publish("mainHeaderShowBackBtn");
+    }
+    if (mainPageContainer.classList.contains("lengthOfShift-page")) {
+      mainPageContainer.classList.remove("lengthOfShift-page");
+      mainPageContainer.classList.add("preference-page-mobile");
+      pubsub.publish("mainHeaderShowBackBtn");
+    }
   }
 
   async mounted() {
@@ -207,6 +326,8 @@ class AccountEmployee extends EmployeePage {
     this.data = user;
     this.init();
     this.loadTypeOfWorkListingData();
+    this.loadAvailabilityListingData();
+    this.loadLengthOfShiftListingData();
 
     const profileForm = document.querySelector("#profileForm");
     const profileImage = document.getElementById("profileImage");
@@ -217,6 +338,8 @@ class AccountEmployee extends EmployeePage {
     const webPreferenceURL = document.getElementById("webPreferenceURL");
     const webProfileURL = document.getElementById("webProfileURL");
     const typeOfWorkURL = document.getElementById("typeOfWorkURL");
+    const availabilityURL = document.getElementById("availabilityURL");
+    const lengthOfShiftURL = document.getElementById("lengthOfShiftURL");
 
     profileForm.addEventListener(
       "submit",
@@ -256,6 +379,7 @@ class AccountEmployee extends EmployeePage {
       mainPageContainer.classList.remove("preference-page-mobile");
       mainPageContainer.classList.remove("preference-page");
       mainPageContainer.classList.remove("typeofWork-page");
+      mainPageContainer.classList.remove("lengthOfShift-page-clicked");
 
       // Set Active Link
       const previousActiveMenu = document.querySelector(".web-menu li.active");
@@ -290,7 +414,7 @@ class AccountEmployee extends EmployeePage {
         ".account-employee-page"
       );
       mainPageContainer.classList.add("preference-wrapper-clicked");
-      mainPageContainer.classList.add("preference-page");
+      mainPageContainer.classList.add("preference-page-clicked");
       mainPageContainer.classList.remove("profile-page-clicked");
 
       const previousActiveMenu = document.querySelector(".web-menu li.active");
@@ -322,7 +446,17 @@ class AccountEmployee extends EmployeePage {
       const mainPageContainer = document.querySelector(
         ".account-employee-page"
       );
-      mainPageContainer.classList.add("typeofWork-page");
+      mainPageContainer.classList.add("typeofWork-page"); // Mobile
+      mainPageContainer.classList.add("typeofWork-page-clicked"); //Web
+      mainPageContainer.classList.remove("availability-page-clicked");
+      mainPageContainer.classList.remove("lengthOfShift-page-clicked");
+
+      // Set Active Link
+      const previousSideActiveMenu = document.querySelector(
+        ".preference-page nav ul li.sideMenu-active"
+      );
+      previousSideActiveMenu.classList.remove("sideMenu-active");
+      e.target.parentElement.parentElement.classList.add("sideMenu-active");
       pubsub.publish("mainHeaderShowBackBtn");
 
       if (window.innerWidth < 768) {
@@ -332,6 +466,74 @@ class AccountEmployee extends EmployeePage {
     });
 
     // End: Type of Work ===========================
+
+    // Begin: Availability ==========================
+    const availabilityForm = document.querySelector("#availabilityForm");
+    availabilityForm.addEventListener(
+      "submit",
+      this.handleAvailabilityFormSubmit.bind(this)
+    );
+
+    availabilityURL.addEventListener("click", (e) => {
+      e.preventDefault();
+      const mainPageContainer = document.querySelector(
+        ".account-employee-page"
+      );
+      mainPageContainer.classList.add("availability-page"); // For Mobile
+      mainPageContainer.classList.add("availability-page-clicked"); //For Web
+      mainPageContainer.classList.remove("typeofWork-page-clicked");
+      mainPageContainer.classList.remove("lengthOfShift-page-clicked");
+
+      // Set Active Link
+      const previousSideActiveMenu = document.querySelector(
+        ".preference-page nav ul li.sideMenu-active"
+      );
+      previousSideActiveMenu.classList.remove("sideMenu-active");
+      e.target.parentElement.parentElement.classList.add("sideMenu-active");
+
+      pubsub.publish("mainHeaderShowBackBtn");
+
+      if (window.innerWidth < 768) {
+        window.scrollTo(0, 0);
+        globalState.preventPopState = true;
+      }
+    });
+
+    // End: Availability ===========================
+
+    // Begin: Length of Shift ==========================
+    const lengthOfShiftForm = document.querySelector("#lengthOfShiftForm");
+    lengthOfShiftForm.addEventListener(
+      "submit",
+      this.handleLengthOfShiftFormSubmit.bind(this)
+    );
+    lengthOfShiftURL.addEventListener("click", (e) => {
+      e.preventDefault();
+      const mainPageContainer = document.querySelector(
+        ".account-employee-page"
+      );
+      mainPageContainer.classList.add("lengthOfShift-page"); // For Mobile
+      mainPageContainer.classList.add("lengthOfShift-page-clicked"); // For Web
+      mainPageContainer.classList.remove("availability-page-clicked");
+      mainPageContainer.classList.remove("typeofWork-page-clicked");
+
+      // Set Active Link
+      //this.setActiveLinkForPreferences();
+      const previousSideActiveMenu = document.querySelector(
+        ".preference-page nav ul li.sideMenu-active"
+      );
+      previousSideActiveMenu.classList.remove("sideMenu-active");
+      e.target.parentElement.parentElement.classList.add("sideMenu-active");
+
+      pubsub.publish("mainHeaderShowBackBtn");
+
+      if (window.innerWidth < 768) {
+        window.scrollTo(0, 0);
+        globalState.preventPopState = true;
+      }
+    });
+
+    // End: Length of Shift ===============
 
     //PubSub for Mobile Related Stuff
     pubsub.subscribe("mainHeaderBackBtnClicked", this.popStateListener);
@@ -364,6 +566,14 @@ class AccountEmployee extends EmployeePage {
           this.marker.setLngLat(position).addTo(this.map);
         }
       });
+  }
+
+  setActiveLinkForPreferences() {
+    const previousSideActiveMenu = document.querySelector(
+      ".preference-page nav ul li.sideMenu-active"
+    );
+    previousSideActiveMenu.classList.remove("sideMenu-active");
+    e.target.parentElement.parentElement.classList.add("sideMenu-active");
   }
 
   async handleProfileFormSubmit(e) {
@@ -495,6 +705,83 @@ class AccountEmployee extends EmployeePage {
   }
 
   // End: Type of Work Events Listener ===========================
+
+  // Begin: Availability Events Listener ===========================
+  async handleAvailabilityFormSubmit(e) {
+    e.preventDefault();
+    console.log("availability submmitted");
+    availabilitySubmit.innerHTML = "Saving...";
+
+    let form = document.querySelector("#availabilityForm");
+    let checkBoxes = form.querySelectorAll('input[type="checkbox"]');
+    //console.log(checkBoxes);
+    const availability = {
+      userId: this.profileId,
+      days: [],
+    };
+    console.log(availability);
+
+    checkBoxes.forEach((item) => {
+      if (item.checked) {
+        availability.days.push(item.value); //stored the objects to result array
+      }
+    });
+
+    let results = await getAvailabilityByUserId(availability.userId);
+
+    try {
+      if (results.length > 0) {
+        await updateAvailability(results[0].id, availability);
+      } else {
+        await setAvailability(availability);
+      }
+    } catch (error) {
+      console.log("ERROR", error);
+    } finally {
+      availabilitySubmit.innerHTML = "Save";
+    }
+  }
+
+  // End: Availability Events Listener ===========================
+
+  // Begin: Length Of Shift Events Listener ===========================
+  async handleLengthOfShiftFormSubmit(e) {
+    e.preventDefault();
+    submitBtn.innerHTML = "Saving...";
+    let form = document.querySelector("#lengthOfShiftForm");
+    let fromTimes = form.querySelectorAll('input[id^="fromTime_"]');
+
+    const lengthOfShift = {
+      userId: this.profileId,
+      time: [],
+    };
+
+    fromTimes.forEach((item) => {
+      if (item.value !== "") {
+        let closestParent = item.closest("div .form-group-lengthOfShift");
+        let toTime = closestParent.querySelector('input[id^="toTime_"]');
+
+        let _from = item.value.trim();
+        let _to = toTime.value.trim();
+
+        lengthOfShift.time.push({ from: _from, to: _to });
+      }
+    });
+
+    let results = await getLengthOfShiftByUserId(lengthOfShift.userId);
+    try {
+      if (results.length > 0) {
+        await updatelengthOfShift(results[0].id, lengthOfShift);
+      } else {
+        await setLengthOfShift(lengthOfShift);
+      }
+    } catch (error) {
+      console.log("ERROR", error);
+    } finally {
+      submitBtn.innerHTML = "Save";
+    }
+  }
+  // End: Length Of Shift Events Listener ===========================
 }
 
 function _validate(oInput, extensions) {

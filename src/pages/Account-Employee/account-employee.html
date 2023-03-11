@@ -30,18 +30,18 @@
           ><span class="text">Preferences</span></a
         >
       </li>
-      <li>
+      <!-- <li>
         <a id="settingURL" href="#"
           ><i class="fa-solid fa-gear"></i><span class="text">Settings</span></a
         >
-      </li>
+      </li> -->
     </ul>
     <ul class="web-menu">
       <li class="active"><a href="#" id="webProfileURL"> Profile</a></li>
       <li>
         <a id="webPreferenceURL" href="#">Preferences</a>
       </li>
-      <li>Settings</li>
+      <!-- <li>Settings</li> -->
     </ul>
   </div>
   <div class="profile-page" id="profile-page">
@@ -77,18 +77,21 @@
             <label for="dateOfBirth"> Date of Birth </label>
             <input required type="date" id="dateOfBirth" name="dateOfBirth" />
           </div>
-          <div class="input-group">
-            <label for="address">Address Line</label>
-            <input type="text" id="address" />
-          </div>
+
           <div class="input-group">
             <label for="city">City</label>
             <input required type="text" id="city" />
           </div>
+
           <div class="input-group">
             <label for="postalCode">Postal Code</label>
             <input required type="text" id="postalCode" />
           </div>
+          <div class="input-group address-input">
+            <label for="address">Address Line</label>
+            <input type="text" id="address" />
+          </div>
+          <div></div>
           <div id="profile-map"></div>
           <div class="input-group">
             <label for="contactNumber">Contact Number</label>
@@ -99,7 +102,7 @@
               name="contactNumber" />
           </div>
           <div class="input-group">
-            <label for="emailAddress">Email Address</label>
+            <label for="emailAddress">Contact Email Address</label>
             <input required type="text" id="emailAddress" name="emailAddress" />
           </div>
         </div>
@@ -126,10 +129,6 @@
     <div class="preference-page" id="preference-page">
       <nav>
         <ul class="preference-menu">
-          <li>
-            <span class="logo"></span
-            ><span class="text"><a href="#">Student</a></span>
-          </li>
           <li class="sideMenu-active">
             <span class="logo"></span
             ><span class="text"
@@ -138,11 +137,15 @@
           </li>
           <li>
             <span class="logo"></span
-            ><span class="text"><a href="#">Availability</a></span>
+            ><span class="text"
+              ><a id="availabilityURL" href="#">Availability</a></span
+            >
           </li>
           <li>
             <span class="logo"></span
-            ><span class="text"><a href="#">Length of shift</a></span>
+            ><span class="text"
+              ><a id="lengthOfShiftURL" href="#">Length of shift</a></span
+            >
           </li>
         </ul>
       </nav>
@@ -151,10 +154,7 @@
       <h2 id="displayName">What type of work are you interested in?</h2>
       <form action="#" id="typeOfWorkForm" class="content">
         <div class="form-wrapper">
-          <div class="form-group">
-            <!-- <input type="checkbox" class="logo" id="" name="workType" />
-          <label for="">Barista</label> -->
-          </div>
+          <div class="form-group-typeOfWork"></div>
           <div class="action-btn-wrapper center">
             <button
               type="submit"
@@ -163,6 +163,46 @@
               Save
             </button>
           </div>
+        </div>
+      </form>
+    </div>
+    <div class="availability-page">
+      <h2 id="displayName">When are you availiable to work?</h2>
+      <form action="#" id="availabilityForm" class="content">
+        <div class="form-wrapper">
+          <div class="form-group-availability"></div>
+          <div class="action-btn-wrapper center">
+            <button
+              type="submit"
+              id="availabilitySubmit"
+              class="primary-button submit-btn">
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="lengthOfShift-page">
+      <h2 id="displayName">Which shift are you interested in?</h2>
+      <form action="#" id="lengthOfShiftForm" class="content">
+        <div class="form-wrapper-lengthOfShift">
+          <div class="form-group-lengthOfShift">
+            <div></div>
+            <div>
+              <label for="fromTime">Start Time</label>
+            </div>
+            <div>
+              <label for="toTime">End Time</label>
+            </div>
+          </div>
+        </div>
+        <div class="action-btn-wrapper center">
+          <button
+            type="submit"
+            id="lengthOfShiftSubmit"
+            class="primary-button submit-btn">
+            Save
+          </button>
         </div>
       </form>
     </div>

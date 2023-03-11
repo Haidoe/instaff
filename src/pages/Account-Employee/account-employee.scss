@@ -8,6 +8,75 @@
 main {
   background: white;
 }
+
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: $colorLightGray;
+
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkmark {
+  background-color: $colorPink;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
 .account-employee-page {
   .header {
     flex-direction: column;
@@ -171,6 +240,7 @@ main {
       aspect-ratio: 16/8;
       border: 1px solid #000;
       border-radius: 4px;
+      margin-top: 1rem;
     }
 
     .action-btn-wrapper {
@@ -289,12 +359,30 @@ main {
     display: none;
   }
 
-  .typeofWork-page {
+  .typeofWork-page,
+  .availability-page,
+  .lengthOfShift-page {
     display: none;
   }
 
   .form-wrapper {
     display: grid;
+  }
+  .form-group-typeOfWork,
+  .form-group-availability,
+  .form-group-lengthOfShift {
+    display: grid;
+  }
+
+  .form-group-lengthOfShift {
+    grid-template-columns: 50px 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  .form-wrapper-lengthOfShift {
+    display: grid;
+    gap: 1rem;
   }
 }
 
@@ -324,24 +412,39 @@ main {
 }
 
 .typeofWork-page {
-  .header {
-    display: none;
-  }
-  .account-setting {
-    display: none;
-  }
-  .preference-page {
+  .header,
+  .account-setting,
+  .preference-page,
+  .lengthOfShift-page {
     display: none;
   }
 
   .typeofWork-page {
     display: unset;
   }
-  .form-group {
-    display: grid;
-    grid-template-columns: 60px 1fr;
-    justify-content: center;
-    align-items: center;
+}
+
+.availability-page {
+  .header,
+  .account-setting,
+  .preference-page,
+  .typeofWork-page,
+  .lengthOfShift-page {
+    display: none;
+  }
+  .availability-page {
+    display: unset;
+  }
+}
+.lengthOfShift-page {
+  .header,
+  .account-setting,
+  .preference-page,
+  .typeofWork-page {
+    display: none;
+  }
+  .lengthOfShift-page {
+    display: unset;
   }
 }
 
@@ -428,6 +531,7 @@ main {
         }
       }
     }
+
     .web-menu {
       flex: 1;
       li {
@@ -534,6 +638,50 @@ main {
       border: 1px solid $borderColor;
       border-radius: 20px;
       background: lightgray;
+    }
+  }
+
+  .typeofWork-page-clicked {
+    .availability-page,
+    .lengthOfShift-page {
+      display: none;
+    }
+    .typeofWork-page {
+      display: unset;
+    }
+  }
+
+  .availability-page-clicked {
+    .typeofWork-page,
+    .lengthOfShift-page {
+      display: none;
+    }
+    .availability-page {
+      display: unset;
+    }
+    .availability-page {
+      grid-row: span 2;
+      border: 1px solid #e6e6e6;
+      padding: 1rem;
+      border-radius: 5px;
+      background-color: white;
+    }
+  }
+
+  .lengthOfShift-page-clicked {
+    .typeofWork-page,
+    .availability-page {
+      display: none;
+    }
+    .lengthOfShift-page {
+      display: unset;
+    }
+    .lengthOfShift-page {
+      grid-row: span 2;
+      border: 1px solid #e6e6e6;
+      padding: 1rem;
+      border-radius: 5px;
+      background-color: white;
     }
   }
 
