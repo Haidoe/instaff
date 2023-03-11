@@ -2,14 +2,12 @@ import EmployerPage from "../../classes/EmployerPage";
 import { getActiveTotalApplicantsByUser } from "../../js/job-posting/job-posting";
 import template from "./dashboard.html";
 import RecentJob from "./components/recent-job";
-import HistoryJob from "./components/history-job";
 import ApplicantBox from "./components/applicant-box";
 import "./dashboard.scss";
 import {
   getTotalAcceptedApplicantsByPostId,
   getApplicantsByPostId,
 } from "../../js/applicants";
-import getPostingHistoryByUser from "../../js/job-posting/getPostingHistoryByUser";
 import getAllActiveJobPostingByUser from "../../js/job-posting/getAllActiveJobPostingByUser";
 import getTotalActiveJobPostingByUser from "../../js/job-posting/getTotalActiveJobPostingByUser";
 import pubsub from "../../classes/PubSub";
@@ -177,29 +175,6 @@ class Dashboard extends EmployerPage {
 
     const recentJobContainer = document.querySelector(`#jp-${data.id}`);
     recentJobContainer.classList.add("active");
-  }
-
-  async loadPostingHistory() {
-    const total = await getPostingHistoryByUser(this.currentUser.uid);
-
-    if (total.length > 0) {
-      const container = document.querySelector(
-        "section.recent-job-posting-content"
-      );
-
-      const history = document.createElement("section");
-      history.className = "history";
-
-      const historyTitle = document.createElement("h3");
-      historyTitle.textContent = "History";
-
-      history.appendChild(historyTitle);
-      container.appendChild(history);
-
-      for (const item of total) {
-        history.appendChild(HistoryJob(item));
-      }
-    }
   }
 
   async loadApplicants(jobPostingId) {

@@ -14,7 +14,7 @@ const getTotalAcceptedApplicantsByPostId = async (id) => {
   const applicantsQuery = query(
     applicantsCol,
     where("jobPostingId", "==", id),
-    where("status", "==", "accepted")
+    where("status", "==", "hired")
   );
 
   const result = await getCountFromServer(applicantsQuery);
