@@ -112,8 +112,8 @@ class MainHeader {
 
     const loggedInNavs = [
       {
-        text: "Inbox",
-        href: "/inbox",
+        text: "Notification",
+        href: "/notification",
       },
     ];
 
