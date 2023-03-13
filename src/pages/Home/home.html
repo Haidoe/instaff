@@ -2,17 +2,26 @@
     
 </head>
 
-<div class="side-bar">
-    <h2>List of jobs available in this location</h2>
+<div id="side-bar">
+    <div class="toggle-off-wrapper">
+        <div id="toogle-button-off"><i class="fa-regular fa-rectangle-xmark"></i></div>
+    </div>
+    <h2 id="side-list-title">List of jobs available in this location</h2>
     <section id="job-info-list"></section>
 </div>
-<div class="new-home-page" id="new-home-page"></div>
-<div class="search-div">
-    <input type="text" id="job_keyword" list="job_title_list" placeholder="Job title" required>
-    <datalist id="job_title_list"></datalist>
-    <div class="button-wrapper">
-        <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
-        <button id="resetBtn">Reset</button>
+
+<div class="new-home-page" id="new-home-page">
+        <div id="toogle-button-on"><i class="fa-solid fa-bars"></i></div>
+</div>
+
+<div class="search-div-wrapper">
+    <div class="search-div">
+        <input type="text" id="job_keyword" list="job_title_list" placeholder="Type your keyword" required>
+        <datalist id="job_title_list"></datalist>
+        <div class="button-wrapper">
+            <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button id="resetBtn">Reset</button>
+        </div>
     </div>
 </div>
 

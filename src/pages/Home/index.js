@@ -67,6 +67,29 @@ class Home extends Pages {
     resetBtn.addEventListener("click", this.mapReset.bind(this));
 
     this.map.on("moveend", this.updateList.bind(this));
+
+    const sidebarOffBtn = document.getElementById('toogle-button-off'); 
+    const sidebarOnBtn = document.getElementById('toogle-button-on');
+    const sidebarOnWrapper = document.getElementsByClassName("toggle-off-wrapper");
+    const sideBar = document.getElementById('side-bar');
+    const homePage = document.getElementById('new-home-page');
+    sidebarOnBtn.style.display = 'none';
+
+    sidebarOffBtn.addEventListener('click',function(e){
+      sideBar.style.width = "0";
+      sideBar.style.left = "-2rem";
+      homePage.style.marginLeft = "0";
+      sidebarOnBtn.style.display = 'flex';
+    })
+
+    sidebarOnBtn.addEventListener('click',function(e){
+      sideBar.style.width = "300px";
+      sideBar.style.left = "0";
+      homePage.style.marginLeft = "300px";
+      sidebarOnBtn.style.display = 'none';
+    })
+
+
   }
 
   removeDuplicates(arr) {
@@ -75,15 +98,12 @@ class Home extends Pages {
   async fetchAllActiveJobPostings() {
     const response = await getAllActiveJobPostings();
     Home.joblist = response;
-    //console.log(Home.joblist);
     Home.joblist.forEach(function (job) {
       Home.jobTitleList.push(job.positionTitle);
     });
 
-    console.log(Home.jobTitleList);
     Home.JobOptions = [];
     Home.JobOptions = this.removeDuplicates(Home.jobTitleList);
-
     const jobPositionList = document.getElementById("job_title_list");
     jobPositionList.innerHTML = "";
     Home.JobOptions.forEach(function (job_title) {
@@ -95,7 +115,6 @@ class Home extends Pages {
 
   updateList() {
     //1. Get the view boundary
-    //console.log(this.map.getBounds())
     const currentBound = this.map.getBounds();
     //2. Calculate the elements inside this boundary
     Home.showlist = [];
@@ -109,12 +128,16 @@ class Home extends Pages {
         job.coordinates.lat <= currentBound._ne.lat
       ) {
         Home.showlist.push(job);
-        // console.log(job.companyName+" , "+job.coordinates.lng+" , "+job.coordinates.lat);
       }
     });
     //3. Update the list
     const JobInfoList = document.getElementById("job-info-list");
     JobInfoList.innerHTML = "";
+
+    if(Home.showlist.length==0){
+      const listTitle = document.getElementById('side-list-title');
+      listTitle.innerHTML = "There's no job in this area";
+    }
 
     Home.showlist.forEach((job) => {
       let job_province = "";
@@ -138,10 +161,8 @@ class Home extends Pages {
       singleArticle.addEventListener("click", () => {
         const currentBound = this.map.getBounds();
         modal.open();
-        const drift = (currentBound._ne.lng - currentBound._sw.lng) / 4;
-        console.log(drift);
+        const drift = (currentBound._ne.lng - currentBound._sw.lng) / 3;
 
-        console.log(job.coordinates);
         this.map.easeTo({
           center: {
             lat: job.coordinates.lat,
@@ -150,11 +171,9 @@ class Home extends Pages {
         });
 
         const jobID = job.id;
-        console.log(jobID);
         Home.markerIDRef.forEach((marker) => {
           if (marker.jobID == jobID) {
             const item = marker.markerObj.getElement();
-            // console.log(Home.focusedMarker);
             if (Home.focusedMarker) {
               const previousMarkerItem = Home.focusedMarker.getElement();
               previousMarkerItem.classList.toggle("marker-selected");
@@ -169,9 +188,7 @@ class Home extends Pages {
         if (Home.focusedItem != null) {
           Home.focusedItem.classList.toggle("focus-article");
         }
-        console.log("before toggle");
         singleArticle.classList.toggle("focus-article");
-        console.log("after toggle");
         Home.focusedItem = singleArticle;
       });
       JobInfoList.appendChild(singleArticle);
@@ -190,9 +207,6 @@ class Home extends Pages {
     Home.currentlist = [];
 
     const keyword = job_keyword.value;
-
-    console.log("Searching for " + keyword);
-
     for (let job of Home.joblist) {
       if (job.positionTitle == keyword) {
         Home.currentlist.push(job);
@@ -221,20 +235,20 @@ class Home extends Pages {
         const modal = new Modal(job);
 
         modal.wrapper = document.querySelector(".new-home-page");
-
         const item = marker.getElement();
-        console.log(item);
 
         marker.getElement().addEventListener("click", () => {
           const item = marker.getElement();
-          console.log(item);
+          const currentBound = this.map.getBounds();
           modal.open();
 
-          // Home.markers.forEach(function(marker_temp){
-          //   if(this.marker==marker_temp){
-          //     console.log(marker_temp)
-          //   }
-          // })
+          const drift = (currentBound._ne.lng - currentBound._sw.lng) / 3;
+          this.map.easeTo({
+            center: {
+              lat: job.coordinates.lat,
+              lng: job.coordinates.lng - drift,
+            },
+          });
 
           if (Home.focusedMarker) {
             const previousMarkerItem = Home.focusedMarker.getElement();
@@ -249,7 +263,6 @@ class Home extends Pages {
       }
     }
 
-    console.log(Home.currentlist);
     let temp_lng = 0;
     let temp_lat = 0;
 
@@ -257,18 +270,11 @@ class Home extends Pages {
       temp_lng += item.coordinates.lng;
       temp_lat += item.coordinates.lat;
     });
-    // let length = Home.currentlist.length;
-
-    // for(i=0; i < length; i++){
-    //   temp_lng+= Home.currentlist[i].coordinatees.lng;
-    //   temp_lat+= Home.currentlist[i].coordinatees.lat;
-    // }
 
     temp_lng = temp_lng / Home.currentlist.length;
     temp_lat = temp_lat / Home.currentlist.length;
 
     console.log(temp_lng + " , " + temp_lat);
-
     this.map.easeTo({
       center: {
         lat: temp_lat,
@@ -277,7 +283,6 @@ class Home extends Pages {
     });
 
     this.updateList();
-    //console.log(Home.currentlist)
   }
 
   removeMarkers() {
@@ -324,13 +329,17 @@ class Home extends Pages {
       modal.wrapper = document.querySelector(".new-home-page");
 
       marker.getElement().addEventListener("click", () => {
-        console.log("marker clicked");
-        console.log(marker._element);
-        // console.log(marker)
+        const currentBound = this.map.getBounds();
 
         modal.open();
 
-        console.log(marker);
+        const drift = (currentBound._ne.lng - currentBound._sw.lng) / 3;
+        this.map.easeTo({
+          center: {
+            lat: job.coordinates.lat,
+            lng: job.coordinates.lng - drift,
+          },
+        });
 
         const articles = document.querySelectorAll("article");
 
@@ -338,7 +347,6 @@ class Home extends Pages {
         //Get the element in the list styled
         Home.markerIDRef.forEach(function (markerRef) {
           if (markerRef.markerObj == marker) {
-            // console.log(markerRef.jobID)
             focusMarkerID = markerRef.jobID;
           }
         });
@@ -356,7 +364,6 @@ class Home extends Pages {
         });
 
         const item = marker.getElement();
-        // console.log(Home.focusedMarker);
 
         if (Home.focusedMarker) {
           const previousMarkerItem = Home.focusedMarker.getElement();
