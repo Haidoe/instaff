@@ -9,6 +9,7 @@
 
   display: grid;
   gap: 0.5rem;
+  z-index: 2000;
 
   @media screen and (min-width: $mediumSmall) {
     max-width: $maxWidthContainer;
