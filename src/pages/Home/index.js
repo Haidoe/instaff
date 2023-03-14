@@ -1,4 +1,5 @@
 import AuthenticatedPage from "../../classes/AuthenticatedPage";
+import FirstTimeModal from "../../components/modal/first-time";
 import Modal from "../../components/modal/job-posting-detail";
 import getAllActiveJobPostings from "../../js/job-posting/getAllActiveJobPostings";
 import { pageTransition } from "../../router";
@@ -392,6 +393,14 @@ class Home extends AuthenticatedPage {
 
     this.initMap();
     this.showJobs();
+
+    // const testModal = new FirstTimeModal();
+    // //Check if user is new
+    // testModal.open();
+
+    // if (this.currentUser.uid) {
+    //   console.log(this.currentUser.details);
+    // }
   }
 
   close() {
