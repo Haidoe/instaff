@@ -4,6 +4,9 @@ import {
   getDocs,
   addDoc,
   serverTimestamp,
+  query,
+  where,
+  orderBy,
 } from "firebase/firestore";
 
 export const addNotification = async (notification) => {
@@ -27,9 +30,14 @@ export const addNotification = async (notification) => {
 export const getNotificationPerUser = async (userId) => {
   const db = getFirestore();
   const notifCol = collection(db, "notifications");
+  const q = query(
+    notifCol,
+    where("userId", "==", userId),
+    orderBy("created", "desc")
+  );
 
   try {
-    const response = await getDocs(notifCol);
+    const response = await getDocs(q);
 
     const mappedResponse = response.docs.map((doc) => ({
       id: doc.id,

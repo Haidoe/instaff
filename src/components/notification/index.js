@@ -52,8 +52,6 @@ class Notification {
       message.textContent = `${this.data.source} ${NOTIFICATION_STATUS.APPLY} ${this.data.jobPostingCompanyName}`;
     } else if (this.data.type === "APPLY_CANCEL") {
       message.textContent = `${this.data.source} ${NOTIFICATION_STATUS.APPLY_CANCEL} ${this.data.jobPostingCompanyName}`;
-    } else {
-      message.textContent = "You have been hired for the job";
     }
 
     anchor.appendChild(message);
