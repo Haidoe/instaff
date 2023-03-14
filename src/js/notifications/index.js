@@ -2,8 +2,6 @@ import {
   getFirestore,
   collection,
   getDocs,
-  where,
-  query,
   addDoc,
   serverTimestamp,
 } from "firebase/firestore";

@@ -3,6 +3,7 @@ import addApplicant from "../../../js/applicants/addApplicant";
 import deleteApplicationRecord from "../../../js/applicants/deleteApplicationRecord";
 import isAlreadyApplied from "../../../js/applicants/isAlreadyApplied";
 import { getUserDetails } from "../../../js/users";
+import { addNotification } from "../../../js/notifications";
 import { extractTime } from "../../../js/utils";
 import ConfirmModal from "../index";
 import "./job-posting-detail.scss";
@@ -270,6 +271,17 @@ class Modal {
     confirm.open();
 
     confirm.handleConfirm = async () => {
+      const notification = {
+        userId: this.data.userId,
+        jobPostingId: this.data.id,
+        imageUrl: this.userDetail.imageURL,
+        jobPostingCompanyName: this.data.companyName,
+        source: this.userDetail.displayName,
+        type: "APPLY",
+      };
+
+      addNotification(notification);
+
       const application = {
         userId: this.userId,
         jobPostingId: this.data.id,
@@ -300,6 +312,17 @@ class Modal {
     confirm.open();
 
     confirm.handleConfirm = () => {
+      const notification = {
+        userId: this.data.userId,
+        jobPostingId: this.data.id,
+        imageUrl: this.userDetail.imageURL,
+        jobPostingCompanyName: this.data.companyName,
+        source: this.userDetail.displayName,
+        type: "APPLY_CANCEL",
+      };
+
+      addNotification(notification);
+
       deleteApplicationRecord(this.applicationId, this.data.id).catch((err) => {
         console.log(err);
       });

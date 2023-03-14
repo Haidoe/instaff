@@ -48,6 +48,10 @@ class Notification {
       message.textContent = `${NOTIFICATION_STATUS.HIRED} ${this.data.jobPostingCompanyName}`;
     } else if (this.data.type === "HIRED_CANCEL") {
       message.textContent = `${this.data.jobPostingCompanyName} ${NOTIFICATION_STATUS.HIRED_CANCEL}`;
+    } else if (this.data.type === "APPLY") {
+      message.textContent = `${this.data.source} ${NOTIFICATION_STATUS.APPLY} ${this.data.jobPostingCompanyName}`;
+    } else if (this.data.type === "APPLY_CANCEL") {
+      message.textContent = `${this.data.source} ${NOTIFICATION_STATUS.APPLY_CANCEL} ${this.data.jobPostingCompanyName}`;
     } else {
       message.textContent = "You have been hired for the job";
     }
@@ -103,7 +107,6 @@ class NotificationsComponent {
         this.listen();
       } else {
         this.unsubscribe && this.unsubscribe();
-        console.log("No user is signed in.");
       }
     });
   }
