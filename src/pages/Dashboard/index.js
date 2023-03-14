@@ -143,7 +143,7 @@ class Dashboard extends EmployerPage {
     if (recent.length) {
       const data = recent[0];
       this.loadJobListingDetails(data);
-      this.loadApplicants(data.id);
+      this.loadApplicants(data);
     }
   }
 
@@ -170,21 +170,21 @@ class Dashboard extends EmployerPage {
 
     if (previousActiveJob) {
       previousActiveJob.classList.remove("active");
-      this.loadApplicants(data.id);
+      this.loadApplicants(data);
     }
 
     const recentJobContainer = document.querySelector(`#jp-${data.id}`);
     recentJobContainer.classList.add("active");
   }
 
-  async loadApplicants(jobPostingId) {
+  async loadApplicants(jobPosting) {
     const container = document.querySelector("div.applicants");
     container.innerHTML = "";
-    const applicants = await getApplicantsByPostId(jobPostingId);
+    const applicants = await getApplicantsByPostId(jobPosting.id);
 
     if (applicants.length) {
       for (const applicant of applicants) {
-        const applicantBox = new ApplicantBox(applicant);
+        const applicantBox = new ApplicantBox(applicant, jobPosting);
         container.appendChild(applicantBox.toElement());
       }
     } else {
