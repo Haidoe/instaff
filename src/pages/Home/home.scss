@@ -17,7 +17,7 @@
   }
 
   .marker-selected{
-    z-index: 10;
+    z-index: 5;
     filter: brightness(200%) contrast(83%) hue-rotate(254deg) saturate(240%) sepia(9%);
   }
 
@@ -36,12 +36,13 @@
     background-color: white;
     padding: 20px 10px;
     display: flex;
-    flex-direction: row nowrap;
     align-items: center;
     justify-content: space-between;
     position: fixed;
     top: 5rem;
-    left: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: .2s;
     z-index: 25;
     min-width: 350px;
     width: 30%;
@@ -107,22 +108,19 @@
   }
 
   @media screen and (min-width: 800px){
-    .search-div{
-      left: 40%;
-    }
     #side-bar{
       padding: 1rem;
       position: fixed;
       top:4.5rem;
       left:0;
-      z-index: 1;
+      z-index: 20;
       display:block;
-      width: 300px;
+      width: 28%;
       background-color: white;
       overflow-x: hidden;
       overflow-y: scroll;
       height: 800px;
-      transition: transform .5s;
+      transition: .5s;
     }
 
     #side-bar h2{
@@ -139,6 +137,10 @@
       transition: 0.3s;
     }
 
+    .search-div{
+      left:64%;
+
+    }
 
     .new-home-page{
       transition: margin-left .5s;
