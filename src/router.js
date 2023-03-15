@@ -34,6 +34,12 @@ const routes = [
   },
 
   {
+    path: "/my-jobs",
+    page: () =>
+      import(/* webpackChunkName: "NotificationPage" */ `./pages/MyJobs`),
+  },
+
+  {
     path: "/notification",
     page: () =>
       import(/* webpackChunkName: "NotificationPage" */ `./pages/Notification`),

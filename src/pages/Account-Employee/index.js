@@ -568,6 +568,12 @@ class AccountEmployee extends EmployeePage {
       });
   }
 
+  close() {
+    pubsub.unsubscribe("mainHeaderBackBtnClicked");
+    window.removeEventListener("popstate", this.popStateListener);
+    console.log("CLOSED AE");
+  }
+
   setActiveLinkForPreferences() {
     const previousSideActiveMenu = document.querySelector(
       ".preference-page nav ul li.sideMenu-active"
@@ -622,6 +628,7 @@ class AccountEmployee extends EmployeePage {
       submitBtn.innerHTML = "Save";
     }
   }
+
   async handleProfileImageChange(e) {
     e.preventDefault();
     const profileImageExtension = document.getElementById(
@@ -650,6 +657,7 @@ class AccountEmployee extends EmployeePage {
       profileImage.classList.remove("visible");
     }
   }
+
   async uploadProfURLChange(e) {
     e.preventDefault();
     const uploadProfURL = document.getElementById("uploadProfURL");

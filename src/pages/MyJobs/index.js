@@ -1,5 +1,5 @@
 import template from "./my-jobs.html";
-import './my-jobs.scss';
+import "./my-jobs.scss";
 import {
   getFirestore,
   Timestamp,
@@ -17,9 +17,7 @@ import createJobBoxElement from "./components/createJobBoxElement";
 import createJobBoxMainElement from "./components/createJobBoxMainElement";
 import calcStarRating from "../../js/ratingandfeedback/calcStarRating";
 
-import {
-  getProfile
-} from "../../js/account-setting/account";
+import { getProfile } from "../../js/account-setting/account";
 import EmployeePage from "../../classes/EmployeePage";
 import pubsub from "../../classes/PubSub";
 
@@ -35,7 +33,6 @@ class MyJobs extends EmployeePage {
   }
 
   async loadactiveJobSection() {
-
     const hiredJobsIdCol = await getJobsHiredByUser(this.profileId);
 
     const hiredJobsIdArray = hiredJobsIdCol.map((job) => job.jobPostingId);
@@ -57,18 +54,19 @@ class MyJobs extends EmployeePage {
     const activeJobSection = document.querySelector(".active-section");
     createJobBoxElement(hiredJobsColFiltered, activeJobSection);
 
-
-
     //render active jobs to active job section main
     const mainContent = document.querySelector(".main-content");
-    createJobBoxMainElement(hiredJobsColFiltered, mainContent, "Your active jobs");
+    createJobBoxMainElement(
+      hiredJobsColFiltered,
+      mainContent,
+      "Your active jobs"
+    );
 
     if (hiredJobsColFiltered.length > 0) {
       const job = hiredJobsColFiltered[0];
 
       const content = document.querySelector(`#job-${job.id}`);
       content.classList.add("show");
-
     }
   }
 
@@ -76,7 +74,9 @@ class MyJobs extends EmployeePage {
     const getAppliedJobsCol = await getJobsAppliedByUser(this.profileId);
 
     //extract jobPostingId from getAppliedJobsCol
-    const getAppliedJobsIdArray = getAppliedJobsCol.map((job) => job.jobPostingId);
+    const getAppliedJobsIdArray = getAppliedJobsCol.map(
+      (job) => job.jobPostingId
+    );
 
     //get job details from jobPostings collection and push job details into array
     const appliedJobsDetailArray = [];
@@ -99,8 +99,12 @@ class MyJobs extends EmployeePage {
     createJobBoxElement(appliedJobsColByUserFiltered, appliedJobSection);
 
     //render applied jobs to active job section main
-     const mainContent = document.querySelector(".main-content");
-    createJobBoxMainElement(appliedJobsColByUserFiltered, mainContent, "Your applied jobs");
+    const mainContent = document.querySelector(".main-content");
+    createJobBoxMainElement(
+      appliedJobsColByUserFiltered,
+      mainContent,
+      "Your applied jobs"
+    );
 
     //hide button
     // const button = appliedJobSectionMain.querySelectorAll("button");
@@ -110,18 +114,15 @@ class MyJobs extends EmployeePage {
   }
 
   async backToMain() {
-      pubsub.subscribe("mainHeaderBackBtnClicked", () => {
+    pubsub.subscribe("mainHeaderBackBtnClicked", () => {
       const mainContent = document.querySelector(".main-content");
       mainContent.classList.remove("show");
       const mainBox = document.querySelector(".main-content div.show");
-        mainBox?.classList.remove("show");
-        console.log("back to main")
-        pubsub.publish("mainHeaderHideBackBtn");
-       
+      mainBox?.classList.remove("show");
+      console.log("back to main");
+      pubsub.publish("mainHeaderHideBackBtn");
     });
-
   }
-
 
   async mounted() {
     document.querySelector("body").classList.add("my-jobs-body");
@@ -133,16 +134,14 @@ class MyJobs extends EmployeePage {
     this.loadactiveJobSection();
     this.loadappliedJobSection();
     this.backToMain();
-  };
-
-
+  }
 
   close() {
     document.querySelector("body").classList.remove("my-jobs-body");
     pubsub.unsubscribe("mainHeaderBackBtnClicked");
     pubsub.publish("mainHeaderHideBackBtn");
+    console.log(pubsub);
   }
-
 }
 
 export default MyJobs;
