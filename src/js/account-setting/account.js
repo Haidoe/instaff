@@ -107,9 +107,13 @@ export const getAvailabilityByUserId = async (userId) => {
 
   return result;
 };
-export const updateAvailability = async (id, availability) => {
+export const updateAvailability = async (id, initialAvailability) => {
   const db = getFirestore();
   const postingDoc = doc(db, `availability/${id}`);
+  const availability = {
+    ...initialAvailability,
+    updated: serverTimestamp(),
+  };
 
   try {
     await setDoc(postingDoc, availability, { merge: true });
@@ -159,9 +163,13 @@ export const getLengthOfShiftByUserId = async (userId) => {
 
   return result;
 };
-export const updatelengthOfShift = async (id, lengthOfShift) => {
+export const updatelengthOfShift = async (id, initiallengthOfShift) => {
   const db = getFirestore();
   const postingDoc = doc(db, `lengthOfShift/${id}`);
+  const lengthOfShift = {
+    ...initiallengthOfShift,
+    updated: serverTimestamp(),
+  };
 
   try {
     await setDoc(postingDoc, lengthOfShift, { merge: true });

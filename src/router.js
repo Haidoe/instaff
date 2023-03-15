@@ -16,11 +16,6 @@ const routes = [
     page: () => import(/* webpackChunkName: "Home"  */ `./pages/Home`),
   },
   {
-    path: "/old-home",
-    page: () => import(/* webpackChunkName: "Home"  */ `./pages/HomeOld/Home`),
-  },
-
-  {
     path: "/sign-in",
     page: () => import(/* webpackChunkName: "Signin" */ `./pages/Signin`),
   },
@@ -36,6 +31,18 @@ const routes = [
       import(
         /* webpackChunkName: "EmailVerification" */ `./pages/Verification`
       ),
+  },
+
+  {
+    path: "/my-jobs",
+    page: () =>
+      import(/* webpackChunkName: "NotificationPage" */ `./pages/MyJobs`),
+  },
+
+  {
+    path: "/notification",
+    page: () =>
+      import(/* webpackChunkName: "NotificationPage" */ `./pages/Notification`),
   },
 
   {
@@ -87,11 +94,6 @@ const routes = [
     path: "/account/setting",
     page: () =>
       import(/* webpackChunkName: "Profile" */ `./pages/Account/setting`),
-  },
-
-  {
-    path: "/profile",
-    page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
   },
 
   {

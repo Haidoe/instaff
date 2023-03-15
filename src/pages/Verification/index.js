@@ -23,7 +23,7 @@ class Verification extends Page {
             <img src="./static/images/verify-letter.svg" alt="envelope picture" class="envelope">
             <div class="group">
               <p>You're almost there! We sent an email to <span id="useremail"></span></p>
-              <p>Click the link in that email to complete your sign up.</p>
+              <p>Click the link in email to complete your sign up.</p>
             </div>
             <div class="group">
               <p>Still can't find the email?</p>
@@ -33,6 +33,10 @@ class Verification extends Page {
             <div class="group">
               <p id="output"></p>
             </div>
+            <div class="group">
+              <a href= "#" class="signout">Maybe later</a>
+            </div>
+
           </div>
         </div>
       </div>
@@ -76,13 +80,23 @@ class Verification extends Page {
         btnResend.innerHTML = `<div>Sending...</div>`;
 
 
-
         // Email verification sent!
         output.innerHTML = `<em>Email Verification sent! Check your mail box.</em>`;
         // ...
 
         btnResend.innerHTML = `<div>Resend Email</div>`;
 
+      });
+    });
+
+    const signOut = document.querySelector(".signout");
+    signOut.addEventListener("click", (e) => {
+      e.preventDefault();
+      auth.signOut().then(() => {
+        // Sign-out successful.
+        pageTransition("/sign-in");
+      }).catch((error) => {
+        // An error happened.
       });
     });
   }

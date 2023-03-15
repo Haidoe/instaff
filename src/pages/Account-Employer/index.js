@@ -101,8 +101,8 @@ class AccountEmployer extends EmployerPage {
     } else {
       //profileImage.src = "../../static/images/sample.jpg";
       profileImage.children[3].style.display = "None";
-      profileImage.style.backgroundImage = `url(../../static/images/sample.jpg)`;
-      bannerImage.style.backgroundImage = `url(../../static/images/sample.jpg)`;
+      profileImage.style.backgroundImage = `url(../../static/images/anonymous.svg)`;
+      bannerImage.style.backgroundImage = `url(../../static/images/anonymous.svg)`;
     }
     if (
       typeof this.data.uploadProfURL !== "undefined" &&

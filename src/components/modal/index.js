@@ -71,10 +71,12 @@ class Modal {
   }
 
   open() {
+    document.body.classList.add("no-scroll");
     this.wrapper.appendChild(this.modal);
   }
 
   close() {
+    document.body.classList.remove("no-scroll");
     this.wrapper.removeChild(this.modal);
   }
 

@@ -1,0 +1,99 @@
+@import '../../../css/variables.scss';
+
+.main-modal .rating-feedback-modal {
+  background-color: $colorLightGray;
+  max-width: 90%;
+  color: $colorGray;
+
+}
+.main-modal .modal-container{
+  padding: 1rem 0 0 0;
+}
+
+.modal-content {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.modal-content-header{
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 2rem 0 2rem 0;
+
+  p{
+    font-weight: bold;
+  }
+
+  img {
+    margin: 0 auto;
+  }
+
+  .modal-content-user-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+}
+
+.modal-content-body {
+  .feedback-container {
+    max-height: 300px;
+    overflow: auto;
+    width: 55%;
+    margin: 0 auto;
+    display: grid;
+    gap: 0.5rem;
+
+    .feedback-item {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: 1rem;
+      justify-content: start;
+      font-size: 14px;
+      padding: 0.5rem;
+      border-bottom: 1px solid $colorLightGray;
+    }
+
+    .feedback-item:first-child{
+      border-top: 1px solid $colorLightGray;
+    }
+
+    .feedback-user-comment-name-date {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 0.5rem;
+      justify-content: start;
+      text-align: left;
+    }
+
+    .feedback-user-comment{
+      font-size: 12px;
+    }
+
+    .feedback-user-name-date{
+      display: flex;
+      flex-flow: row nowrap;
+      font-size: 13px;
+    }
+
+    .feedback-user-name::after{
+      content: " - ";
+    } 
+
+    img.feedback-user-image{
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+  }
+    
+}

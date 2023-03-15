@@ -1,14 +1,12 @@
-import Pages from "../../classes/Page";
+import AuthenticatedPage from "../../classes/AuthenticatedPage";
+import FirstTimeModal from "../../components/modal/first-time";
 import Modal from "../../components/modal/job-posting-detail";
 import getAllActiveJobPostings from "../../js/job-posting/getAllActiveJobPostings";
-import JobPosting from "../JobPostingV2";
-import isAlreadyApplied from "../../js/applicants/isAlreadyApplied";
-import InfoHint from "../../assets/js/info-hint";
-import { getUserDetails } from "../../js/users";
+import { pageTransition } from "../../router";
 import Template from "./home.html";
 import "./home.scss";
 
-class Home extends Pages {
+class Home extends AuthenticatedPage {
   static markers = [];
   static markerIDRef = [];
   static appliedMarkerRef = [];
@@ -33,6 +31,19 @@ class Home extends Pages {
     this.userId = null;
     this.infoHint = null;
     this.errorHint = null;
+  }
+
+  async preload() {
+    const result = await super.preload();
+
+    if (result) {
+      if (this.currentUser.details.typeOfUser === "employer") {
+        pageTransition("/dashboard");
+        return false;
+      }
+    }
+
+    return result;
   }
 
   async load() {
@@ -95,6 +106,7 @@ class Home extends Pages {
   removeDuplicates(arr) {
     return arr.filter((item, index) => arr.indexOf(item) === index);
   }
+
   async fetchAllActiveJobPostings() {
     const response = await getAllActiveJobPostings();
     Home.joblist = response;
@@ -381,12 +393,29 @@ class Home extends Pages {
 
   async mounted() {
     document.querySelector("body").classList.add("new-home-body");
+
+    //Just to make sure Active Menu is set to Dashboard
+    const activeMenu = document.querySelector(".main-header nav a[href='/']");
+    activeMenu?.classList.add("active-menu-item");
+
     this.initMap();
     this.showJobs();
+
+    // const testModal = new FirstTimeModal();
+    // //Check if user is new
+    // testModal.open();
+
+    // if (this.currentUser.uid) {
+    //   console.log(this.currentUser.details);
+    // }
   }
 
   close() {
     document.querySelector("body").classList.remove("new-home-body");
+
+    //Just to make sure Active Menu is set to Dashboard
+    const activeMenu = document.querySelector(".main-header nav a[href='/']");
+    activeMenu?.classList.remove("active-menu-item");
   }
 }
 
