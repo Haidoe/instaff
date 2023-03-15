@@ -569,9 +569,8 @@ class AccountEmployee extends EmployeePage {
   }
 
   close() {
-    pubsub.unsubscribe("mainHeaderBackBtnClicked");
+    pubsub.unsubscribe("mainHeaderBackBtnClicked", this.popStateListener);
     window.removeEventListener("popstate", this.popStateListener);
-    console.log("CLOSED AE");
   }
 
   setActiveLinkForPreferences() {

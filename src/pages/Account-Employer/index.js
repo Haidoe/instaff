@@ -136,12 +136,6 @@ class AccountEmployer extends EmployerPage {
         : "";
   }
 
-  popStateListener(e) {
-    const mainPageContainer = document.querySelector(".account-employee-page");
-    mainPageContainer.classList.remove("profile-page-mobile");
-    pubsub.publish("mainHeaderHideBackBtn");
-  }
-
   async mounted() {
     this.profileId = this.currentUser.uid;
     const snap = await getProfile(this.profileId);
