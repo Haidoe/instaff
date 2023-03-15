@@ -114,14 +114,16 @@ class MyJobs extends EmployeePage {
   }
 
   async backToMain() {
-    pubsub.subscribe("mainHeaderBackBtnClicked", () => {
-      const mainContent = document.querySelector(".main-content");
-      mainContent.classList.remove("show");
-      const mainBox = document.querySelector(".main-content div.show");
-      mainBox?.classList.remove("show");
-      console.log("back to main");
-      pubsub.publish("mainHeaderHideBackBtn");
-    });
+    pubsub.subscribe("mainHeaderBackBtnClicked", this.backToMainBtnListener);
+  }
+
+  backToMainBtnListener() {
+    const mainContent = document.querySelector(".main-content");
+    mainContent.classList.remove("show");
+    const mainBox = document.querySelector(".main-content div.show");
+    mainBox?.classList.remove("show");
+    console.log("back to main");
+    pubsub.publish("mainHeaderHideBackBtn");
   }
 
   async mounted() {
@@ -138,9 +140,8 @@ class MyJobs extends EmployeePage {
 
   close() {
     document.querySelector("body").classList.remove("my-jobs-body");
-    pubsub.unsubscribe("mainHeaderBackBtnClicked");
+    pubsub.unsubscribe("mainHeaderBackBtnClicked", this.backToMainBtnListener);
     pubsub.publish("mainHeaderHideBackBtn");
-    console.log(pubsub);
   }
 }
 
