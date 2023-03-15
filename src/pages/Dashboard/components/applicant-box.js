@@ -7,9 +7,12 @@ import {
   cancelHiredApplicant,
   rejectApplicant,
 } from "../../../js/applicants";
+import { addNotification } from "../../../js/notifications";
+import globalState from "../../../classes/GlobalState";
 class ApplicantBox {
-  constructor(obj) {
+  constructor(obj, jobPosting) {
     this.data = obj;
+    this.jobPosting = jobPosting;
     this.wrapper = null;
 
     this.initElements();
@@ -98,6 +101,14 @@ class ApplicantBox {
     this.btnRefuse.className = "refuse secondary-button";
     this.btnRefuse.textContent = "Reject";
 
+    const notification = {
+      userId: this.data.userId,
+      jobPostingId: this.jobPosting.id,
+      imageUrl: this.jobPosting.bannerImageUrl,
+      source: globalState.user.details.displayName,
+      jobPostingCompanyName: this.jobPosting.companyName,
+    };
+
     this.btnRefuse.addEventListener("click", () => {
       const modal = new Modal();
       modal.wrapper = this.wrapper;
@@ -150,6 +161,9 @@ class ApplicantBox {
       `;
 
       modal.handleConfirm = () => {
+        notification.type = "HIRED";
+        addNotification(notification);
+
         hireApplicant(this.data.id);
         this.data.status = "hired";
         this.renderActionBtns();
@@ -173,6 +187,9 @@ class ApplicantBox {
       `;
 
       modal.handleConfirm = () => {
+        notification.type = "HIRED_CANCEL";
+        addNotification(notification);
+
         this.positionLeft = this.positionLeft + 1;
         cancelHiredApplicant(this.data.id);
         this.data.status = "pending";

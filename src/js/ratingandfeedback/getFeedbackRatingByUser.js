@@ -23,12 +23,12 @@ const getFeedbackRatingByUser = async (userId = "") => {
   });
 
   const rating = ratingAndFeedback.reduce((acc, curr) => {
-    return acc + curr.rating;
+    return acc + (curr.rating ?? 0);
   }, 0);
 
   return {
     total: ratingAndFeedback.length,
-    rating: rating / ratingAndFeedback.length,
+    rating: rating ? rating / ratingAndFeedback.length : 0,
   };
 };
 

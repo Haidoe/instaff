@@ -1,6 +1,6 @@
 import { getAuth, signOut } from "firebase/auth";
 import { pageTransition } from "../router";
-
+import GlobalState from "./GlobalState";
 class Page {
   #user = null;
 
@@ -23,6 +23,7 @@ class Page {
 
   set currentUser(user) {
     this.#user = user;
+    GlobalState.user = user;
   }
 
   async signOutUser() {

@@ -3,6 +3,7 @@ import { router, pageTransition } from "./router";
 import MainHeader from "./components/header";
 import "./css/normalize.css";
 import "./css/global.scss";
+import Notifications from "./components/notification";
 
 //Initialize Firebase App
 const firebaseApp = initialize();
@@ -53,3 +54,6 @@ router();
 const mainHeader = new MainHeader();
 mainHeader.wrapper = document.querySelector("body");
 mainHeader.render();
+
+//This is for the notification
+const notification = new Notifications();
