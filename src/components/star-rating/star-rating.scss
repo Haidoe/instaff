@@ -1,0 +1,42 @@
+@import "../../css/variables";
+
+.star-rating-wrapper {
+  display: flex;
+  gap: 0.25rem;
+  justify-content: center;
+  align-items: center;
+
+  &.read-only {
+    .star-circle {
+      cursor: default;
+    }
+  }
+
+  .star-circle {
+    background-color: $colorLightGray;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &.active {
+      background-color: $colorYellow;
+    }
+
+    .icon {
+      width: 25px;
+      height: 25px;
+      background-color: white;
+      scale: 0.9;
+    }
+  }
+}
+
+.star-suffix {
+  color: $colorGray;
+  font-size: 0.9rem;
+}
+
+.star-prefix {
+  color: $colorGray;
+  margin-right: 0.25rem;
+  font-size: 1.15rem;
+}

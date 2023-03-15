@@ -82,11 +82,15 @@ class MainHeader {
       employee: [
         {
           text: "Search",
-          href: "/search",
+          href: "/",
         },
         {
           text: "My Jobs",
           href: "/my-jobs",
+        },
+        {
+          text: "Account",
+          href: "/account-employee",
         },
       ],
 
@@ -99,17 +103,17 @@ class MainHeader {
           text: "Post",
           href: "/post",
         },
+        {
+          text: "Account",
+          href: "/account-employer",
+        },
       ],
     };
 
     const loggedInNavs = [
       {
-        text: "Inbox",
-        href: "/inbox",
-      },
-      {
-        text: "Account",
-        href: "/account",
+        text: "Notification",
+        href: "/notification",
       },
     ];
 
@@ -180,6 +184,7 @@ class MainHeader {
       const prevActiveMenu = document.querySelector(".active-menu-item");
 
       if (prevActiveMenu) {
+        if (prevActiveMenu.getAttribute("href") === "/") return;
         prevActiveMenu.classList.remove("active-menu-item");
       }
     });

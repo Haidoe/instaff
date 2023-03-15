@@ -1,1 +1,42 @@
-<div class="new-home-page" id="new-home-page"></div>
+<head>
+    
+</head>
+
+<div id="side-bar">
+    <div class="toggle-off-wrapper">
+        <div id="toogle-button-off"><i class="fa-regular fa-rectangle-xmark"></i></div>
+    </div>
+    <h2 id="side-list-title">List of jobs available in this location</h2>
+    <section id="job-info-list"></section>
+</div>
+
+<div class="new-home-page" id="new-home-page">
+        <div id="toogle-button-on"><i class="fa-solid fa-bars"></i></div>
+</div>
+
+<div class="search-div-wrapper">
+    <div class="search-div">
+        <input type="text" id="job_keyword" list="job_title_list" placeholder="Type your keyword" required>
+        <datalist id="job_title_list"></datalist>
+        <div class="button-wrapper">
+            <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button id="resetBtn">Reset</button>
+        </div>
+    </div>
+</div>
+
+
+<div class='tt-side-panel'>
+    <header class='tt-side-panel__header'>
+    </header>
+    <div class='tt-tabs js-tabs'>
+        <div class='tt-tabs__panel'>
+            <div class='js-results' hidden='hidden'></div>
+            <div class='js-results-loader' hidden='hidden'>
+                <div class='loader-center'><span class='loader'></span></div>
+            </div>
+            <div class='tt-tabs__placeholder js-results-placeholder'></div>
+        </div>
+    </div>
+</div>
+

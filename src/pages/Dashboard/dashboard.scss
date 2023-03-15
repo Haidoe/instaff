@@ -4,6 +4,25 @@
 .dashboard-app {
   display: flex;
   flex-direction: column;
+
+  .floating-icon {
+    @extend .gradient-bg;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 3.5rem;
+
+    @media screen and (min-width: $mediumSmall) {
+      display: none;
+    }
+  }
 }
 
 .dashboard-page {
@@ -197,8 +216,13 @@
             display: grid;
             text-align: center;
             gap: 1rem;
+
             @media screen and (min-width: 1024px) {
               grid-template-columns: repeat(2, 1fr);
+            }
+
+            .rejected {
+              filter: grayscale(100%);
             }
 
             img {
@@ -276,6 +300,10 @@
               font-size: 2rem;
               color: $colorPink;
             }
+          }
+
+          .main-modal a {
+            color: $colorPink;
           }
         }
       }

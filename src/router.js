@@ -16,11 +16,6 @@ const routes = [
     page: () => import(/* webpackChunkName: "Home"  */ `./pages/Home`),
   },
   {
-    path: "/old-home",
-    page: () => import(/* webpackChunkName: "Home"  */ `./pages/HomeOld/Home`),
-  },
-
-  {
     path: "/sign-in",
     page: () => import(/* webpackChunkName: "Signin" */ `./pages/Signin`),
   },
@@ -39,16 +34,75 @@ const routes = [
   },
 
   {
+    path: "/my-jobs",
+    page: () =>
+      import(/* webpackChunkName: "NotificationPage" */ `./pages/MyJobs`),
+  },
+
+  {
+    path: "/notification",
+    page: () =>
+      import(/* webpackChunkName: "NotificationPage" */ `./pages/Notification`),
+  },
+
+  {
     path: "/post",
     page: () =>
       import(/* webpackChunkName: "JobPost" */ `./pages/JobPostingV2`),
   },
 
   {
-    path: "/profile",
-    page: () => import(/* webpackChunkName: "Profile" */ `./pages/Profile`),
+    path: "/account",
+    page: () => import(/* webpackChunkName: "AccountPage" */ `./pages/Account`),
+  },
+  {
+    path: "/account-employee",
+    page: () =>
+      import(
+        /* webpackChunkName: "AccountEmployee" */ `./pages/Account-Employee`
+      ),
+  },
+  {
+    path: "/account/preferences",
+    page: () =>
+      import(
+        /* webpackChunkName: "AccountPreference" */ `./pages/Account/preferences`
+      ),
+  },
+  {
+    path: "/account/typeOfWork",
+    page: () =>
+      import(
+        /* webpackChunkName: "AccountTypeOfWork" */ `./pages/Account/typeOfWork`
+      ),
+  },
+  {
+    path: "/account/availability",
+    page: () =>
+      import(
+        /* webpackChunkName: "AccountAvailability" */ `./pages/Account/availability`
+      ),
+  },
+  {
+    path: "/account/lengthOfShift",
+    page: () =>
+      import(
+        /* webpackChunkName: "AccountShift" */ `./pages/Account/lengthOfShift`
+      ),
+  },
+  {
+    path: "/account/setting",
+    page: () =>
+      import(/* webpackChunkName: "Profile" */ `./pages/Account/setting`),
   },
 
+  {
+    path: "/account-employer",
+    page: () =>
+      import(
+        /* webpackChunkName: "ProfileEmployer" */ `./pages/Account-Employer`
+      ),
+  },
   {
     path: "/rating-and-feedback",
     page: () =>

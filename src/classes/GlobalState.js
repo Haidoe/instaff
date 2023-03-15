@@ -1,6 +1,7 @@
 class GlobalState {
   constructor() {
     this.preventPopState = false;
+    this.user = null;
   }
 }
 

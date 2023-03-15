@@ -1,6 +1,6 @@
 import { getAuth, signOut } from "firebase/auth";
 import { pageTransition } from "../router";
-
+import GlobalState from "./GlobalState";
 class Page {
   #user = null;
 
@@ -23,6 +23,7 @@ class Page {
 
   set currentUser(user) {
     this.#user = user;
+    GlobalState.user = user;
   }
 
   async signOutUser() {
@@ -33,7 +34,6 @@ class Page {
 
   getCurrentUser() {
     const auth = getAuth();
-
     return new Promise((resolve, reject) => {
       auth.onAuthStateChanged((user) => {
         resolve(user);

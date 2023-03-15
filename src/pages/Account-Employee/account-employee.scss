@@ -1,0 +1,693 @@
+@import "../../css/variables";
+@import "../../css/gradientText";
+.shadow {
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+}
+main {
+  background: white;
+}
+
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: $colorLightGray;
+
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkmark {
+  background-color: $colorPink;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.account-employee-page {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-color: white;
+    // padding-top: 8px;
+    padding-bottom: 5px;
+    // margin-left: -32px;
+    // margin-right: -36px;
+    // margin-top: -40px;
+    // margin-bottom: 10px;
+    right: 0px;
+    border-bottom: 1px solid black;
+    .banner {
+      display: grid;
+      padding: 3rem 0;
+      align-items: center;
+      .profile-name {
+        display: flex;
+        flex: 1;
+      }
+
+      .progress {
+        flex: 2;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 24px;
+
+        .progress-box {
+          flex: 1;
+          background-color: white;
+          border-radius: 5px;
+          text-align: center;
+          margin-left: 10;
+          p {
+            font-size: 80%;
+          }
+          .progress-bar {
+            width: 90%;
+            margin-left: 5px;
+            border: 1px solid $colorLightGray;
+            position: relative;
+            height: 20px;
+            border-radius: 5px;
+            background-color: $colorLightGray;
+
+            &::before {
+              content: "";
+              border-radius: 5px;
+              background-image: linear-gradient($colorPink, black);
+              position: absolute;
+              left: 0px;
+              top: 0px;
+              bottom: 0px;
+              z-index: 1;
+            }
+            &.p20::before {
+              width: 20%;
+            }
+            &.p60::before {
+              width: 60%;
+            }
+            &.p100::before {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    hr {
+      flex: 1;
+    }
+    ul {
+      flex: 1;
+      li {
+        padding-left: 16px;
+        padding-right: 16px;
+        display: inline;
+      }
+      .active {
+        border-bottom: 2px solid $colorPink;
+      }
+    }
+  }
+  .profile-image,
+  .banner-image {
+    margin: auto;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    aspect-ratio: 36/12.8;
+    border: 1px solid #d81b60;
+    position: relative;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+  }
+
+  .profile-image-wrapper .info {
+    display: grid;
+    text-align: center;
+  }
+
+  .content {
+    // background: white;
+    margin-left: -$sidePadding;
+    margin-right: -$sidePadding;
+    padding: 1rem $sidePadding;
+    display: grid;
+    gap: 1rem;
+
+    .profile-Image {
+      border-radius: 50%;
+      margin: auto;
+      width: 150px;
+      height: 150px;
+      aspect-ratio: 36/12.8;
+      border: 1px solid #d81b60;
+      position: relative;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+
+      input {
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      button {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        background-color: white;
+        border-radius: 50%;
+        outline: 0;
+        border: none;
+
+        .icon {
+          width: 1.5rem;
+          height: 1.5rem;
+          scale: 0.8;
+        }
+      }
+    }
+
+    #profile-map {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16/8;
+      border: 1px solid #000;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+
+    .action-btn-wrapper {
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+      padding: 0 0.5rem;
+      margin-top: 1rem;
+
+      button {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        border-image-source: unset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        gap: 0.25rem;
+
+        span {
+          display: block;
+          width: 20px;
+          height: 20px;
+          scale: 0.6;
+        }
+      }
+
+      &.center {
+        justify-content: center;
+      }
+
+      .primary-button {
+        padding: 0.5rem 3rem;
+      }
+    }
+  }
+  .web-menu {
+    display: none;
+  }
+  .profile-info {
+    text-align: center;
+    display: grid;
+    justify-content: center;
+  }
+  #profile-map {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/8;
+    border: 1px solid #000;
+    border-radius: 4px;
+  }
+
+  .preference-menu .logo {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: $colorLightGray;
+    border-radius: 50%;
+  }
+  .preference-menu li {
+    display: flex;
+    text-align: left;
+    height: 80px;
+    padding-top: 20px;
+  }
+  .preference-menu li:last-child {
+    border-bottom: none;
+  }
+  .preference-menu li .text {
+    padding-left: 20px;
+    line-height: 40px;
+    height: 40px;
+  }
+
+  .mobile-menu .logo {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: $colorLightGray;
+    // border-radius: 50%;
+  }
+  .mobile-menu li a {
+    display: flex;
+    text-align: left;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $borderColor;
+    gap: 1rem;
+  }
+  .mobile-menu li .fa-solid {
+    align-self: center;
+    padding: 10px;
+    color: white;
+    background: darkgrey;
+    border-radius: 5px;
+  }
+  .mobile-menu li:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-menu li .text {
+    padding-right: 20px;
+    line-height: 40px;
+    height: 40px;
+  }
+  .account-employee-page.profile-page {
+    display: none;
+  }
+
+  .profile-page {
+    display: none;
+  }
+
+  .preference-page {
+    display: none;
+  }
+
+  .typeofWork-page,
+  .availability-page,
+  .lengthOfShift-page {
+    display: none;
+  }
+
+  .form-wrapper {
+    display: grid;
+  }
+  .form-group-typeOfWork,
+  .form-group-availability,
+  .form-group-lengthOfShift {
+    display: grid;
+  }
+
+  .form-group-lengthOfShift {
+    grid-template-columns: 50px 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  .form-wrapper-lengthOfShift {
+    display: grid;
+    gap: 1rem;
+  }
+}
+
+.profile-page-mobile {
+  .header {
+    display: none;
+  }
+
+  .account-setting {
+    display: none;
+  }
+  .profile-page {
+    display: unset;
+  }
+}
+
+.preference-page-mobile {
+  .header {
+    display: none;
+  }
+  .account-setting {
+    display: none;
+  }
+  .preference-page {
+    display: unset;
+  }
+}
+
+.typeofWork-page {
+  .header,
+  .account-setting,
+  .preference-page,
+  .lengthOfShift-page {
+    display: none;
+  }
+
+  .typeofWork-page {
+    display: unset;
+  }
+}
+
+.availability-page {
+  .header,
+  .account-setting,
+  .preference-page,
+  .typeofWork-page,
+  .lengthOfShift-page {
+    display: none;
+  }
+  .availability-page {
+    display: unset;
+  }
+}
+.lengthOfShift-page {
+  .header,
+  .account-setting,
+  .preference-page,
+  .typeofWork-page {
+    display: none;
+  }
+  .lengthOfShift-page {
+    display: unset;
+  }
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@media screen and (min-width: 768px) {
+  main {
+    background: unset;
+  }
+  .account-employee-page {
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: unset;
+      padding-left: 2%;
+      padding-right: 2%;
+      .web-menu {
+        width: 800px;
+      }
+    }
+    .banner {
+      display: grid;
+      grid-template-columns: 150px 1fr 1fr;
+      .progress {
+        margin-top: 0px;
+      }
+      gap: 1rem;
+      .profile-name {
+        padding: 0;
+      }
+      .progress {
+        flex: 2;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 24px;
+
+        .progress-box {
+          flex: 1;
+          background-color: white;
+          border-radius: 5px;
+          text-align: center;
+          margin-left: 10;
+          p {
+            font-size: 80%;
+          }
+          .progress-bar {
+            width: 90%;
+            margin-left: 5px;
+            border: 1px solid $colorLightGray;
+            position: relative;
+            height: 20px;
+            border-radius: 5px;
+            background-color: $colorLightGray;
+
+            &::before {
+              content: "";
+              border-radius: 5px;
+              background-image: linear-gradient($colorPink, black);
+              position: absolute;
+              left: 0px;
+              top: 0px;
+              bottom: 0px;
+              z-index: 1;
+            }
+            &.p20::before {
+              width: 20%;
+            }
+            &.p60::before {
+              width: 60%;
+            }
+            &.p100::before {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    .web-menu {
+      flex: 1;
+      li {
+        padding-left: 16px;
+        padding-right: 16px;
+        display: inline;
+      }
+
+      .active {
+        color: $colorPink;
+        border-bottom: 2px solid $colorPink;
+      }
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+    .web-menu {
+      display: unset;
+    }
+    .profile-page {
+      display: unset;
+    }
+    .profile-page .form-wrapper {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr) auto;
+      gap: 2rem;
+
+      .personal-wrapper {
+        grid-column: 1;
+        grid-row: span 2;
+        border: 1px solid $colorLightGray;
+        padding: 1rem;
+        border-radius: 5px;
+        background-color: white;
+      }
+      .profile-image-wrapper {
+        grid-column: 2;
+        grid-row: 1;
+        border: 1px solid $colorLightGray;
+        padding: 1rem;
+        border-radius: 5px;
+        background-color: white;
+      }
+      .upload-prof-wrapper {
+        grid-column: 2;
+        grid-row: 2;
+        background-color: white;
+        border: 1px solid $colorLightGray;
+        padding: 1rem;
+        border-radius: 5px;
+        box-shadow: 5px;
+      }
+      .action-btn-wrapper {
+        grid-column: span 2;
+        grid-row: 3;
+      }
+    }
+    .account-setting {
+      display: unset;
+    }
+  }
+
+  .preference-wrapper-clicked {
+    .profile-page {
+      display: none;
+    }
+    .preference-page-mobile {
+      display: none;
+    }
+    .profile-page .form-wrapper {
+      display: none;
+    }
+    .preference-page {
+      display: unset;
+    }
+    .account-setting {
+      display: unset;
+    }
+    .preference-wrapper {
+      display: grid;
+      grid-template-columns: 30% 70%;
+      gap: 1rem;
+    }
+    .preference-page {
+      grid-column: 1;
+      grid-row: span 2;
+      border: 1px solid #e6e6e6;
+      padding: 1rem;
+      border-radius: 5px;
+      background-color: white;
+    }
+    .typeofWork-page {
+      grid-row: span 2;
+      border: 1px solid #e6e6e6;
+      padding: 1rem;
+      border-radius: 5px;
+      background-color: white;
+    }
+    .typeofWork-page {
+      display: unset;
+    }
+    .sideMenu-active {
+      border: 1px solid $borderColor;
+      border-radius: 20px;
+      background: lightgray;
+    }
+  }
+
+  .typeofWork-page-clicked {
+    .availability-page,
+    .lengthOfShift-page {
+      display: none;
+    }
+    .typeofWork-page {
+      display: unset;
+    }
+  }
+
+  .availability-page-clicked {
+    .typeofWork-page,
+    .lengthOfShift-page {
+      display: none;
+    }
+    .availability-page {
+      display: unset;
+    }
+    .availability-page {
+      grid-row: span 2;
+      border: 1px solid #e6e6e6;
+      padding: 1rem;
+      border-radius: 5px;
+      background-color: white;
+    }
+  }
+
+  .lengthOfShift-page-clicked {
+    .typeofWork-page,
+    .availability-page {
+      display: none;
+    }
+    .lengthOfShift-page {
+      display: unset;
+    }
+    .lengthOfShift-page {
+      grid-row: span 2;
+      border: 1px solid #e6e6e6;
+      padding: 1rem;
+      border-radius: 5px;
+      background-color: white;
+    }
+  }
+
+  .profile-page-clicked {
+    .account-setting {
+      display: unset;
+    }
+  }
+}
