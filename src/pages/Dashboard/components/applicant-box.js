@@ -1,6 +1,12 @@
 import StarRating from "../../../components/star-rating";
 import Modal from "../../../components/modal";
-import { hireApplicant, cancelHiredApplicant } from "../../../js/applicants";
+import ProfileModal from "../../../components/modal/profile";
+import getFeedbackRatingByUser from "../../../js/ratingandfeedback/getFeedbackRatingByUser";
+import {
+  hireApplicant,
+  cancelHiredApplicant,
+  rejectApplicant,
+} from "../../../js/applicants";
 class ApplicantBox {
   constructor(obj) {
     this.data = obj;
@@ -9,9 +15,26 @@ class ApplicantBox {
     this.initElements();
   }
 
-  initElements() {
+  get positionLeft() {
+    return parseInt(
+      document.querySelector("#jpPositionAvailableLeft").textContent
+    );
+  }
+
+  set positionLeft(value) {
+    document.querySelector("#jpPositionAvailableLeft").textContent = value;
+    document.querySelector(
+      `#jp-${this.data.jobPostingId} .article-meta p:last-of-type span`
+    ).textContent = value;
+  }
+
+  async initElements() {
     this.wrapper = document.createElement("div");
     this.wrapper.className = "applicant";
+
+    if (this.data.status === "rejected") {
+      this.wrapper.classList.add("rejected");
+    }
 
     const img = document.createElement("img");
     img.src = this.data.userProfileImageUrl ?? "/static/images/anonymous.svg";
@@ -28,16 +51,21 @@ class ApplicantBox {
 
     content.appendChild(title);
 
-    //For JB's reference
-    const stars = new StarRating(3, false);
-    stars.suffix = "( 4 )";
-
-    stars.handleStarClick = (index) => {
-      stars.rating = index;
-      stars.rerender();
-    };
-
+    const stars = new StarRating(0);
     content.appendChild(stars.toElement());
+
+    getFeedbackRatingByUser(this.data.userId).then(({ rating, total }) => {
+      this.data = {
+        ...this.data,
+        rating,
+        total,
+      };
+
+      stars.prefix = rating || null;
+      stars.suffix = `(${total})`;
+      stars.rating = Math.floor(rating);
+      stars.rerender();
+    });
 
     const meta = document.createElement("div");
     meta.className = "meta";
@@ -46,6 +74,12 @@ class ApplicantBox {
     anchorViewProfile.href = "javascript:void(0)";
     anchorViewProfile.className = "gradient-text";
     anchorViewProfile.textContent = "View Profile";
+
+    anchorViewProfile.addEventListener("click", () => {
+      const modal = new ProfileModal(this.data);
+
+      modal.open();
+    });
 
     meta.appendChild(anchorViewProfile);
 
@@ -64,6 +98,46 @@ class ApplicantBox {
     this.btnRefuse.className = "refuse secondary-button";
     this.btnRefuse.textContent = "Reject";
 
+    this.btnRefuse.addEventListener("click", () => {
+      const modal = new Modal();
+      modal.wrapper = this.wrapper;
+      modal.modalContent.innerHTML = `
+        Are you sure you want to reject <a href="javascript:void(0)"> ${this.data.userDisplayName} </a>?
+      `;
+
+      modal.handleConfirm = () => {
+        rejectApplicant(this.data.id);
+        this.data.status = "rejected";
+        this.renderActionBtns();
+        this.wrapper.classList.add("rejected");
+        modal.close();
+      };
+
+      modal.open();
+    });
+
+    this.btnCancelRefuse = document.createElement("button");
+    this.btnCancelRefuse.className = "refuse secondary-button";
+    this.btnCancelRefuse.textContent = "Rejected.";
+
+    this.btnCancelRefuse.addEventListener("click", () => {
+      const modal = new Modal();
+
+      modal.modalContent.innerHTML = `
+        Are you sure you want to cancel rejecting <a href="javascript:void(0)"> ${this.data.userDisplayName} </a>?
+      `;
+
+      modal.handleConfirm = () => {
+        cancelHiredApplicant(this.data.id);
+        this.data.status = "pending";
+        this.renderActionBtns();
+        this.wrapper.classList.remove("rejected");
+        modal.close();
+      };
+
+      modal.open();
+    });
+
     this.btnHire = document.createElement("button");
     this.btnHire.className = "hire primary-button";
     this.btnHire.textContent = "Hire";
@@ -80,6 +154,8 @@ class ApplicantBox {
         this.data.status = "hired";
         this.renderActionBtns();
         modal.close();
+
+        this.positionLeft = this.positionLeft - 1;
       };
 
       modal.open();
@@ -97,6 +173,7 @@ class ApplicantBox {
       `;
 
       modal.handleConfirm = () => {
+        this.positionLeft = this.positionLeft + 1;
         cancelHiredApplicant(this.data.id);
         this.data.status = "pending";
         this.renderActionBtns();
@@ -108,11 +185,12 @@ class ApplicantBox {
   }
 
   renderActionBtns() {
-    console.log(this.data);
     this.actionBtns.innerHTML = "";
 
     if (this.data.status === "hired") {
       this.actionBtns.appendChild(this.btnCancelHire);
+    } else if (this.data.status === "rejected") {
+      this.actionBtns.appendChild(this.btnCancelRefuse);
     } else {
       this.actionBtns.appendChild(this.btnRefuse);
       this.actionBtns.appendChild(this.btnHire);

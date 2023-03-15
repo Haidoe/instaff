@@ -2,14 +2,12 @@ import EmployerPage from "../../classes/EmployerPage";
 import { getActiveTotalApplicantsByUser } from "../../js/job-posting/job-posting";
 import template from "./dashboard.html";
 import RecentJob from "./components/recent-job";
-import HistoryJob from "./components/history-job";
 import ApplicantBox from "./components/applicant-box";
 import "./dashboard.scss";
 import {
   getTotalAcceptedApplicantsByPostId,
   getApplicantsByPostId,
 } from "../../js/applicants";
-import getPostingHistoryByUser from "../../js/job-posting/getPostingHistoryByUser";
 import getAllActiveJobPostingByUser from "../../js/job-posting/getAllActiveJobPostingByUser";
 import getTotalActiveJobPostingByUser from "../../js/job-posting/getTotalActiveJobPostingByUser";
 import pubsub from "../../classes/PubSub";
@@ -179,35 +177,10 @@ class Dashboard extends EmployerPage {
     recentJobContainer.classList.add("active");
   }
 
-  async loadPostingHistory() {
-    const total = await getPostingHistoryByUser(this.currentUser.uid);
-
-    if (total.length > 0) {
-      const container = document.querySelector(
-        "section.recent-job-posting-content"
-      );
-
-      const history = document.createElement("section");
-      history.className = "history";
-
-      const historyTitle = document.createElement("h3");
-      historyTitle.textContent = "History";
-
-      history.appendChild(historyTitle);
-      container.appendChild(history);
-
-      for (const item of total) {
-        history.appendChild(HistoryJob(item));
-      }
-    }
-  }
-
   async loadApplicants(jobPostingId) {
     const container = document.querySelector("div.applicants");
     container.innerHTML = "";
     const applicants = await getApplicantsByPostId(jobPostingId);
-
-    console.log(applicants);
 
     if (applicants.length) {
       for (const applicant of applicants) {
@@ -253,6 +226,13 @@ class Dashboard extends EmployerPage {
     //PubSub for Mobile Related Stuff
     pubsub.subscribe("mainHeaderBackBtnClicked", this.popStateListener);
     window.addEventListener("popstate", this.popStateListener);
+
+    //Event Listener for Floating Icon
+    const floatingIcon = document.querySelector(".floating-icon");
+    floatingIcon.addEventListener("click", () => {
+      //This is to make that no one can prevent the popstate event
+      globalState.preventPopState = false;
+    });
   }
 
   close() {
@@ -260,6 +240,13 @@ class Dashboard extends EmployerPage {
     pubsub.publish("mainHeaderHideBackBtn");
     window.removeEventListener("popstate", this.popStateListener);
     pubsub.unsubscribe("mainHeaderBackBtnClicked");
+
+    //Just to make sure Active Menu is set to Dashboard
+    const dashboardMenu = document.querySelector(
+      ".main-header a[href='/dashboard']"
+    );
+
+    dashboardMenu?.classList.remove("active-menu-item");
   }
 }
 

@@ -1,6 +1,8 @@
 import "./star-rating.scss";
 
 class StarRating {
+  #prefix = null;
+
   constructor(rating, readOnly = true) {
     this.rating = rating;
 
@@ -12,6 +14,18 @@ class StarRating {
     };
 
     this.suffix = null;
+
+    this.wrapper = document.createElement("div");
+    this.wrapper.className = "star-rating-wrapper";
+  }
+
+  get prefix() {
+    return this.#prefix;
+  }
+
+  set prefix(value) {
+    this.#prefix = value;
+    this.rerender();
   }
 
   createStar(index) {
@@ -38,6 +52,13 @@ class StarRating {
   rerender() {
     this.wrapper.innerHTML = "";
 
+    if (this.#prefix) {
+      const span = document.createElement("span");
+      span.className = "star-prefix";
+      span.textContent = this.prefix;
+      this.wrapper.appendChild(span);
+    }
+
     for (let i = 0; i < 5; i++) {
       this.wrapper.appendChild(this.createStar(i));
     }
@@ -51,9 +72,6 @@ class StarRating {
   }
 
   toElement() {
-    this.wrapper = document.createElement("div");
-    this.wrapper.className = "star-rating-wrapper";
-
     if (this.isReadOnly) {
       this.wrapper.classList.add("read-only");
     }
