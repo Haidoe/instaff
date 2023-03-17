@@ -34,7 +34,7 @@ const createJobBoxElement = (arr, div) => {
     jobsDetail.classList.add("jobs-detail");
     jobBox.appendChild(jobsDetail);
       
-    const jobTitle = document.createElement("p");
+    const jobTitle = document.createElement("h4");
     jobTitle.classList.add("job-title");
     jobTitle.textContent = job.positionTitle;
     jobsDetail.appendChild(jobTitle);
