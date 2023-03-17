@@ -58,16 +58,11 @@
     align-items: center;
     position: absolute;
     bottom: 0;
-    right: 1rem;
     transform: translateY(100%);
     outline: none;
     border: none;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
-
-    @media screen and (min-width: 500px) {
-      right: unset;
-      left: 1rem;
-    }
+    left: 1rem;
 
     &.open {
       transform: translateY(0);
