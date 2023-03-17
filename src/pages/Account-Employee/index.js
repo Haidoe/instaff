@@ -149,12 +149,12 @@ class AccountEmployee extends EmployeePage {
     let results = await getTypeOfWorkByUserId(this.profileId);
     const checkList = [
       "Barista",
-      "Dishwasher",
-      "EventServer",
+      "Dish washer",
+      "Event Server",
       "Bartender",
-      "CounterStaff",
-      "EventSetup",
-      "WarehouseAssociate",
+      "Counter Staff",
+      "Event Setup",
+      "Warehouse Associate",
       "Barback",
       "Busser",
       "Custodial",
