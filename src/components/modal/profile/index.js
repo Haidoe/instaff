@@ -44,9 +44,9 @@ class Profile extends Modal {
     const star = new StarRating(0);
     subtitle.appendChild(star.toElement());
 
-    star.suffix = `(${this.data.total})`;
+    star.suffix = `${this.data.rating}/5`;
     star.rating = Math.floor(this.data.rating);
-    star.prefix = this.data.rating || null;
+    star.rerender();
     content.appendChild(subtitle);
 
     header.appendChild(content);
