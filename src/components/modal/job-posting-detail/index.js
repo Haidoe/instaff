@@ -137,6 +137,20 @@ class Modal {
     infoPositionValue.textContent = this.data.positionTitle;
     infoPositionTitle.appendChild(infoPositionValue);
 
+    const infoWage = document.createElement("div");
+    infoWage.classList.add("info-group");
+    this.modalContentBodySectionDetails.appendChild(infoWage);
+
+    const infoWageProp = document.createElement("div");
+    infoWageProp.classList.add("prop");
+    infoWageProp.textContent = "Wage (per hour)";
+    infoWage.appendChild(infoWageProp);
+
+    const infoWageValue = document.createElement("div");
+    infoWageValue.classList.add("value");
+    infoWageValue.textContent = `$${this.data.wageRate.toFixed(2)}`;
+    infoWage.appendChild(infoWageValue);
+
     const infoSchedule = document.createElement("div");
     infoSchedule.classList.add("info-group");
     this.modalContentBodySectionDetails.appendChild(infoSchedule);
