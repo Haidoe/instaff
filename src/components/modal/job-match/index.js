@@ -37,7 +37,8 @@ class JobMatch extends Modal {
 
     this.openButton.addEventListener("click", () => {
       this.openButton.classList.remove("open");
-      this.modalContainer.classList.remove("close");
+      // this.modalContainer.classList.remove("close");
+      this.modal.classList.remove("close");
     });
 
     this.modal.appendChild(this.openButton);
@@ -53,7 +54,7 @@ class JobMatch extends Modal {
     this.closeButton.appendChild(img);
 
     this.closeButton.addEventListener("click", () => {
-      this.modalContainer.classList.add("close");
+      this.modal.classList.add("close");
       this.openButton.classList.add("open");
     });
 
