@@ -53,6 +53,16 @@ class Profile extends Modal {
 
     this.modalContent.appendChild(header);
 
+    const callBtn = document.createElement("button");
+    callBtn.className = "call-btn";
+    callBtn.textContent = "Call";
+
+    callBtn.addEventListener("click", () => {
+      window.open(`tel:${this.profile.contactNumber}`);
+    });
+
+    content.appendChild(callBtn);
+
     //Section
     const section = document.createElement("section");
     section.className = "profile-section";
