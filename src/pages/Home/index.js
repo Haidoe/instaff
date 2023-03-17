@@ -417,8 +417,8 @@ class Home extends AuthenticatedPage {
     const items = await getAllActiveJobPostings();
     items.length = 2;
 
-    const jobMatchModal = new JobMatch(items);
-    jobMatchModal.open();
+    this.jobMatchModal = new JobMatch(items);
+    this.jobMatchModal.open();
   }
 
   async mounted() {
@@ -438,6 +438,8 @@ class Home extends AuthenticatedPage {
     //Just to make sure Active Menu is set to Dashboard
     const activeMenu = document.querySelector(".main-header nav a[href='/']");
     activeMenu?.classList.remove("active-menu-item");
+
+    this.jobMatchModal.close();
   }
 }
 

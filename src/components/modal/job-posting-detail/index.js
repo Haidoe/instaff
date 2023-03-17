@@ -203,7 +203,7 @@ class Modal {
 
     const infoDescriptionValue = document.createElement("div");
     infoDescriptionValue.classList.add("value");
-    infoDescriptionValue.textContent = this.data.description;
+    infoDescriptionValue.innerHTML = this.data.description;
     infoDescription.appendChild(infoDescriptionValue);
   }
 
