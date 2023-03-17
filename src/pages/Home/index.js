@@ -31,6 +31,8 @@ class Home extends AuthenticatedPage {
     this.userId = null;
     this.infoHint = null;
     this.errorHint = null;
+
+    this.geoAPILoaded = false;
   }
 
   async preload() {
@@ -421,6 +423,32 @@ class Home extends AuthenticatedPage {
     this.jobMatchModal.open();
   }
 
+  async initCurrentLocation() {
+    this.geoAPI = navigator.geolocation.watchPosition(async (position) => {
+      if (this.geoAPILoaded) return true;
+
+      const pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+
+      if (pos.lat && pos.lng) {
+        const customMarker = document.createElement("div");
+        customMarker.className = "custom-marker you-are-here";
+
+        this.currentPositionMarker = new tt.Marker({
+          element: customMarker,
+        })
+          .setLngLat(pos)
+          .addTo(this.map);
+
+        this.map.easeTo({ center: pos });
+
+        this.geoAPILoaded = true;
+      }
+    });
+  }
+
   async mounted() {
     document.querySelector("body").classList.add("new-home-body");
     this.initMap();
@@ -430,6 +458,7 @@ class Home extends AuthenticatedPage {
     activeMenu?.classList.add("active-menu-item");
 
     this.initJobMatch();
+    this.initCurrentLocation();
   }
 
   close() {
@@ -440,6 +469,8 @@ class Home extends AuthenticatedPage {
     activeMenu?.classList.remove("active-menu-item");
 
     this.jobMatchModal.close();
+
+    this.geoAPI && navigator.geolocation.clearWatch(this.geoAPI);
   }
 }
 
