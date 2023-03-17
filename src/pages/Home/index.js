@@ -1,14 +1,11 @@
-import Pages from "../../classes/Page";
+import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import Modal from "../../components/modal/job-posting-detail";
 import getAllActiveJobPostings from "../../js/job-posting/getAllActiveJobPostings";
-import JobPosting from "../JobPostingV2";
-import isAlreadyApplied from "../../js/applicants/isAlreadyApplied";
-import InfoHint from "../../assets/js/info-hint";
-import { getUserDetails } from "../../js/users";
+import { pageTransition } from "../../router";
 import Template from "./home.html";
 import "./home.scss";
 
-class Home extends Pages {
+class Home extends AuthenticatedPage {
   static markers = [];
   static markerIDRef = [];
   static appliedMarkerRef = [];
@@ -33,6 +30,19 @@ class Home extends Pages {
     this.userId = null;
     this.infoHint = null;
     this.errorHint = null;
+  }
+
+  async preload() {
+    const result = await super.preload();
+
+    if (result) {
+      if (this.currentUser.details.typeOfUser === "employer") {
+        pageTransition("/dashboard");
+        return false;
+      }
+    }
+
+    return result;
   }
 
   async load() {
@@ -68,30 +78,28 @@ class Home extends Pages {
 
     this.map.on("moveend", this.updateList.bind(this));
 
-    const sidebarOffBtn = document.getElementById('toogle-button-off'); 
-    const sidebarOnBtn = document.getElementById('toogle-button-on');
+    const sidebarOffBtn = document.getElementById("toogle-button-off");
+    const sidebarOnBtn = document.getElementById("toogle-button-on");
     const searchDiv = document.getElementsByClassName("search-div");
-    const sideBar = document.getElementById('side-bar');
-    const homePage = document.getElementById('new-home-page');
-    sidebarOnBtn.style.display = 'none';
+    const sideBar = document.getElementById("side-bar");
+    const homePage = document.getElementById("new-home-page");
+    sidebarOnBtn.style.display = "none";
 
-    sidebarOffBtn.addEventListener('click',function(e){
+    sidebarOffBtn.addEventListener("click", function (e) {
       sideBar.style.width = "0";
       sideBar.style.left = "-2rem";
       homePage.style.marginLeft = "0";
-      sidebarOnBtn.style.display = 'flex';
+      sidebarOnBtn.style.display = "flex";
       searchDiv[0].style.left = "50%";
-    })
+    });
 
-    sidebarOnBtn.addEventListener('click',function(e){
+    sidebarOnBtn.addEventListener("click", function (e) {
       sideBar.style.width = "300px";
       sideBar.style.left = "0";
       // homePage.style.marginLeft = "300px";
-      sidebarOnBtn.style.display = 'none';
+      sidebarOnBtn.style.display = "none";
       searchDiv[0].style.left = "64%";
-    })
-
-
+    });
   }
 
   removeDuplicates(arr) {
@@ -123,32 +131,29 @@ class Home extends Pages {
     Home.modalList = [];
 
     Home.currentlist.forEach(function (job) {
-        if (
-          job.coordinates.lng >= (currentBound._sw.lng + (currentBound._ne.lng - currentBound._sw.lng) * 0.3) &&
-          job.coordinates.lng <= currentBound._ne.lng &&
-          job.coordinates.lat >= currentBound._sw.lat &&
-          job.coordinates.lat <= currentBound._ne.lat
-        ) {
-          Home.showlist.push(job);
-        }
+      if (
+        job.coordinates.lng >=
+          currentBound._sw.lng +
+            (currentBound._ne.lng - currentBound._sw.lng) * 0.3 &&
+        job.coordinates.lng <= currentBound._ne.lng &&
+        job.coordinates.lat >= currentBound._sw.lat &&
+        job.coordinates.lat <= currentBound._ne.lat
+      ) {
+        Home.showlist.push(job);
       }
-
-
-    );
+    });
     //3. Update the list
     const JobInfoList = document.getElementById("job-info-list");
     JobInfoList.innerHTML = "";
 
     const jobCount = Home.showlist.length;
-    const listTitle = document.getElementById('side-list-title');
+    const listTitle = document.getElementById("side-list-title");
 
-
-    if(jobCount==0){
+    if (jobCount == 0) {
       listTitle.innerHTML = "There's no job in this area";
-    }else if(jobCount==1)
-    {
+    } else if (jobCount == 1) {
       listTitle.innerHTML = `There is 1 job in this area`;
-    }else if(jobCount>1){
+    } else if (jobCount > 1) {
       listTitle.innerHTML = `There are ${jobCount} jobs in this area`;
     }
 
@@ -223,46 +228,46 @@ class Home extends Pages {
 
     let searchCount = 0;
 
-    if(job_keyword.value.length==0){
+    if (job_keyword.value.length == 0) {
       alert("Please add your keywords.");
       this.showJobs();
-    }else{
+    } else {
       for (let job of Home.joblist) {
         if (job.positionTitle.toUpperCase() === keyword.toUpperCase()) {
           searchCount++;
           Home.currentlist.push(job);
-  
+
           const customMarker = document.createElement("div");
           customMarker.className = "custom-marker";
-  
+
           const markerImg = document.createElement("img");
           markerImg.src = "/static/icons/colored-pin.svg";
           customMarker.appendChild(markerImg);
-  
+
           const marker = new tt.Marker({
             element: customMarker,
           })
             .setLngLat(job.coordinates)
             .addTo(this.map);
-  
+
           Home.markers.push(marker);
           const markerRef = {
             markerObj: marker,
             jobID: job.id,
           };
-  
+
           Home.markerIDRef.push(markerRef);
-  
+
           const modal = new Modal(job);
-  
+
           modal.wrapper = document.querySelector(".new-home-page");
           const item = marker.getElement();
-  
+
           marker.getElement().addEventListener("click", () => {
             const item = marker.getElement();
             const currentBound = this.map.getBounds();
             modal.open();
-  
+
             const drift = (currentBound._ne.lng - currentBound._sw.lng) / 3;
             this.map.easeTo({
               center: {
@@ -270,12 +275,12 @@ class Home extends Pages {
                 lng: job.coordinates.lng - drift,
               },
             });
-  
+
             if (Home.focusedMarker) {
               const previousMarkerItem = Home.focusedMarker.getElement();
               previousMarkerItem.classList.toggle("marker-selected");
             }
-  
+
             Home.focusedMarker = marker;
             if (!item.classList.contains("marker-selected")) {
               item.classList.toggle("marker-selected");
@@ -283,22 +288,22 @@ class Home extends Pages {
           });
         }
       }
-  
-      if(searchCount==0){
+
+      if (searchCount == 0) {
         alert("Cannot find such job, please try another keyword.");
         this.showJobs();
-      }else if(searchCount>0){
+      } else if (searchCount > 0) {
         let temp_lng = 0;
         let temp_lat = 0;
-    
+
         Home.currentlist.forEach(function (item) {
           temp_lng += item.coordinates.lng;
           temp_lat += item.coordinates.lat;
         });
-    
+
         temp_lng = temp_lng / Home.currentlist.length;
         temp_lat = temp_lat / Home.currentlist.length;
-    
+
         console.log(temp_lng + " , " + temp_lat);
         this.map.easeTo({
           center: {
@@ -409,10 +414,17 @@ class Home extends Pages {
     document.querySelector("body").classList.add("new-home-body");
     this.initMap();
     this.showJobs();
+
+    const activeMenu = document.querySelector(".main-header nav a[href='/']");
+    activeMenu?.classList.add("active-menu-item");
   }
 
   close() {
     document.querySelector("body").classList.remove("new-home-body");
+
+    //Just to make sure Active Menu is set to Dashboard
+    const activeMenu = document.querySelector(".main-header nav a[href='/']");
+    activeMenu?.classList.remove("active-menu-item");
   }
 }
 
