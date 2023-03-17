@@ -1,10 +1,13 @@
 .main-modal.job-match-modal {
   top: unset;
-  right: unset;
-  left: 1rem;
   background-color: unset;
   padding: 0;
   flex-direction: column-reverse;
+
+  @media screen and (min-width: 600px) {
+    right: unset;
+    left: 1rem;
+  }
 
   .modal-container {
     max-width: 400px;
@@ -55,11 +58,16 @@
     align-items: center;
     position: absolute;
     bottom: 0;
-    left: 1rem;
+    right: 1rem;
     transform: translateY(100%);
     outline: none;
     border: none;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
+
+    @media screen and (min-width: 500px) {
+      right: unset;
+      left: 1rem;
+    }
 
     &.open {
       transform: translateY(0);
