@@ -44,14 +44,24 @@ class Profile extends Modal {
     const star = new StarRating(0);
     subtitle.appendChild(star.toElement());
 
-    star.suffix = `(${this.data.total})`;
+    star.suffix = `${this.data.rating}/5`;
     star.rating = Math.floor(this.data.rating);
-    star.prefix = this.data.rating || null;
+    star.rerender();
     content.appendChild(subtitle);
 
     header.appendChild(content);
 
     this.modalContent.appendChild(header);
+
+    const callBtn = document.createElement("button");
+    callBtn.className = "call-btn";
+    callBtn.textContent = "Call";
+
+    callBtn.addEventListener("click", () => {
+      window.open(`tel:${this.profile.contactNumber}`);
+    });
+
+    content.appendChild(callBtn);
 
     //Section
     const section = document.createElement("section");

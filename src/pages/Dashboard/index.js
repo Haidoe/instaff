@@ -239,7 +239,7 @@ class Dashboard extends EmployerPage {
     document.querySelector("#app").classList.remove("dashboard-app");
     pubsub.publish("mainHeaderHideBackBtn");
     window.removeEventListener("popstate", this.popStateListener);
-    pubsub.unsubscribe("mainHeaderBackBtnClicked");
+    pubsub.unsubscribe("mainHeaderBackBtnClicked", this.popStateListener);
 
     //Just to make sure Active Menu is set to Dashboard
     const dashboardMenu = document.querySelector(

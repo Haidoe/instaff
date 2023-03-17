@@ -1,21 +1,13 @@
 import template from "./my-jobs.html";
 import "./my-jobs.scss";
 import {
-  getFirestore,
   Timestamp,
-  collection,
-  query,
-  where,
-  getDocs,
-  orderBy,
-  documentId,
 } from "firebase/firestore";
 import getJobsAppliedByUser from "../../js/applicants/getJobsAppliedByUser";
 import getJobDetail from "./getJobDetail";
 import getJobsHiredByUser from "../../js/applicants/getJobsHiredByUser";
 import createJobBoxElement from "./components/createJobBoxElement";
 import createJobBoxMainElement from "./components/createJobBoxMainElement";
-import calcStarRating from "../../js/ratingandfeedback/calcStarRating";
 
 import { getProfile } from "../../js/account-setting/account";
 import EmployeePage from "../../classes/EmployeePage";
@@ -59,7 +51,9 @@ class MyJobs extends EmployeePage {
     createJobBoxMainElement(
       hiredJobsColFiltered,
       mainContent,
-      "Your active jobs"
+      "Your active jobs",
+      "primary-button",
+      "Start the shift"
     );
 
     if (hiredJobsColFiltered.length > 0) {
@@ -103,7 +97,9 @@ class MyJobs extends EmployeePage {
     createJobBoxMainElement(
       appliedJobsColByUserFiltered,
       mainContent,
-      "Your applied jobs"
+      "Your applied jobs",
+      "secondary-button",
+      "Pending"
     );
 
     //hide button
@@ -114,14 +110,16 @@ class MyJobs extends EmployeePage {
   }
 
   async backToMain() {
-    pubsub.subscribe("mainHeaderBackBtnClicked", () => {
-      const mainContent = document.querySelector(".main-content");
-      mainContent.classList.remove("show");
-      const mainBox = document.querySelector(".main-content div.show");
-      mainBox?.classList.remove("show");
-      console.log("back to main");
-      pubsub.publish("mainHeaderHideBackBtn");
-    });
+    pubsub.subscribe("mainHeaderBackBtnClicked", this.backToMainBtnListener);
+  }
+
+  backToMainBtnListener() {
+    const mainContent = document.querySelector(".main-content");
+    mainContent.classList.remove("show");
+    const mainBox = document.querySelector(".main-content div.show");
+    mainBox?.classList.remove("show");
+    console.log("back to main");
+    pubsub.publish("mainHeaderHideBackBtn");
   }
 
   async mounted() {
@@ -138,9 +136,8 @@ class MyJobs extends EmployeePage {
 
   close() {
     document.querySelector("body").classList.remove("my-jobs-body");
-    pubsub.unsubscribe("mainHeaderBackBtnClicked");
+    pubsub.unsubscribe("mainHeaderBackBtnClicked", this.backToMainBtnListener);
     pubsub.publish("mainHeaderHideBackBtn");
-    console.log(pubsub);
   }
 }
 

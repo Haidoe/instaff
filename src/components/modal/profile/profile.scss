@@ -1,4 +1,5 @@
-@import "../../../css/variables.scss";
+@import "../../../css/variables";
+@import "../../../css/gradientBg";
 
 .main-modal.profile-modal {
   padding: 1rem 0 0;
@@ -59,6 +60,21 @@
             scale: 0.6;
           }
         }
+      }
+    }
+
+    .call-btn {
+      @extend .gradient-bg;
+      border: none;
+      color: white;
+      padding: 0.25rem 3rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+
+      @media screen and (min-width: $mediumSmall) {
+        padding: 0.25rem 2rem;
       }
     }
 

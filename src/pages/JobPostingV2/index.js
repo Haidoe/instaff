@@ -24,6 +24,9 @@ class JobPosting extends EmployerPage {
 
     //Form related variables
     this.jobPosting = {};
+
+    //WEB API for geolocation
+    this.geoAPI = null;
   }
 
   async load() {
@@ -45,9 +48,20 @@ class JobPosting extends EmployerPage {
       zoom: defaultZoom,
     });
 
-    this.marker = new tt.Marker().setLngLat(defaultCenter).addTo(this.map);
+    const customMarker = document.createElement("div");
+    customMarker.className = "custom-marker";
 
-    navigator.geolocation.getCurrentPosition(async (position) => {
+    const markerImg = document.createElement("img");
+    markerImg.src = "/static/icons/colored-pin.svg";
+    customMarker.appendChild(markerImg);
+
+    this.marker = new tt.Marker({
+      element: customMarker,
+    })
+      .setLngLat(defaultCenter)
+      .addTo(this.map);
+
+    this.geoAPI = navigator.geolocation.watchPosition(async (position) => {
       try {
         const pos = {
           lat: position.coords.latitude,
@@ -308,6 +322,10 @@ class JobPosting extends EmployerPage {
   }
 
   close() {
+    if (this.geoAPI) {
+      navigator.geolocation.clearWatch(this.geoAPI);
+    }
+
     document.querySelector("body").classList.remove("job-post-body");
 
     try {
