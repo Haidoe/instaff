@@ -1,4 +1,5 @@
 import AuthenticatedPage from "../../classes/AuthenticatedPage";
+import JobMatch from "../../components/modal/job-match";
 import Modal from "../../components/modal/job-posting-detail";
 import getAllActiveJobPostings from "../../js/job-posting/getAllActiveJobPostings";
 import { pageTransition } from "../../router";
@@ -264,6 +265,7 @@ class Home extends AuthenticatedPage {
           const item = marker.getElement();
 
           marker.getElement().addEventListener("click", () => {
+            console.log("CLICKED!");
             const item = marker.getElement();
             const currentBound = this.map.getBounds();
             modal.open();
@@ -355,11 +357,11 @@ class Home extends AuthenticatedPage {
 
       Home.markerIDRef.push(markerRef);
 
-      const modal = new Modal(job);
-
-      modal.wrapper = document.querySelector(".new-home-page");
-
       marker.getElement().addEventListener("click", () => {
+        const modal = new Modal(job);
+
+        modal.wrapper = document.querySelector(".new-home-page");
+
         const currentBound = this.map.getBounds();
 
         modal.open();
@@ -410,6 +412,15 @@ class Home extends AuthenticatedPage {
     this.updateList();
   }
 
+  async initJobMatch() {
+    //This is temporary, will be replaced with the actual API call
+    const items = await getAllActiveJobPostings();
+    items.length = 2;
+
+    const jobMatchModal = new JobMatch(items);
+    jobMatchModal.open();
+  }
+
   async mounted() {
     document.querySelector("body").classList.add("new-home-body");
     this.initMap();
@@ -417,6 +428,8 @@ class Home extends AuthenticatedPage {
 
     const activeMenu = document.querySelector(".main-header nav a[href='/']");
     activeMenu?.classList.add("active-menu-item");
+
+    this.initJobMatch();
   }
 
   close() {
