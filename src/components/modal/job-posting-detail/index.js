@@ -6,6 +6,7 @@ import { getUserDetails } from "../../../js/users";
 import { addNotification } from "../../../js/notifications";
 import { extractTime } from "../../../js/utils";
 import ConfirmModal from "../index";
+import { pageTransition } from "../../../router";
 import "./job-posting-detail.scss";
 
 class Modal {
@@ -276,6 +277,22 @@ class Modal {
   }
 
   handleApplyButton() {
+    if (!this.userDetail.uploadProfURL) {
+      const needProofOfWorkModal = new ConfirmModal(
+        "You have not uploaded your proof of work yet. Please upload your proof of work before applying for a job."
+      );
+      needProofOfWorkModal.open();
+
+      needProofOfWorkModal.buttonPrimary.textContent = "Go to Account";
+
+      needProofOfWorkModal.handleConfirm = () => {
+        pageTransition("/account-employee");
+        needProofOfWorkModal.close();
+      };
+
+      return false;
+    }
+
     const confirm = new ConfirmModal();
     confirm.addContainerClass("job-posting-detail-confirm-modal");
     confirm.modalContent.innerHTML = `
