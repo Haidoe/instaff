@@ -173,7 +173,7 @@
           flex-direction: column;
           justify-content: center;
           gap: 1rem;
-          padding: 2rem 0;
+          padding: 2rem 1rem;
           border-bottom: 1px solid $borderColor;
 
           .job-main-header-col-left {
@@ -195,7 +195,7 @@
           @media screen and (min-width: $mediumLarge) {
             display: grid;
             grid-template-columns: 40% 60%;
-            column-gap: 2rem;
+            column-gap: 1rem;
           }
         }
 
