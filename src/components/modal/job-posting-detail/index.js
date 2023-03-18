@@ -288,6 +288,7 @@ class Modal {
       needProofOfWorkModal.handleConfirm = () => {
         pageTransition("/account-employee");
         needProofOfWorkModal.close();
+        this.close();
       };
 
       return false;
