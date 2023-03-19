@@ -1,3 +1,4 @@
+import moment from "moment";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import addApplicant from "../../../js/applicants/addApplicant";
 import deleteApplicationRecord from "../../../js/applicants/deleteApplicationRecord";
@@ -217,8 +218,12 @@ class Modal {
     // this.modalContentBodySectionRating.textContent = "No Rating Yet.";
     this.modalContentBody.appendChild(this.modalContentBodySectionRating);
 
+    const feedbackRatingContainer = document.createElement("div");
+    feedbackRatingContainer.classList.add("feedback-rating-container");
+    this.modalContentBodySectionRating.appendChild(feedbackRatingContainer);
+
     const stars = new StarRating(0);
-    this.modalContentBodySectionRating.appendChild(stars.toElement());
+    feedbackRatingContainer.appendChild(stars.toElement());
 
     const { rating, total, feedbacks } = await getFeedbackRatingByUser(
       this.data.userId
@@ -230,7 +235,7 @@ class Modal {
     const totalComments = document.createElement("div");
     totalComments.classList.add("total-comments");
     totalComments.textContent = total ? `${total} feedbacks` : "No feedbacks";
-    this.modalContentBodySectionRating.appendChild(totalComments);
+    feedbackRatingContainer.appendChild(totalComments);
 
     feedbacks.forEach((feedback) => {
       const feedbackItem = document.createElement("div");
@@ -245,10 +250,33 @@ class Modal {
         : feedback.feedbackFromProfileImageUrl;
       thumbnail.appendChild(thumbnailImg);
 
+      const feedbackItemContent = document.createElement("div");
+      feedbackItemContent.classList.add("feedback-content");
+      feedbackItem.appendChild(feedbackItemContent);
+
       const feedbackItemComment = document.createElement("div");
       feedbackItemComment.classList.add("comment");
       feedbackItemComment.textContent = feedback.feedbackMessage;
-      feedbackItem.appendChild(feedbackItemComment);
+      feedbackItemContent.appendChild(feedbackItemComment);
+
+      const feedbackFooter = document.createElement("div");
+      feedbackFooter.classList.add("feedback-footer");
+      feedbackItemContent.appendChild(feedbackFooter);
+
+      const feedbackAuthor = document.createElement("div");
+      feedbackAuthor.classList.add("feedback-author");
+      feedbackAuthor.textContent = feedback.isAnonymousValue
+        ? "Anonymous"
+        : feedback.feedbackFromDisplayName;
+      feedbackFooter.appendChild(feedbackAuthor);
+
+      const feedbackDate = document.createElement("div");
+      feedbackDate.classList.add("feedback-date");
+      feedbackDate.textContent = feedback.createdDateTime
+        ? moment(feedback.createdDateTime.toDate()).fromNow()
+        : "a moment ago";
+
+      feedbackFooter.appendChild(feedbackDate);
 
       console.log(feedback);
     });
