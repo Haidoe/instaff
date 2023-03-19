@@ -1,21 +1,13 @@
 import template from "./my-jobs.html";
 import "./my-jobs.scss";
 import {
-  getFirestore,
   Timestamp,
-  collection,
-  query,
-  where,
-  getDocs,
-  orderBy,
-  documentId,
 } from "firebase/firestore";
 import getJobsAppliedByUser from "../../js/applicants/getJobsAppliedByUser";
 import getJobDetail from "./getJobDetail";
 import getJobsHiredByUser from "../../js/applicants/getJobsHiredByUser";
 import createJobBoxElement from "./components/createJobBoxElement";
 import createJobBoxMainElement from "./components/createJobBoxMainElement";
-import calcStarRating from "../../js/ratingandfeedback/calcStarRating";
 
 import { getProfile } from "../../js/account-setting/account";
 import EmployeePage from "../../classes/EmployeePage";
@@ -59,7 +51,9 @@ class MyJobs extends EmployeePage {
     createJobBoxMainElement(
       hiredJobsColFiltered,
       mainContent,
-      "Your active jobs"
+      "Your active jobs",
+      "primary-button",
+      "Start the shift"
     );
 
     if (hiredJobsColFiltered.length > 0) {
@@ -103,7 +97,9 @@ class MyJobs extends EmployeePage {
     createJobBoxMainElement(
       appliedJobsColByUserFiltered,
       mainContent,
-      "Your applied jobs"
+      "Your applied jobs",
+      "secondary-button",
+      "Pending"
     );
 
     //hide button

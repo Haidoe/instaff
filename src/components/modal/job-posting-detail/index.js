@@ -1,3 +1,4 @@
+import moment from "moment";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import addApplicant from "../../../js/applicants/addApplicant";
 import deleteApplicationRecord from "../../../js/applicants/deleteApplicationRecord";
@@ -6,7 +7,10 @@ import { getUserDetails } from "../../../js/users";
 import { addNotification } from "../../../js/notifications";
 import { extractTime } from "../../../js/utils";
 import ConfirmModal from "../index";
+import { pageTransition } from "../../../router";
 import "./job-posting-detail.scss";
+import StarRating from "../../star-rating";
+import getFeedbackRatingByUser from "../../../js/ratingandfeedback/getFeedbackRatingByUser";
 
 class Modal {
   constructor(data) {
@@ -137,6 +141,20 @@ class Modal {
     infoPositionValue.textContent = this.data.positionTitle;
     infoPositionTitle.appendChild(infoPositionValue);
 
+    const infoWage = document.createElement("div");
+    infoWage.classList.add("info-group");
+    this.modalContentBodySectionDetails.appendChild(infoWage);
+
+    const infoWageProp = document.createElement("div");
+    infoWageProp.classList.add("prop");
+    infoWageProp.textContent = "Wage (per hour)";
+    infoWage.appendChild(infoWageProp);
+
+    const infoWageValue = document.createElement("div");
+    infoWageValue.classList.add("value");
+    infoWageValue.textContent = `$${this.data.wageRate.toFixed(2)}`;
+    infoWage.appendChild(infoWageValue);
+
     const infoSchedule = document.createElement("div");
     infoSchedule.classList.add("info-group");
     this.modalContentBodySectionDetails.appendChild(infoSchedule);
@@ -189,16 +207,79 @@ class Modal {
 
     const infoDescriptionValue = document.createElement("div");
     infoDescriptionValue.classList.add("value");
-    infoDescriptionValue.textContent = this.data.description;
+    infoDescriptionValue.innerHTML = this.data.description;
     infoDescription.appendChild(infoDescriptionValue);
   }
 
-  initBodySectionRating() {
+  async initBodySectionRating() {
     this.modalContentBodySectionRating = document.createElement("section");
     this.modalContentBodySectionRating.classList.add("rating");
     this.modalContentBodySectionRating.classList.add("hidden");
-    this.modalContentBodySectionRating.textContent = "No Rating Yet.";
+    // this.modalContentBodySectionRating.textContent = "No Rating Yet.";
     this.modalContentBody.appendChild(this.modalContentBodySectionRating);
+
+    const feedbackRatingContainer = document.createElement("div");
+    feedbackRatingContainer.classList.add("feedback-rating-container");
+    this.modalContentBodySectionRating.appendChild(feedbackRatingContainer);
+
+    const stars = new StarRating(0);
+    feedbackRatingContainer.appendChild(stars.toElement());
+
+    const { rating, total, feedbacks } = await getFeedbackRatingByUser(
+      this.data.userId
+    );
+    stars.suffix = ` ${rating ? rating.toFixed(2) : rating}/5`;
+    stars.rating = Math.floor(rating);
+    stars.rerender();
+
+    const totalComments = document.createElement("div");
+    totalComments.classList.add("total-comments");
+    totalComments.textContent = total ? `${total} feedbacks` : "No feedbacks";
+    feedbackRatingContainer.appendChild(totalComments);
+
+    feedbacks.forEach((feedback) => {
+      const feedbackItem = document.createElement("div");
+      feedbackItem.classList.add("feedback-item");
+      this.modalContentBodySectionRating.appendChild(feedbackItem);
+      const thumbnail = document.createElement("div");
+      thumbnail.classList.add("thumbnail");
+      feedbackItem.appendChild(thumbnail);
+      const thumbnailImg = document.createElement("img");
+      thumbnailImg.src = feedback.isAnonymousValue
+        ? "/static/images/anonymous.svg"
+        : feedback.feedbackFromProfileImageUrl;
+      thumbnail.appendChild(thumbnailImg);
+
+      const feedbackItemContent = document.createElement("div");
+      feedbackItemContent.classList.add("feedback-content");
+      feedbackItem.appendChild(feedbackItemContent);
+
+      const feedbackItemComment = document.createElement("div");
+      feedbackItemComment.classList.add("comment");
+      feedbackItemComment.textContent = feedback.feedbackMessage;
+      feedbackItemContent.appendChild(feedbackItemComment);
+
+      const feedbackFooter = document.createElement("div");
+      feedbackFooter.classList.add("feedback-footer");
+      feedbackItemContent.appendChild(feedbackFooter);
+
+      const feedbackAuthor = document.createElement("div");
+      feedbackAuthor.classList.add("feedback-author");
+      feedbackAuthor.textContent = feedback.isAnonymousValue
+        ? "Anonymous"
+        : feedback.feedbackFromDisplayName;
+      feedbackFooter.appendChild(feedbackAuthor);
+
+      const feedbackDate = document.createElement("div");
+      feedbackDate.classList.add("feedback-date");
+      feedbackDate.textContent = feedback.createdDateTime
+        ? moment(feedback.createdDateTime.toDate()).fromNow()
+        : "a moment ago";
+
+      feedbackFooter.appendChild(feedbackDate);
+
+      console.log(feedback);
+    });
   }
 
   initContentNavListeners() {
@@ -262,6 +343,23 @@ class Modal {
   }
 
   handleApplyButton() {
+    if (!this.userDetail.uploadProfURL) {
+      const needProofOfWorkModal = new ConfirmModal(
+        "You have not uploaded your proof of work yet. Please upload your proof of work before applying for a job."
+      );
+      needProofOfWorkModal.open();
+
+      needProofOfWorkModal.buttonPrimary.textContent = "Go to Account";
+
+      needProofOfWorkModal.handleConfirm = () => {
+        pageTransition("/account-employee");
+        needProofOfWorkModal.close();
+        this.close();
+      };
+
+      return false;
+    }
+
     const confirm = new ConfirmModal();
     confirm.addContainerClass("job-posting-detail-confirm-modal");
     confirm.modalContent.innerHTML = `

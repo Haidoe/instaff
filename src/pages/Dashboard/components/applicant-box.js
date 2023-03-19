@@ -64,8 +64,7 @@ class ApplicantBox {
         total,
       };
 
-      stars.prefix = rating || null;
-      stars.suffix = `(${total})`;
+      stars.suffix = ` ${rating}/5`;
       stars.rating = Math.floor(rating);
       stars.rerender();
     });
