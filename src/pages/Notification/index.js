@@ -1,3 +1,4 @@
+import moment from "moment";
 import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import { getNotificationPerUser } from "../../js/notifications";
 import Template from "./notif.html";
@@ -13,6 +14,11 @@ const NOTIFICATION_STATUS = {
 class NotificationPage extends AuthenticatedPage {
   constructor() {
     super("Notification");
+
+    this.urls = {
+      employee: "/my-jobs",
+      employer: "/dashboard",
+    };
   }
 
   load() {
@@ -30,7 +36,10 @@ class NotificationPage extends AuthenticatedPage {
       noNotif.classList.remove("hidden");
     } else {
       response.forEach((notif) => {
-        const notification = document.createElement("div");
+        const notification = document.createElement("a");
+        notification.href =
+          this.urls[this.currentUser.details.typeOfUser] || "/";
+        notification.setAttribute("data-link", "");
         notification.classList.add("notif");
         this.wrapper.appendChild(notification);
 
@@ -49,8 +58,9 @@ class NotificationPage extends AuthenticatedPage {
         messageContainer.appendChild(message);
 
         const messageDate = document.createElement("p");
+        messageDate.classList.add("notif__date");
         const notifDate = notif.created.toDate();
-        messageDate.textContent = `${notifDate.toDateString()} ${notifDate.toLocaleTimeString()}`;
+        messageDate.textContent = moment(notifDate).fromNow();
         messageContainer.appendChild(messageDate);
 
         if (notif.type === "HIRED") {
