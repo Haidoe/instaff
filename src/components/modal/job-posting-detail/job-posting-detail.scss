@@ -25,7 +25,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 1rem;
     position: relative;
-    max-height: 80vh;
+    max-height: 90vh;
     overflow-y: auto;
 
     .modal-content {
@@ -107,7 +107,7 @@
                     content: "";
                     display: block;
                     width: 80%;
-                    height: 1px;
+                    height: 3px;
                     position: absolute;
                     bottom: 0;
                     left: 50%;
