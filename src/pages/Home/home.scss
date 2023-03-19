@@ -27,12 +27,18 @@
   }
 
   .custom-marker {
-    height: 25px;
-    width: 25px;
-    background-color: transparent;
+    height: 20px;
+    width: 20px;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 
   .you-are-here {
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     display: flex;
     justify-content: center;

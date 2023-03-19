@@ -25,7 +25,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 1rem;
     position: relative;
-    max-height: 95vh;
+    max-height: 90vh;
     overflow-y: auto;
 
     .modal-content {
@@ -77,6 +77,9 @@
         flex: 1;
         margin: -1rem;
         margin-top: 0;
+        display: flex;
+        flex-direction: column;
+
         nav {
           border-bottom: 1px solid $borderColor;
 
@@ -104,7 +107,7 @@
                     content: "";
                     display: block;
                     width: 80%;
-                    height: 1px;
+                    height: 3px;
                     position: absolute;
                     bottom: 0;
                     left: 50%;
@@ -117,11 +120,15 @@
         }
 
         section {
+          flex: 1;
           padding: 1rem;
           font-size: 17px;
           display: grid;
           gap: 1rem;
           margin-top: 1rem;
+          max-height: 40vh;
+          overflow-y: auto;
+          height: 100%;
 
           .info-group {
             display: flex;
@@ -177,6 +184,31 @@
       &:focus {
         outline: none;
         background-color: rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .total-comments {
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .feedback-item {
+      font-size: 14px;
+      display: flex;
+      gap: 1rem;
+
+      .thumbnail {
+        img {
+          width: 50px;
+          height: 50px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+      }
+
+      .comment {
+        flex: 1;
       }
     }
   }

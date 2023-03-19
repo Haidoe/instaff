@@ -468,7 +468,7 @@ class Home extends AuthenticatedPage {
     const activeMenu = document.querySelector(".main-header nav a[href='/']");
     activeMenu?.classList.remove("active-menu-item");
 
-    this.jobMatchModal.close();
+    this.jobMatchModal?.close();
 
     this.geoAPI && navigator.geolocation.clearWatch(this.geoAPI);
   }
