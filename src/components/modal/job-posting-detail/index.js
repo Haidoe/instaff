@@ -8,6 +8,8 @@ import { extractTime } from "../../../js/utils";
 import ConfirmModal from "../index";
 import { pageTransition } from "../../../router";
 import "./job-posting-detail.scss";
+import StarRating from "../../star-rating";
+import getFeedbackRatingByUser from "../../../js/ratingandfeedback/getFeedbackRatingByUser";
 
 class Modal {
   constructor(data) {
@@ -208,12 +210,48 @@ class Modal {
     infoDescription.appendChild(infoDescriptionValue);
   }
 
-  initBodySectionRating() {
+  async initBodySectionRating() {
     this.modalContentBodySectionRating = document.createElement("section");
     this.modalContentBodySectionRating.classList.add("rating");
     this.modalContentBodySectionRating.classList.add("hidden");
-    this.modalContentBodySectionRating.textContent = "No Rating Yet.";
+    // this.modalContentBodySectionRating.textContent = "No Rating Yet.";
     this.modalContentBody.appendChild(this.modalContentBodySectionRating);
+
+    const stars = new StarRating(0);
+    this.modalContentBodySectionRating.appendChild(stars.toElement());
+
+    const { rating, total, feedbacks } = await getFeedbackRatingByUser(
+      this.data.userId
+    );
+    stars.suffix = ` ${rating ? rating.toFixed(2) : rating}/5`;
+    stars.rating = Math.floor(rating);
+    stars.rerender();
+
+    const totalComments = document.createElement("div");
+    totalComments.classList.add("total-comments");
+    totalComments.textContent = total ? `${total} feedbacks` : "No feedbacks";
+    this.modalContentBodySectionRating.appendChild(totalComments);
+
+    feedbacks.forEach((feedback) => {
+      const feedbackItem = document.createElement("div");
+      feedbackItem.classList.add("feedback-item");
+      this.modalContentBodySectionRating.appendChild(feedbackItem);
+      const thumbnail = document.createElement("div");
+      thumbnail.classList.add("thumbnail");
+      feedbackItem.appendChild(thumbnail);
+      const thumbnailImg = document.createElement("img");
+      thumbnailImg.src = feedback.isAnonymousValue
+        ? "/static/images/anonymous.svg"
+        : feedback.feedbackFromProfileImageUrl;
+      thumbnail.appendChild(thumbnailImg);
+
+      const feedbackItemComment = document.createElement("div");
+      feedbackItemComment.classList.add("comment");
+      feedbackItemComment.textContent = feedback.feedbackMessage;
+      feedbackItem.appendChild(feedbackItemComment);
+
+      console.log(feedback);
+    });
   }
 
   initContentNavListeners() {

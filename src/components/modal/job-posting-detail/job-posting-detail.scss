@@ -186,6 +186,31 @@
         background-color: rgba(0, 0, 0, 0.3);
       }
     }
+
+    .total-comments {
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .feedback-item {
+      font-size: 14px;
+      display: flex;
+      gap: 1rem;
+
+      .thumbnail {
+        img {
+          width: 50px;
+          height: 50px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+      }
+
+      .comment {
+        flex: 1;
+      }
+    }
   }
 }
 
