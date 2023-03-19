@@ -7,20 +7,28 @@ class FirstTime extends Modal {
 
     this.modal.classList.add("first-time-modal");
 
-    this.buttonSecondary.textContent = "SAMPLE TEXT";
-    this.buttonPrimary.textContent = "REDIRECT";
+    this.buttonSecondary.textContent = "Maybe later";
+    this.buttonPrimary.textContent = "Go to profile";
 
     this.modalContent.innerHTML = "";
 
-    const title = document.createElement("h2");
-    title.textContent = "Welcome to the first time modal";
+    const title = document.createElement("p");
+    title.textContent = "To ensure best experience, please complete your profile.";
     this.modalContent.appendChild(title);
 
     this.handleConfirm = () => {
       console.log("Confirm");
       this.close();
     };
+
+
+    this.buttonPrimary.addEventListener('click', function (e) {
+      console.log("Primary clicked");
+      window.open("/account-employee");
+    })
+
   }
+
 }
 
 export default FirstTime;

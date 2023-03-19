@@ -2,6 +2,8 @@ import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import JobMatch from "../../components/modal/job-match";
 import Modal from "../../components/modal/job-posting-detail";
 import getAllActiveJobPostings from "../../js/job-posting/getAllActiveJobPostings";
+import FirstTime from "../../components/modal/first-time";
+import { getDoc, updateDoc, doc, getFirestore } from "firebase/firestore";
 import { pageTransition } from "../../router";
 import Template from "./home.html";
 import "./home.scss";
@@ -101,6 +103,33 @@ class Home extends AuthenticatedPage {
       sidebarOnBtn.style.display = "none";
       searchDiv[0].style.left = "64%";
     });
+
+    this.verifyFirstTime();
+  }
+
+  async verifyFirstTime() {
+    if (this.currentUser.details.firstTime == null) {
+      const modalFisrtTime = new FirstTime();
+
+      modalFisrtTime.open();
+
+      let userID = this.currentUser.uid;
+      const markFirstTime = async (id) => {
+        const db = getFirestore();
+        const userRef = doc(db, "users", id);
+        try {
+          const markFirstTime = await updateDoc(userRef, {
+            firstTime: false
+          });
+          return markFirstTime;
+
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      }
+      const markFirstTimeResult = await markFirstTime(userID);
+    }
   }
 
   removeDuplicates(arr) {
