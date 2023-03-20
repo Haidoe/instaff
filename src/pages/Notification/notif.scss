@@ -52,5 +52,9 @@
       align-items: flex-start;
       justify-content: center;
     }
+
+    &__date {
+      color: $colorGray;
+    }
   }
 }

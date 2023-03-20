@@ -176,11 +176,11 @@ class Home extends AuthenticatedPage {
       const singleArticle = document.createElement("article");
       singleArticle.innerHTML = job_temp;
 
-      const modal = new Modal(job);
-      modal.wrapper = document.querySelector(".new-home-page");
-      Home.modalList.push(modal);
-
       singleArticle.addEventListener("click", () => {
+        const modal = new Modal(job);
+        modal.wrapper = document.querySelector(".new-home-page");
+        Home.modalList.push(modal);
+
         const currentBound = this.map.getBounds();
         modal.open();
         const drift = (currentBound._ne.lng - currentBound._sw.lng) / 3;

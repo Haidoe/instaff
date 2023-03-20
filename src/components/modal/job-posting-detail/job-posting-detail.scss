@@ -197,6 +197,14 @@
       font-size: 14px;
       display: flex;
       gap: 1rem;
+      border-bottom: 1px solid $colorLightGray;
+      padding: 1rem;
+      margin-left: -1rem;
+      margin-right: -1rem;
+
+      &:last-of-type {
+        border-bottom: none;
+      }
 
       .thumbnail {
         img {
@@ -207,8 +215,29 @@
         }
       }
 
-      .comment {
+      .feedback-content {
         flex: 1;
+      }
+    }
+
+    .feedback-rating-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .feedback-footer {
+      display: flex;
+      gap: 0.15rem;
+      margin-top: 0.5rem;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      color: $colorGray;
+    }
+
+    .feedback-author {
+      &::after {
+        content: " - ";
       }
     }
   }
