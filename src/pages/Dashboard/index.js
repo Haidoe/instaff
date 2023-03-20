@@ -1,5 +1,4 @@
 import EmployerPage from "../../classes/EmployerPage";
-import { getActiveTotalApplicantsByUser } from "../../js/job-posting/job-posting";
 import template from "./dashboard.html";
 import RecentJob from "./components/recent-job";
 import ApplicantBox from "./components/applicant-box";
@@ -27,15 +26,6 @@ class Dashboard extends EmployerPage {
       .then((total) => {
         const boxPostedJobs = document.querySelector("#box-posted-jobs p");
         boxPostedJobs.textContent = total;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    getActiveTotalApplicantsByUser(this.currentUser.uid)
-      .then((total) => {
-        const toPay = document.querySelector("#box-pending-payments p");
-        toPay.textContent = total;
       })
       .catch((error) => {
         console.log(error);
