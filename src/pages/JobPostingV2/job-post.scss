@@ -19,7 +19,7 @@
         background-color: $mainBgColor;
 
         span {
-          @extend .gradient-text;
+          color: $colorPink;
         }
       }
     }
@@ -68,6 +68,8 @@
         border-radius: 50%;
         outline: 0;
         border: none;
+        height: 35px;
+        width: 35px;
 
         .icon {
           width: 1.5rem;
