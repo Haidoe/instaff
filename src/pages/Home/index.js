@@ -1,6 +1,7 @@
 import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import JobMatch from "../../components/modal/job-match";
 import Modal from "../../components/modal/job-posting-detail";
+import getSuggestJobs from "../../js/job-match";
 import getAllActiveJobPostings from "../../js/job-posting/getAllActiveJobPostings";
 import { pageTransition } from "../../router";
 import Template from "./home.html";
@@ -175,11 +176,11 @@ class Home extends AuthenticatedPage {
       const singleArticle = document.createElement("article");
       singleArticle.innerHTML = job_temp;
 
-      const modal = new Modal(job);
-      modal.wrapper = document.querySelector(".new-home-page");
-      Home.modalList.push(modal);
-
       singleArticle.addEventListener("click", () => {
+        const modal = new Modal(job);
+        modal.wrapper = document.querySelector(".new-home-page");
+        Home.modalList.push(modal);
+
         const currentBound = this.map.getBounds();
         modal.open();
         const drift = (currentBound._ne.lng - currentBound._sw.lng) / 3;
@@ -416,7 +417,8 @@ class Home extends AuthenticatedPage {
 
   async initJobMatch() {
     //This is temporary, will be replaced with the actual API call
-    const items = await getAllActiveJobPostings();
+    //const items = await getAllActiveJobPostings();
+    const items = await getSuggestJobs(this.currentUser.uid);
     items.length = 2;
 
     this.jobMatchModal = new JobMatch(items);
@@ -468,7 +470,7 @@ class Home extends AuthenticatedPage {
     const activeMenu = document.querySelector(".main-header nav a[href='/']");
     activeMenu?.classList.remove("active-menu-item");
 
-    this.jobMatchModal.close();
+    this.jobMatchModal?.close();
 
     this.geoAPI && navigator.geolocation.clearWatch(this.geoAPI);
   }

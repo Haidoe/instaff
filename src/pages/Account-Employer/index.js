@@ -81,6 +81,7 @@ class AccountEmployer extends EmployerPage {
     const dateOfBirth = document.getElementById("dateOfBirth");
     const companyName = document.getElementById("companyName");
     const address = document.getElementById("address");
+    const city = document.getElementById("city");
     const contactNumber = document.getElementById("contactNumber");
     const businessNumber = document.getElementById("businessNumber");
     const emailAddress = document.getElementById("emailAddress");
@@ -120,6 +121,7 @@ class AccountEmployer extends EmployerPage {
     companyName.value !== "undefined" ? this.data.companyName : "";
     address.value =
       typeof this.data.address !== "undefined" ? this.data.address : "";
+    city.value = typeof this.data.city !== "undefined" ? this.data.city : "";
     contactNumber.value =
       typeof this.data.contactNumber !== "undefined"
         ? this.data.contactNumber
@@ -202,6 +204,7 @@ class AccountEmployer extends EmployerPage {
     const dateOfBirth = document.getElementById("dateOfBirth");
     const companyName = document.getElementById("companyName");
     const address = document.getElementById("address");
+    const city = document.getElementById("city");
     const contactNumber = document.getElementById("contactNumber");
     const businessNumber = document.getElementById("businessNumber");
     const emailAddress = document.getElementById("emailAddress");
@@ -212,7 +215,8 @@ class AccountEmployer extends EmployerPage {
       dateOfBirth:
         dateOfBirth.value !== null ? new Date(dateOfBirth.value) : "",
       companyName: companyName.value,
-      province: "BC",
+      province: "British Columbia",
+      city: city.value,
       address: address.value,
       contactNumber: contactNumber.value,
       businessNumber: businessNumber.value,

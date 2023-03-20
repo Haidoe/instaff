@@ -97,6 +97,7 @@ class AccountEmployee extends EmployeePage {
     const dateOfBirth = document.querySelector("#dateOfBirth");
     const profileName = document.querySelector(".profile-name");
     const address = document.getElementById("address");
+    const city = document.getElementById("city");
     const contactNumber = document.getElementById("contactNumber");
     const postalCode = document.getElementById("postalCode");
     const emailAddress = document.getElementById("emailAddress");
@@ -131,14 +132,20 @@ class AccountEmployee extends EmployeePage {
       typeof this.data.dateOfBirth !== "undefined"
         ? formatDate(this.data.dateOfBirth.toDate().toDateString())
         : "";
+
     address.value =
       typeof this.data.address !== "undefined" ? this.data.address : "";
+    city.value = typeof this.data.city !== "undefined" ? this.data.city : "";
     contactNumber.value =
       typeof this.data.contactNumber !== "undefined"
         ? this.data.contactNumber
         : "";
     postalCode.value =
       typeof this.data.postalCode !== "undefined" ? this.data.postalCode : "";
+    this.coordinates =
+      typeof this.data.coordinates != "undefined"
+        ? (this.coordinates = this.data.coordinates)
+        : "";
     emailAddress.value =
       typeof this.data.emailAddress !== "undefined"
         ? this.data.emailAddress
@@ -149,12 +156,12 @@ class AccountEmployee extends EmployeePage {
     let results = await getTypeOfWorkByUserId(this.profileId);
     const checkList = [
       "Barista",
-      "Dishwasher",
-      "EventServer",
+      "Dish washer",
+      "Event Server",
       "Bartender",
-      "CounterStaff",
-      "EventSetup",
-      "WarehouseAssociate",
+      "Counter Staff",
+      "Event Setup",
+      "Warehouse Associate",
       "Barback",
       "Busser",
       "Custodial",
@@ -587,6 +594,7 @@ class AccountEmployee extends EmployeePage {
     const displayName = document.getElementById("displayName");
     const dateOfBirth = document.getElementById("dateOfBirth");
     const address = document.getElementById("address");
+    const city = document.getElementById("city");
     const contactNumber = document.getElementById("contactNumber");
     const postalCode = document.getElementById("postalCode");
     const emailAddress = document.getElementById("emailAddress");
@@ -594,7 +602,8 @@ class AccountEmployee extends EmployeePage {
       id: this.currentUser.uid, //this.profileId,
       //   userUID: this.currentUser.uid, //this.profileId,
       displayName: displayName.value,
-      province: "BC",
+      province: "British Columbia",
+      city: city.value,
       dateOfBirth:
         dateOfBirth.value !== null ? new Date(dateOfBirth.value) : "",
       address: address.value,

@@ -4,7 +4,7 @@
   padding: 0;
   flex-direction: column-reverse;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 380px) {
     right: unset;
     left: 1rem;
   }
@@ -16,7 +16,7 @@
   }
 
   .modal-container {
-    max-width: 400px;
+    max-width: 350px;
     text-align: center;
     padding: 1rem 2rem;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
@@ -52,7 +52,7 @@
 
   .open-button {
     height: 60px;
-    padding: 1rem;
+    padding: 0.9rem;
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
     display: flex;
@@ -78,17 +78,13 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     // gap: 1rem;
+    margin-top: 1.5rem;
   }
 
   .job-list-item {
     text-align: left;
-    padding: 0.5rem;
     cursor: pointer;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-      border-radius: 16px;
-    }
+    padding: 0.5rem;
 
     img {
       aspect-ratio: 1;
@@ -103,7 +99,7 @@
     }
 
     .company-name {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
     }
 
     p {
