@@ -1,0 +1,110 @@
+.main-modal.job-match-modal {
+  top: unset;
+  background-color: unset;
+  padding: 0;
+  flex-direction: column-reverse;
+
+  @media screen and (min-width: 380px) {
+    right: unset;
+    left: 1rem;
+  }
+
+  transition: transform 0.3s ease-in-out;
+
+  &.close {
+    transform: translateY(100%);
+  }
+
+  .modal-container {
+    max-width: 350px;
+    text-align: center;
+    padding: 1rem 2rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
+    border-radius: unset;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+
+    z-index: 5;
+
+    h2 {
+      font-size: 26px;
+    }
+
+    .modal-content {
+      padding: 0;
+    }
+  }
+
+  .close-button {
+    outline: none;
+    border: none;
+    padding: 1rem;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+
+    background-color: #f5f5f5;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .open-button {
+    height: 60px;
+    padding: 0.9rem;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    top: -60px;
+    transform: translateY(100%);
+    outline: none;
+    border: none;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
+    left: 1rem;
+
+    &.open {
+      transform: translateY(0);
+      transition: transform 0.3s ease-in-out;
+      transition-delay: 0.3s;
+    }
+  }
+
+  .job-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    // gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .job-list-item {
+    text-align: left;
+    cursor: pointer;
+    padding: 0.5rem;
+
+    img {
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    h3,
+    .wage {
+      font-size: 17px;
+      color: black;
+    }
+
+    .company-name {
+      margin-top: 0.5rem;
+    }
+
+    p {
+      font-size: 15px;
+      color: #626262;
+    }
+  }
+}
