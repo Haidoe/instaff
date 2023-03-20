@@ -74,7 +74,7 @@ class ApplicantBox {
 
     const anchorViewProfile = document.createElement("a");
     anchorViewProfile.href = "javascript:void(0)";
-    anchorViewProfile.className = "gradient-text";
+    anchorViewProfile.className = "view-profile-btn";
     anchorViewProfile.textContent = "View Profile";
 
     anchorViewProfile.addEventListener("click", () => {
