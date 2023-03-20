@@ -1,35 +1,30 @@
 @import "../../css/variables";
 @import "../../css/gradientText";
 .shadow {
-  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
 }
+
 main {
   background: white;
 }
 .account-employer-page {
+  max-width: $maxWidthContainer;
+  margin: 0 auto;
   .header {
-    flex-direction: column;
+    display: grid;
     align-items: center;
-    justify-content: center;
-    display: flex;
     background-color: white;
-    // padding-top: 8px;
     padding-bottom: 5px;
-    // margin-left: -32px;
-    // margin-right: -36px;
-    // margin-top: -40px;
-    // margin-bottom: 10px;
     right: 0px;
     border-bottom: 1px solid black;
+
     .banner {
       display: grid;
       padding: 3rem 0;
       align-items: center;
+
       .profile-name {
-        display: flex;
-        flex: 1;
+        justify-self: center;
       }
 
       .progress {
@@ -43,14 +38,15 @@ main {
           flex: 1;
           background-color: white;
           border-radius: 5px;
+          padding: 4px;
           text-align: center;
-          margin-left: 10;
+          // margin-left: 10;
           p {
             font-size: 80%;
           }
           .progress-bar {
-            width: 90%;
-            margin-left: 5px;
+            width: 100%;
+            // margin-left: 5px;
             border: 1px solid $colorLightGray;
             position: relative;
             height: 20px;
@@ -171,13 +167,14 @@ main {
       aspect-ratio: 16/8;
       border: 1px solid #000;
       border-radius: 4px;
+      margin-top: 1rem;
     }
 
     .action-btn-wrapper {
       display: flex;
       justify-content: space-between;
       text-align: center;
-      padding: 0 0.5rem;
+      // padding: 0 0.5rem;
       margin-top: 1rem;
 
       button {
@@ -204,7 +201,8 @@ main {
       }
 
       .primary-button {
-        padding: 0.5rem 3rem;
+        height: 55px;
+        width: 100%;
       }
     }
   }
@@ -216,6 +214,7 @@ main {
     display: grid;
     justify-content: center;
   }
+
   #profile-map {
     width: 100%;
     height: auto;
@@ -223,6 +222,7 @@ main {
     border: 1px solid #000;
     border-radius: 4px;
   }
+
   .mobile-menu .logo {
     display: inline-block;
     width: 40px;
@@ -290,14 +290,12 @@ main {
   width: 1px;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: $mediumSmall) {
   main {
     background: unset;
   }
   .account-employer-page {
     .header {
-      display: flex;
-      justify-content: space-between;
       align-items: unset;
       padding-left: 2%;
       padding-right: 2%;
@@ -307,14 +305,18 @@ main {
     }
     .banner {
       display: grid;
-      grid-template-columns: 150px 1fr 1fr;
+      grid-template-columns: 150px 1fr 48%;
+
       .progress {
-        margin-top: 0px;
+        padding: 0 1rem;
       }
       gap: 1rem;
+
       .profile-name {
-        padding: 0;
+        // padding: 0;
+        justify-self: left;
       }
+
       .progress {
         flex: 2;
         display: flex;
@@ -333,7 +335,6 @@ main {
           }
           .progress-bar {
             width: 90%;
-            margin-left: 5px;
             border: 1px solid $colorLightGray;
             position: relative;
             height: 20px;
@@ -366,9 +367,8 @@ main {
     .web-menu {
       flex: 1;
       li {
-        padding-left: 16px;
-        padding-right: 16px;
-        display: inline;
+        padding: 0.5rem 1rem;
+        display: inline-block;
       }
 
       .active {
@@ -388,12 +388,12 @@ main {
     }
     .profile-page .form-wrapper {
       grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 1fr) auto;
+      grid-template-rows: repeat(3, 1fr) auto auto;
       gap: 2rem;
 
       .personal-wrapper {
         grid-column: 1;
-        grid-row: span 2;
+        grid-row: 1/5;
         border: 1px solid $colorLightGray;
         padding: 1rem;
         border-radius: 5px;
@@ -418,7 +418,8 @@ main {
       }
       .action-btn-wrapper {
         grid-column: span 2;
-        grid-row: 3;
+        grid-row: 5;
+        margin-top: 0;
       }
     }
   }
