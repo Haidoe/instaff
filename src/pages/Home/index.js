@@ -1,6 +1,7 @@
 import AuthenticatedPage from "../../classes/AuthenticatedPage";
 import JobMatch from "../../components/modal/job-match";
 import Modal from "../../components/modal/job-posting-detail";
+import getSuggestJobs from "../../js/job-match";
 import getAllActiveJobPostings from "../../js/job-posting/getAllActiveJobPostings";
 import { pageTransition } from "../../router";
 import Template from "./home.html";
@@ -416,7 +417,8 @@ class Home extends AuthenticatedPage {
 
   async initJobMatch() {
     //This is temporary, will be replaced with the actual API call
-    const items = await getAllActiveJobPostings();
+    //const items = await getAllActiveJobPostings();
+    const items = await getSuggestJobs(this.currentUser.uid);
     items.length = 2;
 
     this.jobMatchModal = new JobMatch(items);
