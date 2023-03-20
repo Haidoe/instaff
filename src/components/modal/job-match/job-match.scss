@@ -4,13 +4,19 @@
   padding: 0;
   flex-direction: column-reverse;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 380px) {
     right: unset;
     left: 1rem;
   }
 
+  transition: transform 0.3s ease-in-out;
+
+  &.close {
+    transform: translateY(100%);
+  }
+
   .modal-container {
-    max-width: 400px;
+    max-width: 350px;
     text-align: center;
     padding: 1rem 2rem;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
@@ -18,11 +24,7 @@
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
 
-    transition: transform 0.3s ease-in-out;
-
-    &.close {
-      transform: translateY(110%);
-    }
+    z-index: 5;
 
     h2 {
       font-size: 26px;
@@ -50,7 +52,7 @@
 
   .open-button {
     height: 60px;
-    padding: 1rem;
+    padding: 0.9rem;
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
     display: flex;
@@ -58,16 +60,12 @@
     align-items: center;
     position: absolute;
     bottom: 0;
-    right: 1rem;
+    top: -60px;
     transform: translateY(100%);
     outline: none;
     border: none;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
-
-    @media screen and (min-width: 500px) {
-      right: unset;
-      left: 1rem;
-    }
+    left: 1rem;
 
     &.open {
       transform: translateY(0);
@@ -80,17 +78,17 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+    margin-top: 1rem;
   }
 
   .job-list-item {
     text-align: left;
-    padding: 0.5rem;
     cursor: pointer;
 
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-      border-radius: 16px;
-    }
+    // &:hover {
+    //   background-color: rgba(0, 0, 0, 0.1);
+    //   border-radius: 16px;
+    // }
 
     img {
       aspect-ratio: 1;
@@ -105,7 +103,7 @@
     }
 
     .company-name {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
     }
 
     p {

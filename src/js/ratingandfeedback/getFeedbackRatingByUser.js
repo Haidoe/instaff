@@ -27,6 +27,7 @@ const getFeedbackRatingByUser = async (userId = "") => {
   }, 0);
 
   return {
+    feedbacks: ratingAndFeedback,
     total: ratingAndFeedback.length,
     rating: rating ? rating / ratingAndFeedback.length : 0,
   };

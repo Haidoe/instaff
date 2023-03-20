@@ -33,6 +33,8 @@ class Home extends AuthenticatedPage {
     this.userId = null;
     this.infoHint = null;
     this.errorHint = null;
+
+    this.geoAPILoaded = false;
   }
 
   async preload() {
@@ -202,11 +204,11 @@ class Home extends AuthenticatedPage {
       const singleArticle = document.createElement("article");
       singleArticle.innerHTML = job_temp;
 
-      const modal = new Modal(job);
-      modal.wrapper = document.querySelector(".new-home-page");
-      Home.modalList.push(modal);
-
       singleArticle.addEventListener("click", () => {
+        const modal = new Modal(job);
+        modal.wrapper = document.querySelector(".new-home-page");
+        Home.modalList.push(modal);
+
         const currentBound = this.map.getBounds();
         modal.open();
         const drift = (currentBound._ne.lng - currentBound._sw.lng) / 3;
@@ -446,8 +448,34 @@ class Home extends AuthenticatedPage {
     const items = await getAllActiveJobPostings();
     items.length = 2;
 
-    const jobMatchModal = new JobMatch(items);
-    jobMatchModal.open();
+    this.jobMatchModal = new JobMatch(items);
+    this.jobMatchModal.open();
+  }
+
+  async initCurrentLocation() {
+    this.geoAPI = navigator.geolocation.watchPosition(async (position) => {
+      if (this.geoAPILoaded) return true;
+
+      const pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+
+      if (pos.lat && pos.lng) {
+        const customMarker = document.createElement("div");
+        customMarker.className = "custom-marker you-are-here";
+
+        this.currentPositionMarker = new tt.Marker({
+          element: customMarker,
+        })
+          .setLngLat(pos)
+          .addTo(this.map);
+
+        this.map.easeTo({ center: pos });
+
+        this.geoAPILoaded = true;
+      }
+    });
   }
 
   async mounted() {
@@ -459,6 +487,7 @@ class Home extends AuthenticatedPage {
     activeMenu?.classList.add("active-menu-item");
 
     this.initJobMatch();
+    this.initCurrentLocation();
   }
 
   close() {
@@ -467,6 +496,10 @@ class Home extends AuthenticatedPage {
     //Just to make sure Active Menu is set to Dashboard
     const activeMenu = document.querySelector(".main-header nav a[href='/']");
     activeMenu?.classList.remove("active-menu-item");
+
+    this.jobMatchModal?.close();
+
+    this.geoAPI && navigator.geolocation.clearWatch(this.geoAPI);
   }
 }
 
