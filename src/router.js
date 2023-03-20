@@ -104,10 +104,6 @@ const routes = [
       ),
   },
   {
-    path: "/job-match",
-    page: () => import(/* webpackChunkName: "JobMatch" */ `./pages/JobMatch`),
-  },
-  {
     path: "/rating-and-feedback",
     page: () =>
       import(
