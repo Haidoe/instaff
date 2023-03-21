@@ -6,6 +6,7 @@ class Page {
 
   constructor(title) {
     this.title = title;
+    this.isClosed = false;
     this.setDocumentTitle();
   }
 
