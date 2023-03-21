@@ -428,32 +428,39 @@ class Home extends AuthenticatedPage {
   }
 
   async initCurrentLocation() {
-    this.geoAPI = navigator.geolocation.watchPosition(async (position) => {
-      if (this.geoAPILoaded) return true;
+    const currentLocationBtn = document.querySelector("#home-current-location");
 
-      const pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
+    currentLocationBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      currentLocationBtn.style.display = "none";
 
-      if (pos.lat && pos.lng) {
-        const customMarker = document.createElement("div");
-        customMarker.className = "custom-marker you-are-here";
+      this.geoAPI = navigator.geolocation.watchPosition(async (position) => {
+        if (this.geoAPILoaded) return true;
 
-        const markerImg = document.createElement("img");
-        markerImg.src = "/static/instaff-you-are-here.svg";
-        customMarker.appendChild(markerImg);
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
 
-        this.currentPositionMarker = new tt.Marker({
-          element: customMarker,
-        })
-          .setLngLat(pos)
-          .addTo(this.map);
+        if (pos.lat && pos.lng) {
+          const customMarker = document.createElement("div");
+          customMarker.className = "custom-marker you-are-here";
 
-        this.map.easeTo({ center: pos });
+          const markerImg = document.createElement("img");
+          markerImg.src = "/static/instaff-you-are-here.svg";
+          customMarker.appendChild(markerImg);
 
-        this.geoAPILoaded = true;
-      }
+          this.currentPositionMarker = new tt.Marker({
+            element: customMarker,
+          })
+            .setLngLat(pos)
+            .addTo(this.map);
+
+          this.map.easeTo({ center: pos });
+
+          this.geoAPILoaded = true;
+        }
+      });
     });
   }
 

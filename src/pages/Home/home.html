@@ -1,7 +1,3 @@
-<head>
-
-</head>
-
 <div id="side-bar">
     <div class="toggle-off-wrapper">
         <div id="toogle-button-off"><i class="fa-regular fa-rectangle-xmark"></i></div>
@@ -16,12 +12,18 @@
     <div id="toogle-button-on"><i class="fa-solid fa-bars"></i></div>
 </div>
 
-<div class="search-div">
-    <input type="text" id="job_keyword" list="job_title_list" placeholder="Type your keyword" required>
-    <datalist id="job_title_list"></datalist>
-    <div class="button-wrapper">
-        <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
-        <button id="resetBtn">Reset</button>
-    </div>
-</div>
 
+
+<div class="floating-inputs">
+    <div class="search-div">
+        <input type="text" id="job_keyword" list="job_title_list" placeholder="Type your keyword..." required>
+        <datalist id="job_title_list"></datalist>
+        <div class="button-wrapper">
+            <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button id="resetBtn">Reset</button>
+        </div>
+    </div>
+    <button class="current-location" id="home-current-location">
+        Use my current location
+    </button>
+</div>
