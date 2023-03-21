@@ -421,6 +421,8 @@ class Home extends AuthenticatedPage {
     const items = await getSuggestJobs(this.currentUser.uid);
     items.length = 2;
 
+    if (this.isClosed) return;
+
     this.jobMatchModal = new JobMatch(items);
     this.jobMatchModal.open();
   }
@@ -464,6 +466,7 @@ class Home extends AuthenticatedPage {
   }
 
   close() {
+    this.isClosed = true;
     document.querySelector("body").classList.remove("new-home-body");
 
     //Just to make sure Active Menu is set to Dashboard
