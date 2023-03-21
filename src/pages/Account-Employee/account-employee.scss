@@ -397,6 +397,9 @@ main {
   .profile-page {
     display: unset;
   }
+  .preference-wrapper {
+    display: none;
+  }
 }
 
 .preference-page-mobile {
@@ -440,7 +443,8 @@ main {
   .header,
   .account-setting,
   .preference-page,
-  .typeofWork-page {
+  .typeofWork-page,
+  .availability-page {
     display: none;
   }
   .lengthOfShift-page {
@@ -688,6 +692,12 @@ main {
   .profile-page-clicked {
     .account-setting {
       display: unset;
+    }
+    .preference-page {
+      display: none;
+    }
+    .preference-wrapper {
+      display: none;
     }
   }
 }
