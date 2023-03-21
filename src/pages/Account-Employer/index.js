@@ -8,6 +8,7 @@ import {
   convertCoordinatesToAddress,
   convertAddressToCoordinates,
 } from "../../js/map-util";
+import pubsub from "../../classes/PubSub";
 
 class AccountEmployer extends EmployerPage {
   constructor() {
@@ -29,7 +30,7 @@ class AccountEmployer extends EmployerPage {
     };
 
     let defaultZoom = 15;
-    console.log(process.env.INSTAFF_MAP_KEY);
+    // console.log(process.env.INSTAFF_MAP_KEY);
     this.map = tt.map({
       key: process.env.INSTAFF_MAP_KEY,
       container: "profile-map",
@@ -81,12 +82,13 @@ class AccountEmployer extends EmployerPage {
     const dateOfBirth = document.getElementById("dateOfBirth");
     const companyName = document.getElementById("companyName");
     const address = document.getElementById("address");
+    const city = document.getElementById("city");
     const contactNumber = document.getElementById("contactNumber");
     const businessNumber = document.getElementById("businessNumber");
     const emailAddress = document.getElementById("emailAddress");
     const postalCode = document.getElementById("postalCode");
     const submitBtn = document.getElementById("submitBtn");
-    console.log(this.data);
+    // console.log(this.data);
     if (
       typeof this.data.imageURL !== "undefined" &&
       this.data.imageURL !== ""
@@ -120,6 +122,7 @@ class AccountEmployer extends EmployerPage {
     companyName.value !== "undefined" ? this.data.companyName : "";
     address.value =
       typeof this.data.address !== "undefined" ? this.data.address : "";
+    city.value = typeof this.data.city !== "undefined" ? this.data.city : "";
     contactNumber.value =
       typeof this.data.contactNumber !== "undefined"
         ? this.data.contactNumber
@@ -174,7 +177,7 @@ class AccountEmployer extends EmployerPage {
     );
 
     this.initMap();
-    console.log("Map");
+    // console.log("Map");
     document
       .getElementById("address")
       .addEventListener("focusout", async (e) => {
@@ -194,7 +197,10 @@ class AccountEmployer extends EmployerPage {
           this.marker.setLngLat(position).addTo(this.map);
         }
       });
+    
+    this.backToProfile();
   }
+
   async handleFormSubmit(e) {
     e.preventDefault();
     submitBtn.innerHTML = "Saving...";
@@ -202,6 +208,7 @@ class AccountEmployer extends EmployerPage {
     const dateOfBirth = document.getElementById("dateOfBirth");
     const companyName = document.getElementById("companyName");
     const address = document.getElementById("address");
+    const city = document.getElementById("city");
     const contactNumber = document.getElementById("contactNumber");
     const businessNumber = document.getElementById("businessNumber");
     const emailAddress = document.getElementById("emailAddress");
@@ -212,7 +219,8 @@ class AccountEmployer extends EmployerPage {
       dateOfBirth:
         dateOfBirth.value !== null ? new Date(dateOfBirth.value) : "",
       companyName: companyName.value,
-      province: "BC",
+      province: "British Columbia",
+      city: city.value,
       address: address.value,
       contactNumber: contactNumber.value,
       businessNumber: businessNumber.value,
@@ -239,6 +247,7 @@ class AccountEmployer extends EmployerPage {
       submitBtn.innerHTML = "Save";
     }
   }
+
   async handleProfileImageChange(e) {
     e.preventDefault();
     const profileImageExtension = document.getElementById(
@@ -267,6 +276,7 @@ class AccountEmployer extends EmployerPage {
       profileImage.classList.remove("visible");
     }
   }
+
   async uploadProfURLChange(e) {
     e.preventDefault();
     const uploadProfURL = document.getElementById("uploadProfURL");
@@ -285,7 +295,26 @@ class AccountEmployer extends EmployerPage {
       alert("Invalid Proof of Business Registration");
     }
   }
+
+  async backToProfile() {
+    pubsub.subscribe("mainHeaderBackBtnClicked", this.backToProfileBtnListener);
+  }
+
+  backToProfileBtnListener() {
+    const mainPageContainer = document.querySelector(".account-employer-page");
+    mainPageContainer.classList.remove("profile-page-mobile");
+
+    console.log("back to main");
+    pubsub.publish("mainHeaderHideBackBtn");
+  }
+
+    close() {
+    pubsub.unsubscribe("mainHeaderBackBtnClicked", this.backToProfileBtnListener);
+    pubsub.publish("mainHeaderHideBackBtn");
+  }
 }
+
+
 
 function _validate(oInput, extensions) {
   var sFileName = oInput.value;

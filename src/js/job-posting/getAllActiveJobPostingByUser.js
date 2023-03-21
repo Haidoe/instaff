@@ -26,7 +26,12 @@ const getAllActiveJobPostingByUser = async (id) => {
       ...doc.data(),
     }));
 
-    return data;
+    //sort by created date
+    const sortedData = data.sort((a, b) => {
+      return b.created.seconds - a.created.seconds;
+    });
+
+    return sortedData;
   } catch (error) {
     console.log(error);
     return [];

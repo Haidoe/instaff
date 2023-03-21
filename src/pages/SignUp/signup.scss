@@ -4,13 +4,14 @@
 @import "../../css/buttonWhite.scss";
 
 .sign-up-page {
-letter-spacing: 0.5px;
+  letter-spacing: 0.5px;
 
   .inner-wrapper {
-     height: 100vh;
+    height: 100vh;
   }
 
-  .left-col, .right-col {
+  .left-col,
+  .right-col {
     padding: 0 1rem;
   }
 
@@ -30,49 +31,43 @@ letter-spacing: 0.5px;
     font-weight: normal;
   }
 
-  
   //  style input autocomplete
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover, 
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active,
-    textarea:-webkit-autofill,
-    textarea:-webkit-autofill:hover,
-    textarea:-webkit-autofill:focus,
-    textarea:-webkit-autofill:active,
-    select:-webkit-autofill,
-    select:-webkit-autofill:hover,
-    select:-webkit-autofill:focus,
-    select:-webkit-autofill:active {
-      border: 1px solid white;
-      -webkit-text-fill-color: white;
-      background-color: transparent;
-      transition: background-color 5000s ease-in-out 0s;
-    }
-
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  textarea:-webkit-autofill:active,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus,
+  select:-webkit-autofill:active {
+    border: 1px solid white;
+    -webkit-text-fill-color: white;
+    background-color: transparent;
+    transition: background-color 5000s ease-in-out 0s;
+  }
 
   @media screen and (min-width: $mediumLarge) {
-
-    .inner-wrapper{
+    .inner-wrapper {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr;
       grid-template-areas: "left-col right-col";
 
-      .left-col{
+      .left-col {
         display: block;
         background-color: white;
         grid-area: left-col;
-  
-        background-image: url("../../static/images/signup-left-col.png");
-        background-size: contain;
+        background-image: url("../../static/images/signup-left-col.svg");
+        background-size: 70%;
         background-repeat: no-repeat;
         background-position: center;
       }
-  
+    }
   }
-}
-
 }
 
 .sign-up-body #app {

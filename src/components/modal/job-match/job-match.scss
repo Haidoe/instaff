@@ -77,18 +77,14 @@
   .job-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 1rem;
+    // gap: 1rem;
+    margin-top: 1.5rem;
   }
 
   .job-list-item {
     text-align: left;
     cursor: pointer;
-
-    // &:hover {
-    //   background-color: rgba(0, 0, 0, 0.1);
-    //   border-radius: 16px;
-    // }
+    padding: 0.5rem;
 
     img {
       aspect-ratio: 1;

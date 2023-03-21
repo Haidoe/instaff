@@ -48,7 +48,7 @@
 
   .boards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     justify-content: center;
     text-align: center;
     padding: 1rem;
@@ -59,6 +59,13 @@
       flex-direction: column;
       justify-content: space-between;
       background-color: #fff;
+
+      @media screen and (min-width: $mediumSmall) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        padding: 1rem;
+      }
     }
 
     p {
@@ -279,6 +286,10 @@
                   padding: 0.5rem 1rem;
                   text-transform: uppercase;
                 }
+              }
+
+              .view-profile-btn {
+                color: $colorPink;
               }
 
               .hire {
