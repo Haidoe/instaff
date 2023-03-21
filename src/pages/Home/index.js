@@ -440,6 +440,10 @@ class Home extends AuthenticatedPage {
         const customMarker = document.createElement("div");
         customMarker.className = "custom-marker you-are-here";
 
+        const markerImg = document.createElement("img");
+        markerImg.src = "/static/instaff-you-are-here.svg";
+        customMarker.appendChild(markerImg);
+
         this.currentPositionMarker = new tt.Marker({
           element: customMarker,
         })
