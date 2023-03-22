@@ -129,7 +129,7 @@ const createJobBoxMainElement = async (arr, div, text, btnType, btnText) =>  {
 
     const dateOptions = {
       weekday: 'long', // Add this line to include the day of the week
-      year: 'numeric',
+      // year: 'numeric',
       month: 'short',
       day: 'numeric'
     };
@@ -140,11 +140,12 @@ const createJobBoxMainElement = async (arr, div, text, btnType, btnText) =>  {
       hour12: true
     };
 
-    const dateString = startTime.toLocaleString('en-US', dateOptions);
+    const startDateString = startTime.toLocaleString('en-US', dateOptions);
     const startTimeString = startTime.toLocaleString('en-US', timeOptions);
+    const endDateString = endTime.toLocaleString('en-US', dateOptions);
     const endTimeString = endTime.toLocaleString('en-US', timeOptions);
 
-    const formattedDateTime = `${dateString}, ${startTimeString} - ${endTimeString}`;
+    const formattedDateTime = `${startDateString}, ${startTimeString} - ${endDateString}, ${endTimeString}`;
 
     //end of format time
 
