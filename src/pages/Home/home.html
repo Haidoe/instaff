@@ -1,29 +1,50 @@
-<div id="side-bar">
+<!-- <div id="side-bar">
     <div class="toggle-off-wrapper">
         <div id="toogle-button-off"><i class="fa-regular fa-rectangle-xmark"></i></div>
     </div>
     <h2 id="side-list-title">List of jobs available in this location</h2>
     <section id="job-info-list"></section>
-</div>
+</div> -->
 
 
 
 <div class="new-home-page" id="new-home-page">
-    <div id="toogle-button-on"><i class="fa-solid fa-bars"></i></div>
+    <!-- <div id="toogle-button-on"><i class="fa-solid fa-bars"></i></div> -->
 </div>
-
-
 
 <div class="floating-inputs">
     <div class="search-div">
         <input type="text" id="job_keyword" list="job_title_list" placeholder="Type your keyword..." required>
-        <datalist id="job_title_list"></datalist>
+        <!-- <datalist id="job_title_list"></datalist> -->
         <div class="button-wrapper">
+            <button id="resetBtn">
+                <div class="icon close-icon"></div>
+                <span class="visually-hidden">Reset</span>
+            </button>
+
             <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <button id="resetBtn">Reset</button>
         </div>
     </div>
-    <button class="current-location" id="home-current-location">
-        Use my current location
-    </button>
+
+    <div class="side-bar">
+        <aside id="home-aside-job-list">
+            <div class="spacer"></div>
+
+            <section class="results">
+                <h2>
+                    List of Jobs Available:
+                </h2>
+
+                <div class="job-lists" id="home-list-jobs">
+                </div>
+            </section>
+
+            <section class="no-result">
+                <h2>Instaff can't find a position title with "<span id="searched-text"></span>"
+                </h2>
+
+                <p> Try searching other position titles.</p>
+            </section>
+        </aside>
+    </div>
 </div>
