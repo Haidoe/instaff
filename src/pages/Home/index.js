@@ -270,13 +270,14 @@ class Home extends AuthenticatedPage {
 
   jobFilter() {
     this.searchResets();
-    this.removeMarkers();
 
     const searchText = document.querySelector("#job_keyword");
 
     if (searchText.value.trim().length === 0) {
       return;
     }
+
+    this.removeMarkers();
 
     const result = this.jobs.filter((job) => {
       return job.positionTitle.toUpperCase() === searchText.value.toUpperCase();
