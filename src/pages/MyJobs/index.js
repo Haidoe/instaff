@@ -8,6 +8,8 @@ import getJobDetail from "./getJobDetail";
 import getJobsHiredByUser from "../../js/applicants/getJobsHiredByUser";
 import createJobBoxElement from "./components/createJobBoxElement";
 import createJobBoxMainElement from "./components/createJobBoxMainElement";
+import createJobBoxMainElementApplied from "./components/createJobBoxMainElementApplied";
+import deleteApplicationRecord from "../../js/applicants/deleteApplicationRecord";
 
 import { getProfile } from "../../js/account-setting/account";
 import EmployeePage from "../../classes/EmployeePage";
@@ -94,13 +96,21 @@ class MyJobs extends EmployeePage {
 
     //render applied jobs to active job section main
     const mainContent = document.querySelector(".main-content");
-    createJobBoxMainElement(
+    createJobBoxMainElementApplied(
       appliedJobsColByUserFiltered,
       mainContent,
       "Your applied jobs",
-      "secondary-button",
-      "Pending"
+      "primary-button",
+      "Cancel application",
+      this.profileId,
     );
+
+
+    const jobMainButton = document.querySelector(".job-main-button");
+    jobMainButton.addEventListener("click", async (e) => {
+      deleteApplicationRecord(this.profileId, e.target.dataset.jobid);
+    });
+
 
     //hide button
     // const button = appliedJobSectionMain.querySelectorAll("button");
