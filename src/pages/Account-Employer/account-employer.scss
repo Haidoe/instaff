@@ -6,7 +6,9 @@
 
 main {
   background: white;
-  
+}
+.input-group input {
+  border: 1px solid $borderColor;
 }
 .account-employer-page {
   max-width: $maxWidthContainer;
@@ -15,7 +17,6 @@ main {
     display: grid;
     align-items: center;
     background-color: white;
-    padding-bottom: 5px;
     right: 0px;
     border-bottom: 1px solid black;
 
@@ -202,13 +203,16 @@ main {
       }
 
       .primary-button {
-        height: 55px;
-        width: 100%;
+        padding: 0.5rem 3rem;
       }
     }
   }
   .web-menu {
     display: none;
+  }
+  .account-setting {
+    background-color: white;
+    border-bottom: 2px solid $borderColor;
   }
   .profile-info {
     text-align: center;
@@ -407,6 +411,7 @@ main {
         padding: 1rem;
         border-radius: 5px;
         background-color: white;
+        align-self: center;
       }
       .upload-prof-wrapper {
         grid-column: 2;
@@ -415,7 +420,7 @@ main {
         border: 1px solid $colorLightGray;
         padding: 1rem;
         border-radius: 5px;
-        box-shadow: 5px;
+        align-self: center;
       }
       .action-btn-wrapper {
         grid-column: span 2;
