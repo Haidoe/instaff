@@ -4,6 +4,7 @@ import StarRating from "../../../components/star-rating/index";
 import deleteApplicationRecord from "../../../js/applicants/deleteApplicationRecord";
 import getApplicantsIdByPostId from "../../../js/applicants/getApplicantsIdByPostId";
 import { async } from "@firebase/util";
+import { extractTime } from "../../../js/utils";
 
 
 const createJobBoxMainElement = async (arr, div, text, btnType, btnText, userId) =>  {
@@ -136,12 +137,13 @@ const createJobBoxMainElement = async (arr, div, text, btnType, btnText, userId)
     groupjobTopicSchedule.textContent = "Schedule";
     contentGroup5.appendChild(groupjobTopicSchedule);
 
-    //format time "Feb 21, 2018, 5:00 PM - 8:00 PM"
+    //format time "Thu, Feb 21, 2018, 5:00 PM - 8:00 PM"
     const startTime = job.time.from.toDate()
     const endTime = job.time.to.toDate()
 
     const dateOptions = {
-      year: 'numeric',
+      weekday: 'short', // Add this line to include the day of the week
+      // year: 'numeric',
       month: 'short',
       day: 'numeric'
     };
@@ -152,11 +154,12 @@ const createJobBoxMainElement = async (arr, div, text, btnType, btnText, userId)
       hour12: true
     };
 
-    const dateString = startTime.toLocaleString('en-US', dateOptions);
+    const startDateString = startTime.toLocaleString('en-US', dateOptions);
     const startTimeString = startTime.toLocaleString('en-US', timeOptions);
+    const endDateString = endTime.toLocaleString('en-US', dateOptions);
     const endTimeString = endTime.toLocaleString('en-US', timeOptions);
 
-    const formattedDateTime = `${dateString}, ${startTimeString} - ${endTimeString}`;
+    const formattedDateTime = `${startDateString}, ${startTimeString} - ${endDateString}, ${endTimeString}`;
 
     //end of format time
 
