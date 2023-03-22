@@ -171,6 +171,7 @@ class Dashboard extends EmployerPage {
     const container = document.querySelector("div.applicants");
     container.innerHTML = "";
     const applicants = await getApplicantsByPostId(jobPosting.id);
+    container.innerHTML = "";
 
     if (applicants.length) {
       for (const applicant of applicants) {

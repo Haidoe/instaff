@@ -3,6 +3,8 @@ import JobMatch from "../../components/modal/job-match";
 import Modal from "../../components/modal/job-posting-detail";
 import getSuggestJobs from "../../js/job-match";
 import getAllActiveJobPostings from "../../js/job-posting/getAllActiveJobPostings";
+import FirstTime from "../../components/modal/first-time";
+import { getDoc, updateDoc, doc, getFirestore } from "firebase/firestore";
 import { pageTransition } from "../../router";
 import Template from "./home.html";
 import "./home.scss";
@@ -104,6 +106,33 @@ class Home extends AuthenticatedPage {
       sidebarOnBtn.style.display = "none";
       searchDiv[0].style.left = "64%";
     });
+
+    this.verifyFirstTime();
+  }
+
+  async verifyFirstTime() {
+    if (this.currentUser.details.firstTime == null) {
+      const modalFisrtTime = new FirstTime();
+
+      modalFisrtTime.open();
+
+      let userID = this.currentUser.uid;
+      const markFirstTime = async (id) => {
+        const db = getFirestore();
+        const userRef = doc(db, "users", id);
+        try {
+          const markFirstTime = await updateDoc(userRef, {
+            firstTime: false
+          });
+          return markFirstTime;
+
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      }
+      const markFirstTimeResult = await markFirstTime(userID);
+    }
   }
 
   removeDuplicates(arr) {
@@ -421,33 +450,46 @@ class Home extends AuthenticatedPage {
     const items = await getSuggestJobs(this.currentUser.uid);
     items.length = 2;
 
+    if (this.isClosed) return;
+
     this.jobMatchModal = new JobMatch(items);
     this.jobMatchModal.open();
   }
 
   async initCurrentLocation() {
-    this.geoAPI = navigator.geolocation.watchPosition(async (position) => {
-      if (this.geoAPILoaded) return true;
+    const currentLocationBtn = document.querySelector("#home-current-location");
 
-      const pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
+    currentLocationBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      currentLocationBtn.style.display = "none";
 
-      if (pos.lat && pos.lng) {
-        const customMarker = document.createElement("div");
-        customMarker.className = "custom-marker you-are-here";
+      this.geoAPI = navigator.geolocation.watchPosition(async (position) => {
+        if (this.geoAPILoaded) return true;
 
-        this.currentPositionMarker = new tt.Marker({
-          element: customMarker,
-        })
-          .setLngLat(pos)
-          .addTo(this.map);
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
 
-        this.map.easeTo({ center: pos });
+        if (pos.lat && pos.lng) {
+          const customMarker = document.createElement("div");
+          customMarker.className = "custom-marker you-are-here";
 
-        this.geoAPILoaded = true;
-      }
+          const markerImg = document.createElement("img");
+          markerImg.src = "/static/instaff-you-are-here.svg";
+          customMarker.appendChild(markerImg);
+
+          this.currentPositionMarker = new tt.Marker({
+            element: customMarker,
+          })
+            .setLngLat(pos)
+            .addTo(this.map);
+
+          this.map.easeTo({ center: pos });
+
+          this.geoAPILoaded = true;
+        }
+      });
     });
   }
 
@@ -464,6 +506,7 @@ class Home extends AuthenticatedPage {
   }
 
   close() {
+    this.isClosed = true;
     document.querySelector("body").classList.remove("new-home-body");
 
     //Just to make sure Active Menu is set to Dashboard

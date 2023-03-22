@@ -213,7 +213,7 @@ class MainHeader {
         itemAnchor.setAttribute("data-signout", "");
         itemAnchor.addEventListener("click", () => {
           signOut(this.auth);
-          pageTransition("/");
+          pageTransition("/sign-in");
         });
       } else {
         itemAnchor.setAttribute("data-link", "");
