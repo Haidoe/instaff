@@ -277,8 +277,6 @@ class Modal {
         : "a moment ago";
 
       feedbackFooter.appendChild(feedbackDate);
-
-      console.log(feedback);
     });
   }
 

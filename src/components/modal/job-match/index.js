@@ -7,7 +7,7 @@ class JobMatch extends Modal {
     super(null);
 
     this.jobItems = jobItems;
-    console.log(this.jobItems);
+    // console.log(this.jobItems);
 
     this.modal.classList.add("job-match-modal");
 

@@ -46,28 +46,137 @@
   }
 
   .floating-inputs {
-    background-color: white;
     position: fixed;
-
-    left: 50%;
-    transform: translateX(-50%);
     transition: 0.2s;
     z-index: 25;
-    min-width: 350px;
     width: 100%;
-    -webkit-box-shadow: 7px 6px 5px -4px #000000;
-    box-shadow: 7px 6px 5px -4px #000000;
+    // -webkit-box-shadow: 7px 6px 5px -4px #000000;
+    // box-shadow: 7px 6px 5px -4px #000000;
     z-index: 100;
-    max-width: 600px;
+    max-width: 400px;
 
-    @media screen and (min-width: 630px) {
-      top: 6rem;
+    @media screen and (min-width: 400px) {
+      padding: 1rem 1rem 0;
+    }
+
+    display: flex;
+    flex-direction: column;
+    // padding: 1rem;
+
+    .side-bar {
+      position: relative;
+      display: block;
+      width: 100%;
+      top: calc(-56px - 1rem);
+    }
+  }
+
+  #home-aside-job-list {
+    background-color: rgba(white, 1);
+    // background-color: rgb(203, 114, 114);
+    padding: 1rem;
+    padding-top: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(-150%);
+
+    height: calc(100vh - (70.5px));
+    overflow-y: auto;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    transition: all 0.5s;
+
+    &.show {
+      transform: translateY(0);
+    }
+
+    .spacer {
+      height: 80px;
+      background: white;
+      margin: -1rem;
+      position: sticky;
+      top: 0;
+    }
+
+    h2 {
+      font-size: 26px;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 56px;
+    }
+
+    .results {
+      h2 {
+        grid-column: 1 / -1;
+      }
+
+      &.hide {
+        display: none;
+      }
+
+      #home-list-jobs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .job-card {
+        padding: 0.5rem;
+        &:hover {
+          background-color: $colorLightGray;
+          border-radius: 10px;
+        }
+
+        &__title,
+        &__wage {
+          color: $colorPink;
+        }
+
+        &__company-name {
+          margin-top: 0.5rem;
+        }
+      }
+
+      .job-card__thumbnail {
+        img {
+          aspect-ratio: 1/1;
+          object-fit: cover;
+          border-radius: 10px;
+        }
+      }
+    }
+
+    .no-result {
+      display: none;
+
+      &.show {
+        display: unset;
+      }
+
+      span {
+        color: $colorPink;
+      }
+
+      p {
+        text-align: center;
+        color: $colorGray;
+      }
     }
   }
 
   .search-div {
     display: flex;
-    align-items: center;
+    border-bottom: 2px solid $colorLightGray;
+    z-index: 10;
+    overflow: hidden;
+
+    @media screen and (min-width: 400px) {
+      border-radius: 6px;
+    }
+
+    box-shadow: 7px 6px 5px -6px #000;
 
     input {
       flex: 1;
@@ -90,15 +199,35 @@
     background-color: transparent;
     border: none;
     width: 40px;
+    padding: 0;
+    font-size: 1rem;
+
+    &:hover {
+      color: $colorPink;
+    }
   }
 
   #resetBtn {
     background-color: transparent;
-    border: 1px solid rgb(216, 215, 215);
+    padding: 0;
+    margin: 0;
     border-radius: 0;
-    // TODO: fix this
+    border-right: 1px solid $colorLightGray;
     display: none;
+    &:hover {
+      .icon {
+        background-color: $colorPink;
+      }
+    }
+    .icon {
+      width: 30px;
+      height: 30px;
+      scale: 0.8;
+      margin: 0;
+      cursor: pointer;
+    }
   }
+
   .search-div button {
     color: rgb(0, 0, 0);
     background-color: rgb(228, 228, 228);
@@ -137,8 +266,20 @@
 
   .button-wrapper {
     display: flex;
-    flex-flow: row nowrap;
-    gap: 1rem;
+    padding: 0.5rem 0;
+    padding-right: 0.25rem;
+    background-color: white;
+
+    // flex-flow: row nowrap;
+
+    & > * {
+      flex: 1;
+    }
+
+    button {
+      border: none;
+      outline: none;
+    }
   }
   #side-bar {
     display: none;
