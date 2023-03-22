@@ -128,6 +128,7 @@ const createJobBoxMainElement = async (arr, div, text, btnType, btnText) =>  {
     const endTime = job.time.to.toDate()
 
     const dateOptions = {
+      weekday: 'long', // Add this line to include the day of the week
       year: 'numeric',
       month: 'short',
       day: 'numeric'
