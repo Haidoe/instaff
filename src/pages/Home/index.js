@@ -302,7 +302,14 @@ class Home extends AuthenticatedPage {
       this.renderJobs(result);
       result.forEach((job) => {
         const card = new JobCard(job);
-        container.appendChild(card.toElement());
+        const cardElement = card.toElement();
+        cardElement.addEventListener("click", () => {
+          this.map.easeTo({
+            center: job.coordinates,
+          });
+        });
+
+        container.appendChild(cardElement);
       });
     }
 
@@ -567,6 +574,10 @@ class Home extends AuthenticatedPage {
 
       marker.getElement().addEventListener("click", () => {
         const modal = new Modal(job);
+
+        this.map.easeTo({
+          center: job.coordinates,
+        });
 
         modal.wrapper = document.querySelector(".new-home-page");
 
