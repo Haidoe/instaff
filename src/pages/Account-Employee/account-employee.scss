@@ -8,6 +8,10 @@ main {
   background: white;
 }
 
+.input-group input {
+  border: 1px solid $borderColor;
+}
+
 .checkbox-container {
   display: block;
   position: relative;
@@ -271,13 +275,15 @@ main {
       }
 
       .primary-button {
-        height: 55px;
-        width: 100%;
+        padding: 0.5rem 3rem;
       }
     }
   }
   .web-menu {
     display: none;
+  }
+  .account-setting {
+    background-color: white;
   }
   .profile-info {
     text-align: center;
@@ -580,6 +586,7 @@ main {
         padding: 1rem;
         border-radius: 5px;
         background-color: white;
+        align-self: center;
       }
       .upload-prof-wrapper {
         grid-column: 2;
@@ -588,7 +595,7 @@ main {
         border: 1px solid $colorLightGray;
         padding: 1rem;
         border-radius: 5px;
-        box-shadow: 5px;
+        align-self: center;
       }
       .action-btn-wrapper {
         grid-column: span 2;
