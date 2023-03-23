@@ -1,12 +1,15 @@
 {
   "short_name": "Instaff",
   "name": "Instaff",
+  "background_color": "#ffffff",
+  "theme_color": "#d81b60",
   "icons": [
     {
-      "src": "/static/favicon.png",
+      "src": "/static/pwa-logo/icon-512x512px.png",
+      "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone"
 }
