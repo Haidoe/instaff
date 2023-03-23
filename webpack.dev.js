@@ -1,6 +1,5 @@
 const path = require("path");
 const { merge } = require("webpack-merge");
-const { EnvironmentPlugin } = require("webpack");
 const commonConfig = require("./webpack.common.js");
 
 const devConfig = {
@@ -43,11 +42,6 @@ const devConfig = {
       },
     ],
   },
-  plugins: [
-    new EnvironmentPlugin({
-      INSTAFF_MODE: "development",
-    }),
-  ],
 };
 
 module.exports = merge(commonConfig, devConfig);
