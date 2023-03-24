@@ -21,9 +21,10 @@ const getSuggestJobs = async (userId) => {
   const userProfile = snap.data();
 
   // ***** Get Type of Work *****
+  let positionTitles = [];
   let typeOfWork = await getTypeOfWorkByUserId(userId);
   if (typeOfWork.length > 0) {
-    typeOfWork = typeOfWork[0].positionTitle;
+    positionTitles = typeOfWork[0].positionTitle.map((v) => v.toLowerCase());
   }
   // ***** Get Length of Shift *****
   let lengthOfShift = await getLengthOfShiftByUserId(userId);
@@ -102,9 +103,9 @@ const getSuggestJobs = async (userId) => {
         })),
     }));
     // ***** Check Applicant's Preferences (Job Position Title) *****
-    if (typeOfWork.length > 0) {
+    if (positionTitles.length > 0) {
       jobData = jobData.filter((f) => {
-        return typeOfWork.includes(f.positionTitle);
+        return positionTitles.includes(f.positionTitle.toLowerCase());
       });
     }
     // ***** Check Applicant's Preferences (Availability) *****

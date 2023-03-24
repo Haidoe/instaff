@@ -30,7 +30,7 @@ class AccountEmployer extends EmployerPage {
     };
 
     let defaultZoom = 15;
-    // console.log(process.env.INSTAFF_MAP_KEY);
+
     this.map = tt.map({
       key: process.env.INSTAFF_MAP_KEY,
       container: "profile-map",
@@ -38,9 +38,20 @@ class AccountEmployer extends EmployerPage {
       zoom: defaultZoom,
     });
 
-    this.marker = new tt.Marker().setLngLat(defaultCenter).addTo(this.map);
+    const customMarker = document.createElement("div");
+    customMarker.className = "custom-marker";
 
-    navigator.geolocation.getCurrentPosition(async (position) => {
+    const markerImg = document.createElement("img");
+    markerImg.src = "/static/icons/colored-pin.svg";
+    customMarker.appendChild(markerImg);
+
+    this.marker = new tt.Marker({
+      element: customMarker,
+    })
+      .setLngLat(defaultCenter)
+      .addTo(this.map);
+
+    this.geoAPI = navigator.geolocation.watchPosition(async (position) => {
       try {
         const pos = {
           lat: position.coords.latitude,
@@ -69,12 +80,13 @@ class AccountEmployer extends EmployerPage {
             response.extendedPostalCode;
         }
       } catch (error) {
+        console.log(error);
         console.log("Unable to do autocomplete.");
       }
     });
   }
   async init() {
-    //const lblProfileImage = document.getElementById("lblProfileImage");
+    const postingProfileImage = document.getElementById("postingProfileImage");
     const profileImage = document.querySelector("#profileImage");
     const bannerImage = document.querySelector(".banner-image");
     const displayName = document.querySelector("#displayName");
@@ -88,20 +100,20 @@ class AccountEmployer extends EmployerPage {
     const emailAddress = document.getElementById("emailAddress");
     const postalCode = document.getElementById("postalCode");
     const submitBtn = document.getElementById("submitBtn");
-    // console.log(this.data);
+
     if (
       typeof this.data.imageURL !== "undefined" &&
       this.data.imageURL !== ""
     ) {
       document.getElementById("lblProfileImage").innerHTML =
         "Change profile photo";
-      console.log(this.data.imageURL);
+
       profileImage.children[3].style.display = "None";
       profileImage.style.backgroundImage = `url("${this.data.imageURL}")`;
       bannerImage.style.backgroundImage = `url("${this.data.imageURL}")`;
-      this.profileImageToUpload = this.data.imageURL;
+      postingProfileImage.removeAttribute("required");
+      //this.profileImageToUpload = this.data.imageURL;
     } else {
-      //profileImage.src = "../../static/images/sample.jpg";
       profileImage.children[3].style.display = "None";
       profileImage.style.backgroundImage = `url(../../static/images/anonymous.svg)`;
       bannerImage.style.backgroundImage = `url(../../static/images/anonymous.svg)`;
@@ -110,7 +122,6 @@ class AccountEmployer extends EmployerPage {
       typeof this.data.uploadProfURL !== "undefined" &&
       this.data.uploadProfURL !== ""
     ) {
-      console.log("account-emp", this.data);
       this.uploadProfURL = this.data.uploadProfURL;
     }
     displayName.value = this.data.displayName;
@@ -119,7 +130,9 @@ class AccountEmployer extends EmployerPage {
       typeof this.data.dateOfBirth !== "undefined"
         ? formatDate(this.data.dateOfBirth.toDate().toDateString())
         : "";
-    companyName.value !== "undefined" ? this.data.companyName : "";
+
+    companyName.value =
+      typeof this.data.companyName !== "undefined" ? this.data.companyName : "";
     address.value =
       typeof this.data.address !== "undefined" ? this.data.address : "";
     city.value = typeof this.data.city !== "undefined" ? this.data.city : "";
@@ -144,7 +157,6 @@ class AccountEmployer extends EmployerPage {
     const snap = await getProfile(this.profileId);
     const user = snap.data();
     this.data = user;
-    this.init();
 
     const form = document.querySelector("#form1");
     const profileImage = document.getElementById("profileImage");
@@ -156,20 +168,20 @@ class AccountEmployer extends EmployerPage {
       this.handleProfileImageChange.bind(this)
     );
 
-    profileURL.addEventListener("click", (e) => {
-      e.preventDefault();
+    // profileURL.addEventListener("click", (e) => {
+    //   e.preventDefault();
 
-      const mainPageContainer = document.querySelector(
-        ".account-employer-page"
-      );
-      mainPageContainer.classList.add("profile-page-mobile");
-      pubsub.publish("mainHeaderShowBackBtn");
+    //   const mainPageContainer = document.querySelector(
+    //     ".account-employer-page"
+    //   );
+    //   mainPageContainer.classList.add("profile-page-mobile");
+    //   pubsub.publish("mainHeaderShowBackBtn");
 
-      if (window.innerWidth < 768) {
-        window.scrollTo(0, 0);
-        globalState.preventPopState = true;
-      }
-    });
+    //   if (window.innerWidth < 768) {
+    //     window.scrollTo(0, 0);
+    //     globalState.preventPopState = true;
+    //   }
+    // });
 
     uploadProfURL.addEventListener(
       "change",
@@ -177,28 +189,8 @@ class AccountEmployer extends EmployerPage {
     );
 
     this.initMap();
-    // console.log("Map");
-    document
-      .getElementById("address")
-      .addEventListener("focusout", async (e) => {
-        e.preventDefault();
-        const city = document.getElementById("city");
-        const address = document.getElementById("address");
-
-        const trimCity = city.value.trim();
-        const trimAddress = address.value.trim();
-
-        if (trimCity && trimAddress) {
-          const query = `${trimAddress}, ${trimCity}, BC, Canada`;
-          const position = await convertAddressToCoordinates(query);
-          this.coordinates = position;
-
-          this.map.easeTo({ center: position });
-          this.marker.setLngLat(position).addTo(this.map);
-        }
-      });
-    
-    this.backToProfile();
+    this.addressListener();
+    this.init();
   }
 
   async handleFormSubmit(e) {
@@ -236,10 +228,13 @@ class AccountEmployer extends EmployerPage {
           ? await uploadFile(this.uploadProfURL, "users")
           : "";
 
-      data.imageURL =
-        postingProfileImage !== null
-          ? await uploadFile(this.profileImageToUpload, "users")
-          : "";
+      if (
+        this.profileImageToUpload !== null &&
+        this.profileImageToUpload !== "undefined"
+      ) {
+        data.imageURL = await uploadFile(this.profileImageToUpload, "users");
+      }
+
       setProfileInfo(data);
     } catch (error) {
       console.log("ERROR", error);
@@ -265,13 +260,12 @@ class AccountEmployer extends EmployerPage {
 
     if (isValid) {
       const profileImage = document.getElementById("profileImage");
-      console.log(e.target.files[0]);
+
       this.profileImageToUpload = e.target.files[0];
       const imgUrl = await readURL(this.profileImageToUpload);
       profileImage.style.backgroundImage = `url(${imgUrl})`;
       profileImage.classList.add("visible");
       profileImage.children[3].style.display = "None";
-      console.log(imgUrl);
     } else {
       profileImage.classList.remove("visible");
     }
@@ -296,25 +290,22 @@ class AccountEmployer extends EmployerPage {
     }
   }
 
-  async backToProfile() {
-    pubsub.subscribe("mainHeaderBackBtnClicked", this.backToProfileBtnListener);
-  }
+  addressListener() {
+    let timer = null;
+    const typingInterval = 1500;
+    const addressInput = document.getElementById("address");
 
-  backToProfileBtnListener() {
-    const mainPageContainer = document.querySelector(".account-employer-page");
-    mainPageContainer.classList.remove("profile-page-mobile");
+    addressInput.addEventListener("keyup", async (e) => {
+      e.preventDefault();
+      clearTimeout(timer);
+      timer = setTimeout(this.handleChangeAddress.bind(this), typingInterval);
+    });
 
-    console.log("back to main");
-    pubsub.publish("mainHeaderHideBackBtn");
-  }
-
-    close() {
-    pubsub.unsubscribe("mainHeaderBackBtnClicked", this.backToProfileBtnListener);
-    pubsub.publish("mainHeaderHideBackBtn");
+    addressInput.addEventListener("keydown", (e) => {
+      clearTimeout(timer);
+    });
   }
 }
-
-
 
 function _validate(oInput, extensions) {
   var sFileName = oInput.value;

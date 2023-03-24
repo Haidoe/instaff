@@ -7,16 +7,25 @@
 main {
   background: white;
 }
+.input-group input {
+  border: 1px solid $borderColor;
+}
 .account-employer-page {
+  .custom-marker {
+    height: 25px;
+    width: 25px;
+    background-color: transparent;
+  }
+
   max-width: $maxWidthContainer;
   margin: 0 auto;
   .header {
-    display: grid;
-    align-items: center;
-    background-color: white;
-    padding-bottom: 5px;
-    right: 0px;
-    border-bottom: 1px solid black;
+    display: none;
+    // display: grid;
+    // align-items: center;
+    // background-color: white;
+    // right: 0px;
+    // border-bottom: 1px solid black;
 
     .banner {
       display: grid;
@@ -201,13 +210,16 @@ main {
       }
 
       .primary-button {
-        height: 55px;
-        width: 100%;
+        padding: 0.5rem 3rem;
       }
     }
   }
   .web-menu {
     display: none;
+  }
+  .account-setting {
+    background-color: white;
+    border-bottom: 2px solid $borderColor;
   }
   .profile-info {
     text-align: center;
@@ -258,9 +270,9 @@ main {
     display: none;
   }
 
-  .profile-page {
-    display: none;
-  }
+  // .profile-page {
+  //   display: none;
+  // }
 
   .form-wrapper {
     display: grid;
@@ -296,12 +308,22 @@ main {
   }
   .account-employer-page {
     .header {
+      //display: unset;
+      display: grid;
+      align-items: center;
+      background-color: white;
+      right: 0px;
+      border-bottom: 1px solid black;
       align-items: unset;
       padding-left: 2%;
       padding-right: 2%;
       .web-menu {
         width: 800px;
       }
+      background-image: url("../../static/images/undraw_profile_data_re_v81r.svg");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: right 20px center;
     }
     .banner {
       display: grid;
@@ -406,6 +428,7 @@ main {
         padding: 1rem;
         border-radius: 5px;
         background-color: white;
+        align-self: center;
       }
       .upload-prof-wrapper {
         grid-column: 2;
@@ -414,7 +437,7 @@ main {
         border: 1px solid $colorLightGray;
         padding: 1rem;
         border-radius: 5px;
-        box-shadow: 5px;
+        align-self: center;
       }
       .action-btn-wrapper {
         grid-column: span 2;
