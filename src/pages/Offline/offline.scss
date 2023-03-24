@@ -85,4 +85,19 @@
       font-size: 52px;
     }
   }
+
+  .button-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    button {
+      max-width: 300px;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      margin-top: 2rem;
+    }
+  }
 }
