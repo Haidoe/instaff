@@ -2,6 +2,7 @@ const path = require("path");
 const { merge } = require("webpack-merge");
 const commonConfig = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { InjectManifest } = require("workbox-webpack-plugin");
 
 const prodConfig = {
   mode: "production",
@@ -32,7 +33,13 @@ const prodConfig = {
       },
     ],
   },
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [
+    new MiniCssExtractPlugin(),
+    new InjectManifest({
+      swSrc: "./src/static/instaff-sw.js",
+      swDest: "instaff-service-worker.js",
+    }),
+  ],
 };
 
 module.exports = merge(commonConfig, prodConfig);

@@ -1,4 +1,5 @@
 import Page from "../../classes/Page";
+import Template from "./offline.html";
 import pubsub from "../../classes/PubSub";
 import "./offline.scss";
 
@@ -8,6 +9,8 @@ class OfflinePage extends Page {
   }
 
   load() {
+    return Template;
+
     return `
     <div class="offline-page">
       <section>
