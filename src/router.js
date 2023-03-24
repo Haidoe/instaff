@@ -1,4 +1,5 @@
 import globalState from "./classes/GlobalState";
+import OfflinePage from "./pages/Offline";
 import { getParams, pathToRegex } from "./js/utils";
 
 //Will hold the class instance of the active page
@@ -151,13 +152,17 @@ export const router = async () => {
   //This is to get the active route
   let activeRoute = transformedRoutes.find((route) => route.result !== null);
 
-  const lazyLoaded = await (activeRoute
-    ? activeRoute.page()
-    : import(/* webpackChunkName: "404" */ `./pages/page404`));
+  if (activeRoute?.path === "/offline") {
+    activePage = new OfflinePage(getParams(activeRoute));
+  } else {
+    const lazyLoaded = await (activeRoute
+      ? activeRoute.page()
+      : import(/* webpackChunkName: "404" */ `./pages/page404`));
 
-  const Page = lazyLoaded.default;
+    const Page = lazyLoaded.default;
 
-  activePage = new Page(getParams(activeRoute));
+    activePage = new Page(getParams(activeRoute));
+  }
 
   const willLoad = await activePage.preload();
 
