@@ -134,6 +134,12 @@ class Dashboard extends EmployerPage {
       const data = recent[0];
       this.loadJobListingDetails(data);
       this.loadApplicants(data);
+
+      const jobDetailsContainer = document.querySelector(
+        "section.recent-job-posting-content section.content"
+      );
+
+      jobDetailsContainer.classList.add("loaded");
     }
   }
 
