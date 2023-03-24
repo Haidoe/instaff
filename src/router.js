@@ -157,7 +157,7 @@ export const router = async () => {
   } else {
     const lazyLoaded = await (activeRoute
       ? activeRoute.page()
-      : import(/* webpackChunkName: "404" */ `./pages/page404`));
+      : import(/* webpackChunkName: "404" */ `./pages/Error404`));
 
     const Page = lazyLoaded.default;
 
