@@ -47,6 +47,7 @@ const recentJobs = (obj) => {
   meta.className = "article-meta";
 
   const applicants = document.createElement("p");
+  applicants.className = "applied-candidates";
   applicants.innerHTML = `Applied Candidates: <span>${
     obj.numOfCandidates ?? 0
   }</span>`;
