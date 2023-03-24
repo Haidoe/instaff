@@ -1,0 +1,88 @@
+@import "../../css/gradientBg";
+
+@import "../../css/variables";
+
+.offline-body {
+  @extend .gradient-bg;
+  background-repeat: no-repeat;
+
+  #app {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .offline-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: $mediumSmall) {
+      justify-content: center;
+    }
+
+    section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      color: white;
+      text-align: center;
+      width: 100%;
+      max-width: $maxWidthContainer;
+      margin: 0 auto;
+
+      @media screen and (min-width: $mediumSmall) {
+        background-color: white;
+        color: black;
+        flex: unset;
+        padding: 5rem 1rem;
+      }
+    }
+  }
+
+  h2 {
+    padding: 3rem;
+    @media screen and (min-width: $mediumSmall) {
+      padding-bottom: 0;
+      padding-top: 0;
+    }
+
+    img {
+      max-width: 250px;
+      margin: 0 auto;
+    }
+
+    #mobile-instaff-logo {
+      @media screen and (min-width: $mediumSmall) {
+        display: none;
+      }
+    }
+
+    #desktop-instaff-logo {
+      display: none;
+      @media screen and (min-width: $mediumSmall) {
+        display: block;
+      }
+    }
+  }
+
+  .main-content {
+    margin-top: 2rem;
+    font-size: 37px;
+    margin-bottom: 2rem;
+
+    img {
+      max-width: 265px;
+      margin: 0 auto;
+      display: none;
+      margin-bottom: 1rem;
+      @media screen and (min-width: $mediumSmall) {
+        display: block;
+      }
+    }
+
+    @media screen and (min-width: $mediumSmall) {
+      font-size: 52px;
+    }
+  }
+}

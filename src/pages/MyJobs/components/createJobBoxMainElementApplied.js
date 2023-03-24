@@ -1,11 +1,13 @@
 
 import calcStarRating from "../../../js/ratingandfeedback/calcStarRating";
 import StarRating from "../../../components/star-rating/index";
-import startTheShift from "../../../js/applicants/startTheShift";
+import deleteApplicationRecord from "../../../js/applicants/deleteApplicationRecord";
+import getApplicantsIdByPostId from "../../../js/applicants/getApplicantsIdByPostId";
 import { async } from "@firebase/util";
+import { extractTime } from "../../../js/utils";
 
 
-const createJobBoxMainElement = async (arr, div, text, btnType, btnText) =>  {
+const createJobBoxMainElement = async (arr, div, text, btnType, btnText, userId) =>  {
 
   arr.forEach(async (job) => {
     const jobBoxMain = document.createElement("div");
@@ -54,6 +56,18 @@ const createJobBoxMainElement = async (arr, div, text, btnType, btnText) =>  {
     jobMainButton.textContent = btnText;
     jobMainHeaderColRight.appendChild(jobMainButton);
 
+    jobMainButton.addEventListener("click", async () => {
+      const application = await getApplicantsIdByPostId(job.id, userId);
+      const applicationId = application[0].id;
+      console.log(applicationId);
+      await deleteApplicationRecord(applicationId, job.id);
+      // jobMainButton.textContent = "Cancelled";
+      // jobMainButton.classList.add("btn-cancelled");
+      const jobBoxMain = document.getElementById(`job-${job.id}`);
+      jobBoxMain.remove();
+      console.log("cancelled and delete")
+    });
+
     const jobMainBody = document.createElement("div");
     jobMainBody.classList.add("job-main-body");
     jobBoxMain.appendChild(jobMainBody);
@@ -76,7 +90,7 @@ const createJobBoxMainElement = async (arr, div, text, btnType, btnText) =>  {
     contentGroup2.classList.add("content-group");
     jobMainBody.appendChild(contentGroup2);
 
-     const groupjobTopicAddress = document.createElement("p");
+    const groupjobTopicAddress = document.createElement("p");
     groupjobTopicAddress.classList.add("topic-title");
     groupjobTopicAddress.textContent = "Address";
     contentGroup2.appendChild(groupjobTopicAddress);
@@ -123,12 +137,12 @@ const createJobBoxMainElement = async (arr, div, text, btnType, btnText) =>  {
     groupjobTopicSchedule.textContent = "Schedule";
     contentGroup5.appendChild(groupjobTopicSchedule);
 
-    //format time "Feb 21, 2018, 5:00 PM - 8:00 PM"
+    //format time "Thu, Feb 21, 2018, 5:00 PM - 8:00 PM"
     const startTime = job.time.from.toDate()
     const endTime = job.time.to.toDate()
 
     const dateOptions = {
-      weekday: 'long', // Add this line to include the day of the week
+      weekday: 'short', // Add this line to include the day of the week
       // year: 'numeric',
       month: 'short',
       day: 'numeric'

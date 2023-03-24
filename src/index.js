@@ -4,25 +4,11 @@ import MainHeader from "./components/header";
 import "./css/normalize.css";
 import "./css/global.scss";
 import Notifications from "./components/notification";
+import registerServiceWorker from "./service-worker-registration.js";
+import globalState from "./classes/GlobalState.js";
 
 //Initialize Firebase App
 const firebaseApp = initialize();
-
-//Disabling the service worker in the development
-if (process.env.INSTAFF_MODE !== "development") {
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("/service-worker.js")
-        .then((registration) => {
-          console.log("SW registered: ", registration);
-        })
-        .catch((registrationError) => {
-          console.log("SW registration failed: ", registrationError);
-        });
-    });
-  }
-}
 
 //This is For Router
 document.body.addEventListener("click", (e) => {
@@ -57,3 +43,20 @@ mainHeader.render();
 
 //This is for the notification
 const notification = new Notifications();
+
+// window.addEventListener("offline", () => {
+//   pageTransition("/offline");
+// });
+
+// window.addEventListener("online", () => {
+//   console.log("STATE", globalState.user.details.typeOfUser);
+//   if (globalState.user.details.typeOfUser === "employee") {
+//     pageTransition("/");
+//   } else {
+//     pageTransition("/dashboard");
+//   }
+// });
+
+registerServiceWorker();
+
+console.log(process.env.NODE_ENV);

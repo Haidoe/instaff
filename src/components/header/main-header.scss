@@ -2,6 +2,7 @@
 
 .main-header {
   background: white;
+  z-index: 150;
 
   &.main-header-hidden {
     display: none;

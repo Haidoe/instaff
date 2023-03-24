@@ -8,6 +8,7 @@ import { getDoc, updateDoc, doc, getFirestore } from "firebase/firestore";
 import { pageTransition } from "../../router";
 import Template from "./home.html";
 import "./home.scss";
+import JobCard from "./job-card";
 
 class Home extends AuthenticatedPage {
   static markers = [];
@@ -36,6 +37,8 @@ class Home extends AuthenticatedPage {
     this.errorHint = null;
 
     this.geoAPILoaded = false;
+    this.markers = [];
+    this.jobs = [];
   }
 
   async preload() {
@@ -80,32 +83,32 @@ class Home extends AuthenticatedPage {
     this.map.addControl(new tt.FullscreenControl());
 
     searchBtn.addEventListener("click", this.jobFilter.bind(this));
-    resetBtn.addEventListener("click", this.mapReset.bind(this));
+    // resetBtn.addEventListener("click", this.mapReset.bind(this));
 
-    this.map.on("moveend", this.updateList.bind(this));
+    // this.map.on("moveend", this.updateList.bind(this));
 
-    const sidebarOffBtn = document.getElementById("toogle-button-off");
-    const sidebarOnBtn = document.getElementById("toogle-button-on");
-    const searchDiv = document.getElementsByClassName("search-div");
-    const sideBar = document.getElementById("side-bar");
-    const homePage = document.getElementById("new-home-page");
-    sidebarOnBtn.style.display = "none";
+    // const sidebarOffBtn = document.getElementById("toogle-button-off");
+    // const sidebarOnBtn = document.getElementById("toogle-button-on");
+    // const searchDiv = document.getElementsByClassName("search-div");
+    // const sideBar = document.getElementById("side-bar");
+    // const homePage = document.getElementById("new-home-page");
+    // sidebarOnBtn.style.display = "none";
 
-    sidebarOffBtn.addEventListener("click", function (e) {
-      sideBar.style.width = "0";
-      sideBar.style.left = "-2rem";
-      homePage.style.marginLeft = "0";
-      sidebarOnBtn.style.display = "flex";
-      searchDiv[0].style.left = "50%";
-    });
+    // sidebarOffBtn.addEventListener("click", function (e) {
+    //   sideBar.style.width = "0";
+    //   sideBar.style.left = "-2rem";
+    //   homePage.style.marginLeft = "0";
+    //   sidebarOnBtn.style.display = "flex";
+    //   searchDiv[0].style.left = "50%";
+    // });
 
-    sidebarOnBtn.addEventListener("click", function (e) {
-      sideBar.style.width = "300px";
-      sideBar.style.left = "0";
-      // homePage.style.marginLeft = "300px";
-      sidebarOnBtn.style.display = "none";
-      searchDiv[0].style.left = "64%";
-    });
+    // sidebarOnBtn.addEventListener("click", function (e) {
+    //   sideBar.style.width = "300px";
+    //   sideBar.style.left = "0";
+    //   // homePage.style.marginLeft = "300px";
+    //   sidebarOnBtn.style.display = "none";
+    //   searchDiv[0].style.left = "64%";
+    // });
 
     this.verifyFirstTime();
   }
@@ -122,15 +125,14 @@ class Home extends AuthenticatedPage {
         const userRef = doc(db, "users", id);
         try {
           const markFirstTime = await updateDoc(userRef, {
-            firstTime: false
+            firstTime: false,
           });
           return markFirstTime;
-
         } catch (error) {
           console.log(error);
           return false;
         }
-      }
+      };
       const markFirstTimeResult = await markFirstTime(userID);
     }
   }
@@ -253,8 +255,70 @@ class Home extends AuthenticatedPage {
     });
   }
 
+  searchResets() {
+    const noResult = document.querySelector("#home-aside-job-list .no-result");
+
+    noResult.classList.remove("show");
+
+    const res = document.querySelector("#home-aside-job-list .results");
+    res.classList.remove("hide");
+
+    const searched = document.querySelector("#searched-text");
+
+    searched.textContent = "";
+  }
+
   jobFilter() {
+    this.searchResets();
+
+    const searchText = document.querySelector("#job_keyword");
+
+    if (searchText.value.trim().length === 0) {
+      return;
+    }
+
     this.removeMarkers();
+
+    const result = this.jobs.filter((job) => {
+      return job.positionTitle.toUpperCase() === searchText.value.toUpperCase();
+    });
+
+    if (result.length === 0) {
+      const searched = document.querySelector("#searched-text");
+
+      searched.textContent = searchText.value;
+
+      const noResult = document.querySelector(
+        "#home-aside-job-list .no-result"
+      );
+
+      noResult.classList.add("show");
+
+      const res = document.querySelector("#home-aside-job-list .results");
+
+      res.classList.add("hide");
+    } else {
+      const container = document.querySelector("#home-list-jobs");
+      container.innerHTML = "";
+      this.renderJobs(result);
+      result.forEach((job) => {
+        const card = new JobCard(job);
+        const cardElement = card.toElement();
+        cardElement.addEventListener("click", () => {
+          this.map.easeTo({
+            center: job.coordinates,
+          });
+        });
+
+        container.appendChild(cardElement);
+      });
+    }
+
+    const asideJobList = document.querySelector("#home-aside-job-list");
+    asideJobList.classList.add("show");
+
+    return false;
+
     Home.currentlist = [];
 
     const keyword = job_keyword.value;
@@ -351,11 +415,9 @@ class Home extends AuthenticatedPage {
   }
 
   removeMarkers() {
-    if (Home.markers.length > 0) {
-      Home.markers.forEach(function (marker) {
-        marker.remove();
-      });
-    }
+    this.markers.forEach((marker) => {
+      marker.remove();
+    });
   }
 
   async showJobs() {
@@ -457,52 +519,113 @@ class Home extends AuthenticatedPage {
   }
 
   async initCurrentLocation() {
-    const currentLocationBtn = document.querySelector("#home-current-location");
+    this.geoAPI = navigator.geolocation.watchPosition(async (position) => {
+      if (this.geoAPILoaded) return true;
 
-    currentLocationBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      currentLocationBtn.style.display = "none";
+      const pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
 
-      this.geoAPI = navigator.geolocation.watchPosition(async (position) => {
-        if (this.geoAPILoaded) return true;
+      if (pos.lat && pos.lng) {
+        const customMarker = document.createElement("div");
+        customMarker.className = "custom-marker you-are-here";
 
-        const pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
+        const markerImg = document.createElement("img");
+        markerImg.src = "/static/instaff-you-are-here.svg";
+        customMarker.appendChild(markerImg);
 
-        if (pos.lat && pos.lng) {
-          const customMarker = document.createElement("div");
-          customMarker.className = "custom-marker you-are-here";
+        this.currentPositionMarker = new tt.Marker({
+          element: customMarker,
+        })
+          .setLngLat(pos)
+          .addTo(this.map);
 
-          const markerImg = document.createElement("img");
-          markerImg.src = "/static/instaff-you-are-here.svg";
-          customMarker.appendChild(markerImg);
+        this.map.easeTo({ center: pos });
 
-          this.currentPositionMarker = new tt.Marker({
-            element: customMarker,
-          })
-            .setLngLat(pos)
-            .addTo(this.map);
+        this.geoAPILoaded = true;
+      }
+    });
+  }
 
-          this.map.easeTo({ center: pos });
+  async initJobs() {
+    const response = await getAllActiveJobPostings();
 
-          this.geoAPILoaded = true;
-        }
+    this.jobs = response;
+
+    this.renderJobs(response);
+  }
+
+  renderJobs(jobs) {
+    jobs.forEach((job) => {
+      const customMarker = document.createElement("div");
+      customMarker.className = "custom-marker";
+
+      const markerImg = document.createElement("img");
+      markerImg.src = "/static/icons/colored-pin.svg";
+      customMarker.appendChild(markerImg);
+
+      const marker = new tt.Marker({
+        element: customMarker,
+      })
+        .setLngLat(job.coordinates)
+        .addTo(this.map);
+
+      this.markers.push(marker);
+
+      marker.getElement().addEventListener("click", () => {
+        const modal = new Modal(job);
+
+        this.map.easeTo({
+          center: job.coordinates,
+        });
+
+        modal.wrapper = document.querySelector(".new-home-page");
+
+        modal.open();
       });
+    });
+  }
+
+  initListeners() {
+    const searchInput = document.querySelector("#job_keyword");
+    const resetBtn = document.querySelector("#resetBtn");
+
+    searchInput.addEventListener("keyup", (e) => {
+      if (!!e.target.value) {
+        resetBtn.style.display = "block";
+        // show reset
+      } else {
+        resetBtn.style.display = "none";
+        // hide reset
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      const asideJobList = document.querySelector("#home-aside-job-list");
+      asideJobList.classList.remove("show");
+
+      resetBtn.style.display = "none";
+
+      const searchText = document.querySelector("#job_keyword");
+      searchText.value = "";
+
+      this.renderJobs(this.jobs);
     });
   }
 
   async mounted() {
     document.querySelector("body").classList.add("new-home-body");
     this.initMap();
-    this.showJobs();
+    // this.showJobs();
+    this.initJobs();
 
     const activeMenu = document.querySelector(".main-header nav a[href='/']");
     activeMenu?.classList.add("active-menu-item");
 
     this.initJobMatch();
     this.initCurrentLocation();
+    this.initListeners();
   }
 
   close() {
