@@ -29,6 +29,11 @@ class Profile extends Modal {
     const img = document.createElement("img");
     img.src = this.profile.imageURL ?? "/static/images/anonymous.svg";
     img.alt = "Profile Image";
+
+    img.addEventListener("error", (e) => {
+      e.target.src = "/static/images/anonymous.svg";
+    });
+
     header.appendChild(img);
 
     const content = document.createElement("div");
