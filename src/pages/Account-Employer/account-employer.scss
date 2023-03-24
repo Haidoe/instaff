@@ -11,14 +11,21 @@ main {
   border: 1px solid $borderColor;
 }
 .account-employer-page {
+  .custom-marker {
+    height: 25px;
+    width: 25px;
+    background-color: transparent;
+  }
+
   max-width: $maxWidthContainer;
   margin: 0 auto;
   .header {
-    display: grid;
-    align-items: center;
-    background-color: white;
-    right: 0px;
-    border-bottom: 1px solid black;
+    display: none;
+    // display: grid;
+    // align-items: center;
+    // background-color: white;
+    // right: 0px;
+    // border-bottom: 1px solid black;
 
     .banner {
       display: grid;
@@ -263,9 +270,9 @@ main {
     display: none;
   }
 
-  .profile-page {
-    display: none;
-  }
+  // .profile-page {
+  //   display: none;
+  // }
 
   .form-wrapper {
     display: grid;
@@ -301,12 +308,22 @@ main {
   }
   .account-employer-page {
     .header {
+      //display: unset;
+      display: grid;
+      align-items: center;
+      background-color: white;
+      right: 0px;
+      border-bottom: 1px solid black;
       align-items: unset;
       padding-left: 2%;
       padding-right: 2%;
       .web-menu {
         width: 800px;
       }
+      background-image: url("../../static/images/undraw_profile_data_re_v81r.svg");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: right 20px center;
     }
     .banner {
       display: grid;

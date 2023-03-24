@@ -46,7 +46,7 @@ class AccountEmployee extends EmployeePage {
     };
 
     let defaultZoom = 15;
-    console.log(process.env.INSTAFF_MAP_KEY);
+
     this.map = tt.map({
       key: process.env.INSTAFF_MAP_KEY,
       container: "profile-map",
@@ -54,9 +54,20 @@ class AccountEmployee extends EmployeePage {
       zoom: defaultZoom,
     });
 
-    this.marker = new tt.Marker().setLngLat(defaultCenter).addTo(this.map);
+    const customMarker = document.createElement("div");
+    customMarker.className = "custom-marker";
 
-    navigator.geolocation.getCurrentPosition(async (position) => {
+    const markerImg = document.createElement("img");
+    markerImg.src = "/static/icons/colored-pin.svg";
+    customMarker.appendChild(markerImg);
+
+    this.marker = new tt.Marker({
+      element: customMarker,
+    })
+      .setLngLat(defaultCenter)
+      .addTo(this.map);
+
+    this.geoAPI = navigator.geolocation.watchPosition(async (position) => {
       try {
         const pos = {
           lat: position.coords.latitude,
@@ -85,12 +96,13 @@ class AccountEmployee extends EmployeePage {
             response.extendedPostalCode;
         }
       } catch (error) {
+        console.log(error);
         console.log("Unable to do autocomplete.");
       }
     });
   }
   async init() {
-    //const lblProfileImage = document.getElementById("lblProfileImage");
+    const postingProfileImage = document.getElementById("postingProfileImage");
     const profileImage = document.querySelector("#profileImage");
     const bannerImage = document.querySelector(".banner-image");
     const displayName = document.querySelector("#displayName");
@@ -102,18 +114,16 @@ class AccountEmployee extends EmployeePage {
     const postalCode = document.getElementById("postalCode");
     const emailAddress = document.getElementById("emailAddress");
 
-    console.log(this.data);
     if (
       typeof this.data.imageURL !== "undefined" &&
       this.data.imageURL !== ""
     ) {
       document.getElementById("lblProfileImage").innerHTML =
         "Change profile photo";
-      console.log(this.data.imageURL);
       profileImage.children[3].style.display = "None";
       profileImage.style.backgroundImage = `url("${this.data.imageURL}")`;
       bannerImage.style.backgroundImage = `url("${this.data.imageURL}")`;
-      this.profileImageToUpload = this.data.imageURL;
+      postingProfileImage.removeAttribute("required");
     } else {
       //profileImage.src = "../../static/images/sample.jpg";
       profileImage.children[3].style.display = "None";
@@ -156,15 +166,17 @@ class AccountEmployee extends EmployeePage {
     let results = await getTypeOfWorkByUserId(this.profileId);
     const checkList = [
       "Barista",
-      "Dish washer",
-      "Event Server",
       "Bartender",
-      "Counter Staff",
-      "Event Setup",
-      "Warehouse Associate",
       "Barback",
       "Busser",
+      "Cleaner",
       "Custodial",
+      "Counter Staff",
+      "Dish Washer",
+      "Event Server",
+      "Event Setup",
+      "Warehouse Associate",
+      "Warehouse Packer",
     ];
     checkList.forEach((item) => {
       let findItem = undefined;
@@ -198,7 +210,6 @@ class AccountEmployee extends EmployeePage {
   }
   async loadAvailabilityListingData() {
     let results = await getAvailabilityByUserId(this.profileId);
-    console.log(results);
     const checkList = [
       "Sunday",
       "Monday",
@@ -237,25 +248,18 @@ class AccountEmployee extends EmployeePage {
         ".form-group-availability"
       );
       availabilityContainer.appendChild(checkboxContainer);
-      //availabilityContainer.appendChild(labelCheckboxFor);
     });
   }
 
   async loadLengthOfShiftListingData() {
     const checkList = [];
 
-    //checkList.length = 5;
     for (let i = 0; i < 5; i++) {
-      // let hour = i == 0 ? 12 : i > 12 ? i - 12 : i;
-      // let ampm = i > 12 ? "PM" : "AM";
       checkList.push({
         ctrlId: "checkbox_timeslot_" + i,
-        // value: hour + ":00 " + ampm + " - " + hour + ":59 " + ampm,
-        // text: hour + ":00 " + ampm,
       });
     }
     let results = await getLengthOfShiftByUserId(this.profileId);
-    console.log(results);
     checkList.forEach((item) => {
       let findItem = undefined;
       let idx = checkList.indexOf(item);
@@ -415,7 +419,6 @@ class AccountEmployee extends EmployeePage {
     // Web =======================
     webPreferenceURL.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("hello from web page");
 
       const mainPageContainer = document.querySelector(
         ".account-employee-page"
@@ -427,13 +430,6 @@ class AccountEmployee extends EmployeePage {
       const previousActiveMenu = document.querySelector(".web-menu li.active");
       previousActiveMenu.classList.remove("active");
       e.target.parentElement.classList.add("active");
-
-      // Set Active Link
-      // const previousSideActiveMenu = document.querySelector(
-      //   ".preference-page nav li.sideMenu-active"
-      // );
-      //previousSideActiveMenu.classList.remove("sideMenu-active");
-      //e.target.parentElement.classList.add("sideMenu-active");
     });
 
     // Begin: Type of Work ===========================
@@ -443,9 +439,6 @@ class AccountEmployee extends EmployeePage {
       "submit",
       this.handleTypeOfWorkFormSubmit.bind(this)
     );
-
-    // const results = await getTypeOfWorkByUserId(this.profileId);
-    // console.log(results);
 
     typeOfWorkURL.addEventListener("click", (e) => {
       e.preventDefault();
@@ -525,7 +518,6 @@ class AccountEmployee extends EmployeePage {
       mainPageContainer.classList.remove("typeofWork-page-clicked");
 
       // Set Active Link
-      //this.setActiveLinkForPreferences();
       const previousSideActiveMenu = document.querySelector(
         ".preference-page nav ul li.sideMenu-active"
       );
@@ -553,26 +545,7 @@ class AccountEmployee extends EmployeePage {
     );
 
     this.initMap();
-    console.log("Map");
-    document
-      .getElementById("address")
-      .addEventListener("focusout", async (e) => {
-        e.preventDefault();
-        const city = document.getElementById("city");
-        const address = document.getElementById("address");
-
-        const trimCity = city.value.trim();
-        const trimAddress = address.value.trim();
-
-        if (trimCity && trimAddress) {
-          const query = `${trimAddress}, ${trimCity}, BC, Canada`;
-          const position = await convertAddressToCoordinates(query);
-          this.coordinates = position;
-
-          this.map.easeTo({ center: position });
-          this.marker.setLngLat(position).addTo(this.map);
-        }
-      });
+    this.addressListener();
   }
 
   close() {
@@ -580,12 +553,20 @@ class AccountEmployee extends EmployeePage {
     window.removeEventListener("popstate", this.popStateListener);
   }
 
-  setActiveLinkForPreferences() {
-    const previousSideActiveMenu = document.querySelector(
-      ".preference-page nav ul li.sideMenu-active"
-    );
-    previousSideActiveMenu.classList.remove("sideMenu-active");
-    e.target.parentElement.parentElement.classList.add("sideMenu-active");
+  addressListener() {
+    let timer = null;
+    const typingInterval = 1500;
+    const addressInput = document.getElementById("address");
+
+    addressInput.addEventListener("keyup", async (e) => {
+      e.preventDefault();
+      clearTimeout(timer);
+      timer = setTimeout(this.handleChangeAddress.bind(this), typingInterval);
+    });
+
+    addressInput.addEventListener("keydown", (e) => {
+      clearTimeout(timer);
+    });
   }
 
   async handleProfileFormSubmit(e) {
@@ -599,8 +580,7 @@ class AccountEmployee extends EmployeePage {
     const postalCode = document.getElementById("postalCode");
     const emailAddress = document.getElementById("emailAddress");
     const data = {
-      id: this.currentUser.uid, //this.profileId,
-      //   userUID: this.currentUser.uid, //this.profileId,
+      id: this.currentUser.uid,
       displayName: displayName.value,
       province: "British Columbia",
       city: city.value,
@@ -621,14 +601,14 @@ class AccountEmployee extends EmployeePage {
           ? await uploadFile(this.uploadProfURL, "users")
           : "";
 
-      data.imageURL =
-        postingProfileImage !== null
-          ? await uploadFile(this.profileImageToUpload, "users")
-          : "";
-      console.log(this.profileImageToUpload);
-      console.log(data.imageURL);
+      if (
+        this.profileImageToUpload !== null &&
+        this.profileImageToUpload !== "undefined"
+      ) {
+        data.imageURL = await uploadFile(this.profileImageToUpload, "users");
+      }
+
       data.uploadProfURL = uploadProfURL.imageURL;
-      console.log(data);
       setProfileInfo(data);
     } catch (error) {
       console.log("ERROR", error);
@@ -654,13 +634,11 @@ class AccountEmployee extends EmployeePage {
 
     if (isValid) {
       const profileImage = document.getElementById("profileImage");
-      console.log(e.target.files[0]);
       this.profileImageToUpload = e.target.files[0];
       const imgUrl = await readURL(this.profileImageToUpload);
       profileImage.style.backgroundImage = `url(${imgUrl})`;
       profileImage.classList.add("visible");
       profileImage.children[3].style.display = "None";
-      console.log(imgUrl);
     } else {
       profileImage.classList.remove("visible");
     }
@@ -725,17 +703,14 @@ class AccountEmployee extends EmployeePage {
   // Begin: Availability Events Listener ===========================
   async handleAvailabilityFormSubmit(e) {
     e.preventDefault();
-    console.log("availability submmitted");
     availabilitySubmit.innerHTML = "Saving...";
 
     let form = document.querySelector("#availabilityForm");
     let checkBoxes = form.querySelectorAll('input[type="checkbox"]');
-    //console.log(checkBoxes);
     const availability = {
       userId: this.profileId,
       days: [],
     };
-    console.log(availability);
 
     checkBoxes.forEach((item) => {
       if (item.checked) {
