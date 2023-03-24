@@ -114,6 +114,10 @@ class Home extends AuthenticatedPage {
   }
 
   async verifyFirstTime() {
+    console.log("is first time", this.currentUser?.details);
+
+    if (this.currentUser?.details === false) return;
+
     if (this.currentUser.details.firstTime == null) {
       const modalFisrtTime = new FirstTime();
 
@@ -127,10 +131,8 @@ class Home extends AuthenticatedPage {
           const markFirstTime = await updateDoc(userRef, {
             firstTime: false,
           });
-          return markFirstTime;
         } catch (error) {
           console.log(error);
-          return false;
         }
       };
       const markFirstTimeResult = await markFirstTime(userID);
