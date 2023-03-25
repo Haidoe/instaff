@@ -12,9 +12,9 @@ class Page {
 
   setDocumentTitle() {
     if (this.title === "Home") {
-      document.title = "Instaff | Hire. Instantly.";
+      document.title = "Instaff | Hire Instantly!";
     } else {
-      document.title = `${this.title} | Instaff | Hire. Instantly.`;
+      document.title = `${this.title} | Instaff | Hire Instantly!`;
     }
   }
 

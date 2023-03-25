@@ -188,6 +188,7 @@ class Dashboard extends EmployerPage {
   }
 
   handleLoadApplicants(applicants) {
+    console.log("Applicants", applicants);
     const container = document.querySelector("div.applicants");
 
     container.innerHTML = "";
@@ -250,6 +251,7 @@ class Dashboard extends EmployerPage {
     pubsub.publish("mainHeaderHideBackBtn");
     window.removeEventListener("popstate", this.popStateListener);
     pubsub.unsubscribe("mainHeaderBackBtnClicked", this.popStateListener);
+    this.realTimeApplicants?.unsubscribe();
 
     //Just to make sure Active Menu is set to Dashboard
     const dashboardMenu = document.querySelector(
