@@ -43,6 +43,11 @@ class ApplicantBox {
     img.src = this.data.userProfileImageUrl ?? "/static/images/anonymous.svg";
     img.alt = "Applicant Image";
 
+    //Added Error Event of img
+    img.addEventListener("error", (e) => {
+      e.target.src = "/static/images/anonymous.svg";
+    });
+
     this.wrapper.appendChild(img);
 
     const content = document.createElement("div");

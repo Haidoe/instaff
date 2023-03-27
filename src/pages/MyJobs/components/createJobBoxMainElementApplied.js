@@ -7,7 +7,7 @@ import { async } from "@firebase/util";
 import { extractTime } from "../../../js/utils";
 
 
-const createJobBoxMainElement = async (arr, div, text, btnType, btnText, userId) =>  {
+const createJobBoxMainElement = async (arr, div, text, btnType, btnText, userId) => {
 
   arr.forEach(async (job) => {
     const jobBoxMain = document.createElement("div");
@@ -42,7 +42,7 @@ const createJobBoxMainElement = async (arr, div, text, btnType, btnText, userId)
     const averageRating = await calcStarRating(job.id);
     jobMainRating.classList.add("job-main-rating");
     jobMainHeader.appendChild(jobMainRating);
-    const stars = new StarRating( `${averageRating}`);
+    const stars = new StarRating(`${averageRating}`);
     stars.suffix = `${averageRating}` + "/" + 5;
     jobMainRating.appendChild(stars.toElement());
     jobMainHeaderColLeft.appendChild(jobMainRating);
@@ -65,6 +65,9 @@ const createJobBoxMainElement = async (arr, div, text, btnType, btnText, userId)
       // jobMainButton.classList.add("btn-cancelled");
       const jobBoxMain = document.getElementById(`job-${job.id}`);
       jobBoxMain.remove();
+      const jobBox = document.getElementById(job.id);
+      jobBox.remove();
+      // console.log(jobBox);
       console.log("cancelled and delete")
     });
 

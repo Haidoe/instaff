@@ -371,6 +371,10 @@ class AccountEmployee extends EmployeePage {
         ".account-employee-page"
       );
       mainPageContainer.classList.add("profile-page-mobile");
+      mainPageContainer.classList.remove("typeofWork-page-clicked");
+      mainPageContainer.classList.remove("preference-page-clicked");
+      mainPageContainer.classList.remove("preference-wrapper-clicked");
+
       pubsub.publish("mainHeaderShowBackBtn");
 
       if (window.innerWidth < 768) {
@@ -386,10 +390,13 @@ class AccountEmployee extends EmployeePage {
         ".account-employee-page"
       );
       mainPageContainer.classList.add("profile-page-clicked");
+      mainPageContainer.classList.remove("preference-page-clicked");
       mainPageContainer.classList.remove("preference-wrapper-clicked");
       mainPageContainer.classList.remove("preference-page-mobile");
       mainPageContainer.classList.remove("preference-page");
       mainPageContainer.classList.remove("typeofWork-page");
+      mainPageContainer.classList.remove("availability-page");
+      mainPageContainer.classList.remove("lengthOfShift-page");
       mainPageContainer.classList.remove("lengthOfShift-page-clicked");
 
       // Set Active Link
@@ -426,6 +433,7 @@ class AccountEmployee extends EmployeePage {
       mainPageContainer.classList.add("preference-wrapper-clicked");
       mainPageContainer.classList.add("preference-page-clicked");
       mainPageContainer.classList.remove("profile-page-clicked");
+      mainPageContainer.classList.remove("profile-page-mobile");
 
       const previousActiveMenu = document.querySelector(".web-menu li.active");
       previousActiveMenu.classList.remove("active");
@@ -483,6 +491,7 @@ class AccountEmployee extends EmployeePage {
       mainPageContainer.classList.add("availability-page-clicked"); //For Web
       mainPageContainer.classList.remove("typeofWork-page-clicked");
       mainPageContainer.classList.remove("lengthOfShift-page-clicked");
+      mainPageContainer.classList.remove("profile-page-mobile");
 
       // Set Active Link
       const previousSideActiveMenu = document.querySelector(
@@ -516,6 +525,7 @@ class AccountEmployee extends EmployeePage {
       mainPageContainer.classList.add("lengthOfShift-page-clicked"); // For Web
       mainPageContainer.classList.remove("availability-page-clicked");
       mainPageContainer.classList.remove("typeofWork-page-clicked");
+      mainPageContainer.classList.remove("profile-page-mobile");
 
       // Set Active Link
       const previousSideActiveMenu = document.querySelector(
@@ -788,5 +798,7 @@ function _validate(oInput, extensions) {
   }
   return false;
 }
+
+function _showHide() {}
 
 export default AccountEmployee;

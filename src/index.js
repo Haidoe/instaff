@@ -44,18 +44,19 @@ mainHeader.render();
 //This is for the notification
 const notification = new Notifications();
 
-// window.addEventListener("offline", () => {
-//   pageTransition("/offline");
-// });
+window.addEventListener("offline", () => {
+  pageTransition("/offline");
+});
 
-// window.addEventListener("online", () => {
-//   console.log("STATE", globalState.user.details.typeOfUser);
-//   if (globalState.user.details.typeOfUser === "employee") {
-//     pageTransition("/");
-//   } else {
-//     pageTransition("/dashboard");
-//   }
-// });
+window.addEventListener("online", () => {
+  setTimeout(() => {
+    if (globalState.user?.details.typeOfUser === "employer") {
+      pageTransition("/dashboard");
+    } else {
+      pageTransition("/");
+    }
+  }, 1000);
+});
 
 registerServiceWorker();
 
