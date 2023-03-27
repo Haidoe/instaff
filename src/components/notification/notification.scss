@@ -50,7 +50,6 @@
     }
 
     &__message {
-      // background-color: aquamarine;
       flex: 1;
     }
 
@@ -68,7 +67,10 @@
       font-weight: bold;
       padding: 0;
       cursor: pointer;
-      opacity: 0;
+
+      @media screen and (min-width: $mediumSmall) {
+        opacity: 0;
+      }
 
       &:hover {
         color: rgb(248, 204, 204);

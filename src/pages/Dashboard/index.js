@@ -191,6 +191,15 @@ class Dashboard extends EmployerPage {
     console.log("Applicants", applicants);
     const container = document.querySelector("div.applicants");
 
+    const totalApplicants = document.querySelector("#jpTotalApplicants");
+    totalApplicants.textContent = applicants.length;
+
+    const totalApplicantsAside = document.querySelector(
+      `#jp-${this.activeJobPosting.id} .applied-candidates span`
+    );
+
+    totalApplicantsAside.textContent = applicants.length;
+
     container.innerHTML = "";
 
     if (applicants.length) {
