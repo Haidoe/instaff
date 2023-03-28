@@ -27,7 +27,7 @@ class Profile extends Modal {
     header.className = "profile-header";
 
     const img = document.createElement("img");
-    img.src = this.profile.imageURL ?? "/static/images/anonymous.svg";
+    img.src = this.data.userProfileImageUrl ?? "/static/images/anonymous.svg";
     img.alt = "Profile Image";
 
     img.addEventListener("error", (e) => {
@@ -117,7 +117,7 @@ class Profile extends Modal {
 
     const infoAddressValue = document.createElement("div");
     infoAddressValue.classList.add("value");
-    infoAddressValue.textContent = `${this.profile.addressLine}, ${this.profile.zipCode}, ${this.profile.province}`;
+    infoAddressValue.textContent = `${this.profile.address}, ${this.profile.postalCode}, ${this.profile.province}`;
     infoAddress.appendChild(infoAddressValue);
 
     //Proof of Work

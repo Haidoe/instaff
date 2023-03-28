@@ -11,10 +11,14 @@ import getAllActiveJobPostingByUser from "../../js/job-posting/getAllActiveJobPo
 import getTotalActiveJobPostingByUser from "../../js/job-posting/getTotalActiveJobPostingByUser";
 import pubsub from "../../classes/PubSub";
 import globalState from "../../classes/GlobalState";
+import RealTimeApplicants from "../../js/applicants/realTimeApplicantsByJobPostingId";
 
 class Dashboard extends EmployerPage {
   constructor() {
     super("Home");
+
+    this.realTimeApplicants = null;
+    this.activeJobPosting = null;
   }
 
   async load() {
@@ -174,14 +178,33 @@ class Dashboard extends EmployerPage {
   }
 
   async loadApplicants(jobPosting) {
+    this.activeJobPosting = jobPosting;
     const container = document.querySelector("div.applicants");
     container.innerHTML = "";
-    const applicants = await getApplicantsByPostId(jobPosting.id);
+
+    this.realTimeApplicants?.unsubscribe();
+    this.realTimeApplicants = new RealTimeApplicants(jobPosting.id);
+    this.realTimeApplicants.subscribe(this.handleLoadApplicants.bind(this));
+  }
+
+  handleLoadApplicants(applicants) {
+    console.log("Applicants", applicants);
+    const container = document.querySelector("div.applicants");
+
+    const totalApplicants = document.querySelector("#jpTotalApplicants");
+    totalApplicants.textContent = applicants.length;
+
+    const totalApplicantsAside = document.querySelector(
+      `#jp-${this.activeJobPosting.id} .applied-candidates span`
+    );
+
+    totalApplicantsAside.textContent = applicants.length;
+
     container.innerHTML = "";
 
     if (applicants.length) {
       for (const applicant of applicants) {
-        const applicantBox = new ApplicantBox(applicant, jobPosting);
+        const applicantBox = new ApplicantBox(applicant, this.activeJobPosting);
         container.appendChild(applicantBox.toElement());
       }
     } else {
@@ -237,6 +260,7 @@ class Dashboard extends EmployerPage {
     pubsub.publish("mainHeaderHideBackBtn");
     window.removeEventListener("popstate", this.popStateListener);
     pubsub.unsubscribe("mainHeaderBackBtnClicked", this.popStateListener);
+    this.realTimeApplicants?.unsubscribe();
 
     //Just to make sure Active Menu is set to Dashboard
     const dashboardMenu = document.querySelector(
