@@ -623,8 +623,9 @@ main {
       }
     }
     .account-setting {
-      display: unset;
+      // display: unset;
       display: block;
+      background-color: white;
     }
   }
 
@@ -642,7 +643,9 @@ main {
       display: unset;
     }
     .account-setting {
-      display: unset;
+      // display: unset;
+      display: block;
+      background-color: #fff;
     }
     .preference-wrapper {
       display: grid;
@@ -721,7 +724,9 @@ main {
 
   .profile-page-clicked {
     .account-setting {
-      display: unset;
+      // display: unset;
+      display: block;
+      background-color: #fff;
     }
     .preference-page {
       display: none;
