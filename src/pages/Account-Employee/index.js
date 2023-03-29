@@ -113,6 +113,8 @@ class AccountEmployee extends EmployeePage {
     const contactNumber = document.getElementById("contactNumber");
     const postalCode = document.getElementById("postalCode");
     const emailAddress = document.getElementById("emailAddress");
+    const viewProof = document.getElementById("viewProof");
+    const uploadedDate = document.getElementById("uploadedDate");
 
     if (
       typeof this.data.imageURL !== "undefined" &&
@@ -134,6 +136,19 @@ class AccountEmployee extends EmployeePage {
       typeof this.data.uploadProfURL !== "undefined" &&
       this.data.imageURL !== ""
     ) {
+      viewProof.href = this.data.uploadProfURL;
+      const newContent = document.createTextNode(
+        `${this.data.displayName}-proof-of-work`
+      );
+      const options = {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      };
+      uploadedDate.innerHTML = this.data.updated
+        .toDate()
+        .toLocaleDateString("en-CA", options);
+      viewProof.appendChild(newContent);
       this.uploadProfURL = this.data.uploadProfURL;
     }
     displayName.value = this.data.displayName;

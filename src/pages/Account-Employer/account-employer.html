@@ -45,19 +45,6 @@
             <input required type="text" id="companyName" name="companyName" />
           </div>
           <div class="input-group">
-            <label for="address">Address Line</label>
-            <input type="text" id="address" />
-          </div>
-          <div class="input-group">
-            <label for="city">City</label>
-            <input required type="text" id="city" />
-          </div>
-          <div class="input-group">
-            <label for="postalCode">Postal Code</label>
-            <input required type="text" id="postalCode" />
-          </div>
-          <div id="profile-map"></div>
-          <div class="input-group">
             <label for="contactNumber">Contact Number</label>
             <input
               required
@@ -73,6 +60,21 @@
               id="businessNumber"
               name="businessNumber" />
           </div>
+
+          <div class="input-group">
+            <label for="postalCode">Postal Code</label>
+            <input required type="text" id="postalCode" />
+          </div>
+          <div class="input-group">
+            <label for="city">City</label>
+            <input required type="text" id="city" />
+          </div>
+          <div class="input-group">
+            <label for="address">Address Line</label>
+            <input type="text" id="address" />
+          </div>
+          <div id="profile-map"></div>
+
           <div class="input-group">
             <label for="emailAddress">Contact Email Address</label>
             <input required type="text" id="emailAddress" name="emailAddress" />
@@ -80,9 +82,15 @@
         </div>
 
         <div class="upload-prof-wrapper">
+          <div class="download-pdf-wrapper">
+            <a id="viewProof"></a>
+            <span id="uploadedDate"></span>
+          </div>
           <div class="input-group">
-            <label for="uploadProfURL">Proof of business eligibility</label>
-            <a href="#"></a>
+            <label for="uploadProfURL"
+              >Upload your proof of business eligibility</label
+            >
+
             <input type="file" id="uploadProfURL" />
           </div>
         </div>
