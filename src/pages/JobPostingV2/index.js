@@ -24,9 +24,6 @@ class JobPosting extends EmployerPage {
 
     //Form related variables
     this.jobPosting = {};
-
-    //WEB API for geolocation
-    this.geoAPI = null;
   }
 
   async load() {
@@ -61,7 +58,10 @@ class JobPosting extends EmployerPage {
       .setLngLat(defaultCenter)
       .addTo(this.map);
 
-    this.geoAPI = navigator.geolocation.watchPosition(async (position) => {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      console.log(position);
+      if (this.isClosed) return;
+
       try {
         const pos = {
           lat: position.coords.latitude,
@@ -322,10 +322,7 @@ class JobPosting extends EmployerPage {
   }
 
   close() {
-    if (this.geoAPI) {
-      navigator.geolocation.clearWatch(this.geoAPI);
-    }
-
+    this.isClosed = true;
     document.querySelector("body").classList.remove("job-post-body");
 
     try {

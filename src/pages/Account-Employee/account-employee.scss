@@ -81,12 +81,29 @@ main {
 }
 
 .account-employee-page {
+  .custom-marker {
+    height: 25px;
+    width: 25px;
+    background-color: transparent;
+  }
+  .download-pdf-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2%;
+    gap: 1rem;
+    a {
+      text-decoration: unset;
+      color: blue;
+    }
+  }
   max-width: $maxWidthContainer;
   margin: 0 auto;
   .header {
     display: grid;
     align-items: center;
-
+    background-image: url("../../static/images/profile-bg.svg");
+    background-repeat: no-repeat;
+    background-position: center;
     background-color: white;
     padding-bottom: 5px;
     right: 0px;
@@ -590,7 +607,6 @@ main {
         padding: 1rem;
         border-radius: 5px;
         background-color: white;
-        align-self: center;
       }
       .upload-prof-wrapper {
         grid-column: 2;
@@ -599,7 +615,6 @@ main {
         border: 1px solid $colorLightGray;
         padding: 1rem;
         border-radius: 5px;
-        align-self: center;
       }
       .action-btn-wrapper {
         grid-column: span 2;
@@ -608,7 +623,9 @@ main {
       }
     }
     .account-setting {
-      display: unset;
+      // display: unset;
+      display: block;
+      background-color: white;
     }
   }
 
@@ -626,7 +643,9 @@ main {
       display: unset;
     }
     .account-setting {
-      display: unset;
+      // display: unset;
+      display: block;
+      background-color: #fff;
     }
     .preference-wrapper {
       display: grid;
@@ -705,7 +724,9 @@ main {
 
   .profile-page-clicked {
     .account-setting {
-      display: unset;
+      // display: unset;
+      display: block;
+      background-color: #fff;
     }
     .preference-page {
       display: none;

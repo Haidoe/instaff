@@ -9,6 +9,7 @@ import { pageTransition } from "../../router";
 import Template from "./home.html";
 import "./home.scss";
 import JobCard from "./job-card";
+import RealTimeActiveJobPostings from "../../js/job-posting/getAllActiveJobPostingsRealTime";
 
 class Home extends AuthenticatedPage {
   static markers = [];
@@ -39,6 +40,9 @@ class Home extends AuthenticatedPage {
     this.geoAPILoaded = false;
     this.markers = [];
     this.jobs = [];
+    this.textFilter = "";
+
+    this.listener = null;
   }
 
   async preload() {
@@ -274,15 +278,18 @@ class Home extends AuthenticatedPage {
     this.searchResets();
 
     const searchText = document.querySelector("#job_keyword");
+    this.textFilter = searchText.value.trim();
 
-    if (searchText.value.trim().length === 0) {
+    if (this.textFilter.length === 0) {
       return;
     }
 
     this.removeMarkers();
 
     const result = this.jobs.filter((job) => {
-      return job.positionTitle.toUpperCase() === searchText.value.toUpperCase();
+      return (
+        job.positionTitle.trim().toUpperCase() === this.textFilter.toUpperCase()
+      );
     });
 
     if (result.length === 0) {
@@ -302,7 +309,7 @@ class Home extends AuthenticatedPage {
     } else {
       const container = document.querySelector("#home-list-jobs");
       container.innerHTML = "";
-      this.renderJobs(result);
+
       result.forEach((job) => {
         const card = new JobCard(job);
         const cardElement = card.toElement();
@@ -314,6 +321,8 @@ class Home extends AuthenticatedPage {
 
         container.appendChild(cardElement);
       });
+
+      this.renderJobs();
     }
 
     const asideJobList = document.querySelector("#home-aside-job-list");
@@ -558,7 +567,19 @@ class Home extends AuthenticatedPage {
     this.renderJobs(response);
   }
 
-  renderJobs(jobs) {
+  renderJobs(jobPostings) {
+    this.removeMarkers();
+
+    let jobs = jobPostings || this.jobs;
+
+    if (this.textFilter.length > 0) {
+      jobs = jobs.filter(
+        (job) =>
+          job.positionTitle.trim().toUpperCase() ===
+          this.textFilter.toUpperCase()
+      );
+    }
+
     jobs.forEach((job) => {
       const customMarker = document.createElement("div");
       customMarker.className = "custom-marker";
@@ -612,7 +633,9 @@ class Home extends AuthenticatedPage {
       const searchText = document.querySelector("#job_keyword");
       searchText.value = "";
 
-      this.renderJobs(this.jobs);
+      this.textFilter = "";
+
+      this.renderJobs();
     });
   }
 
@@ -620,7 +643,17 @@ class Home extends AuthenticatedPage {
     document.querySelector("body").classList.add("new-home-body");
     this.initMap();
     // this.showJobs();
-    this.initJobs();
+    // this.initJobs();
+
+    this.listener = new RealTimeActiveJobPostings();
+
+    this.listener.subscribe((postings) => {
+      this.jobs = [...this.jobs, ...postings];
+
+      console.log("JOBS GOT UPDATED", this.jobs);
+
+      this.renderJobs();
+    });
 
     const activeMenu = document.querySelector(".main-header nav a[href='/']");
     activeMenu?.classList.add("active-menu-item");
@@ -641,6 +674,8 @@ class Home extends AuthenticatedPage {
     this.jobMatchModal?.close();
 
     this.geoAPI && navigator.geolocation.clearWatch(this.geoAPI);
+
+    this.listener?.unsubscribe();
   }
 }
 

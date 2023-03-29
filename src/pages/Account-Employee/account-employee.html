@@ -3,7 +3,6 @@
     <div class="banner">
       <div class="banner-image"></div>
       <h2 class="profile-name"></h2>
-      
     </div>
   </div>
   <div class="account-setting">
@@ -20,14 +19,12 @@
           ><span class="text">Preferences</span></a
         >
       </li>
-      
     </ul>
     <ul class="web-menu">
       <li class="active"><a href="#" id="webProfileURL"> Profile</a></li>
       <li>
         <a id="webPreferenceURL" href="#">Preferences</a>
       </li>
-      
     </ul>
   </div>
   <div class="profile-page" id="profile-page">
@@ -66,13 +63,12 @@
           </div>
 
           <div class="input-group">
-            <label for="city">City</label>
-            <input required type="text" id="city" />
-          </div>
-
-          <div class="input-group">
             <label for="postalCode">Postal Code</label>
             <input required type="text" id="postalCode" />
+          </div>
+          <div class="input-group">
+            <label for="city">City</label>
+            <input required type="text" id="city" />
           </div>
           <div class="input-group address-input">
             <label for="address">Address Line</label>
@@ -95,8 +91,14 @@
         </div>
 
         <div class="upload-prof-wrapper">
+          <div class="download-pdf-wrapper">
+            <a id="viewProof"></a>
+            <span id="uploadedDate"></span>
+          </div>
           <div class="input-group">
-            <label for="uploadProfURL">Proof of work eligibility</label>
+            <label for="uploadProfURL"
+              >Upload your proof of work eligibility</label
+            >
             <a href="#"></a>
             <input type="file" id="uploadProfURL" />
           </div>

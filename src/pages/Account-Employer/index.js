@@ -99,6 +99,8 @@ class AccountEmployer extends EmployerPage {
     const businessNumber = document.getElementById("businessNumber");
     const emailAddress = document.getElementById("emailAddress");
     const postalCode = document.getElementById("postalCode");
+    const viewProof = document.getElementById("viewProof");
+    const uploadedDate = document.getElementById("uploadedDate");
     const submitBtn = document.getElementById("submitBtn");
 
     if (
@@ -122,6 +124,19 @@ class AccountEmployer extends EmployerPage {
       typeof this.data.uploadProfURL !== "undefined" &&
       this.data.uploadProfURL !== ""
     ) {
+      viewProof.href = this.data.uploadProfURL;
+      const newContent = document.createTextNode(
+        `${this.data.displayName}-proof-of-business`
+      );
+      const options = {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      };
+      uploadedDate.innerHTML = this.data.updated
+        .toDate()
+        .toLocaleDateString("en-CA", options);
+      viewProof.appendChild(newContent);
       this.uploadProfURL = this.data.uploadProfURL;
     }
     displayName.value = this.data.displayName;
