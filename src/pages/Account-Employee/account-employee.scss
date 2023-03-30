@@ -96,12 +96,11 @@ main {
       color: blue;
     }
   }
-  max-width: $maxWidthContainer;
-  margin: 0 auto;
+
   .header {
     display: grid;
     align-items: center;
-    background-image: url("../../static/images/profile-bg.svg");
+    // background-image: url("../../static/images/profile-bg.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-color: white;
@@ -497,17 +496,27 @@ main {
       align-items: unset;
       padding-left: 2%;
       padding-right: 2%;
+      margin-top: -1rem;
+      margin-left: -3%;
+      margin-right: -3%;
+
       .web-menu {
         width: 800px;
       }
-      background-image: url("../../static/images/undraw_profile_data_re_v81r.svg");
+
+      // background-image: url("../../static/images/undraw_profile_data_re_v81r.svg");
       background-size: contain;
       background-repeat: no-repeat;
       background-position: right 20px center;
     }
+
     .banner {
       display: grid;
       grid-template-columns: 150px 1fr 48%;
+      max-width: $maxWidthContainer;
+      margin: 0 auto;
+      width: 100%;
+
       .progress {
         padding: 0 1rem;
       }
