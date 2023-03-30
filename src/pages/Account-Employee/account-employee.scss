@@ -96,18 +96,17 @@ main {
       color: blue;
     }
   }
-  max-width: $maxWidthContainer;
-  margin: 0 auto;
+
   .header {
     display: grid;
     align-items: center;
-    background-image: url("../../static/images/profile-bg.svg");
+    // background-image: url("../../static/images/profile-bg.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-color: white;
     padding-bottom: 5px;
     right: 0px;
-    border-bottom: 1px solid black;
+    // border-bottom: 1px solid black;
 
     .banner {
       display: grid;
@@ -299,9 +298,12 @@ main {
   .web-menu {
     display: none;
   }
+
   .account-setting {
     background-color: white;
+    border-top: 1px solid black;
   }
+
   .profile-info {
     text-align: center;
     display: grid;
@@ -490,142 +492,181 @@ main {
 @media screen and (min-width: $mediumSmall) {
   main {
     background: unset;
-  }
-  .account-employee-page {
-    .header {
-      display: grid;
-      align-items: unset;
-      padding-left: 2%;
-      padding-right: 2%;
-      .web-menu {
-        width: 800px;
-      }
-      background-image: url("../../static/images/undraw_profile_data_re_v81r.svg");
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: right 20px center;
-    }
-    .banner {
-      display: grid;
-      grid-template-columns: 150px 1fr 48%;
-      .progress {
-        padding: 0 1rem;
-      }
-      gap: 1rem;
 
-      .profile-name {
-        // padding: 0;
-        justify-self: left;
-      }
-      .progress {
-        flex: 2;
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        margin-top: 24px;
+    .account-employee-page {
+      .header {
+        display: grid;
+        align-items: unset;
+        // padding-left: 2%;
+        // padding-right: 2%;
+        padding: 2rem 0 0;
+        margin-top: -1rem;
+        margin-left: -3%;
+        margin-right: -3%;
 
-        .progress-box {
-          flex: 1;
-          background-color: white;
-          border-radius: 5px;
-          text-align: center;
-          margin-left: 10;
-          p {
-            font-size: 80%;
+        .web-menu {
+          width: 800px;
+        }
+
+        h2 {
+          font-size: 52px;
+        }
+
+        .banner {
+          display: flex;
+          flex-direction: row;
+          max-width: $maxWidthContainer;
+          margin: 0 auto;
+          width: 100%;
+          // border-bottom: 1px solid black;
+
+          background-image: url("../../static/images/undraw_profile_data_re_v81r.svg");
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: right 20px center;
+
+          .banner-image {
+            flex-basis: 150px;
+            flex-grow: 0;
+            flex-shrink: 0;
           }
-          .progress-bar {
-            width: 90%;
-            border: 1px solid $colorLightGray;
-            position: relative;
-            height: 20px;
-            border-radius: 5px;
-            background-color: $colorLightGray;
 
-            &::before {
-              content: "";
+          .progress {
+            padding: 0 1rem;
+          }
+          gap: 1rem;
+
+          .profile-name {
+            // padding: 0;
+            flex: 1;
+            justify-self: left;
+          }
+
+          .progress {
+            flex: 2;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 24px;
+
+            .progress-box {
+              flex: 1;
+              background-color: white;
               border-radius: 5px;
-              background-image: linear-gradient($colorPink, black);
-              position: absolute;
-              left: 0px;
-              top: 0px;
-              bottom: 0px;
-              z-index: 1;
-            }
-            &.p20::before {
-              width: 20%;
-            }
-            &.p60::before {
-              width: 60%;
-            }
-            &.p100::before {
-              width: 100%;
+              text-align: center;
+              margin-left: 10;
+              p {
+                font-size: 80%;
+              }
+              .progress-bar {
+                width: 90%;
+                border: 1px solid $colorLightGray;
+                position: relative;
+                height: 20px;
+                border-radius: 5px;
+                background-color: $colorLightGray;
+
+                &::before {
+                  content: "";
+                  border-radius: 5px;
+                  background-image: linear-gradient($colorPink, black);
+                  position: absolute;
+                  left: 0px;
+                  top: 0px;
+                  bottom: 0px;
+                  z-index: 1;
+                }
+                &.p20::before {
+                  width: 20%;
+                }
+                &.p60::before {
+                  width: 60%;
+                }
+                &.p100::before {
+                  width: 100%;
+                }
+              }
             }
           }
         }
       }
-    }
 
-    .web-menu {
-      flex: 1;
-      li {
-        padding: 0.5rem 1rem;
-        display: inline-block;
+      .web-menu {
+        flex: 1;
+        li {
+          padding: 0.5rem 1rem;
+          display: inline-block;
+        }
+
+        .active {
+          color: $colorPink;
+          border-bottom: 3px solid $colorPink;
+          transform: translateY(1px);
+        }
       }
 
-      .active {
-        color: $colorPink;
-        border-bottom: 2px solid $colorPink;
+      .mobile-menu {
+        display: none;
       }
-    }
+      .web-menu {
+        display: unset;
+      }
+      .profile-page {
+        display: unset;
+      }
+      .profile-page .form-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr) auto auto;
+        gap: 1rem;
+        max-width: $maxWidthContainer;
+        margin: 0 auto;
+        width: 100%;
 
-    .mobile-menu {
-      display: none;
-    }
-    .web-menu {
-      display: unset;
-    }
-    .profile-page {
-      display: unset;
-    }
-    .profile-page .form-wrapper {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(3, 1fr) auto auto;
-      gap: 2rem;
+        .personal-wrapper {
+          grid-column: 1;
+          grid-row: 1/5;
+          border: 1px solid $colorLightGray;
+          padding: 1rem;
+          border-radius: 5px;
+          background-color: white;
+        }
 
-      .personal-wrapper {
-        grid-column: 1;
-        grid-row: 1/5;
-        border: 1px solid $colorLightGray;
-        padding: 1rem;
-        border-radius: 5px;
+        .profile-image-wrapper {
+          grid-column: 2;
+          grid-row: 1;
+          border: 1px solid $colorLightGray;
+          padding: 1rem;
+          border-radius: 5px;
+          background-color: white;
+        }
+
+        .upload-prof-wrapper {
+          grid-column: 2;
+          grid-row: 2;
+          background-color: white;
+          border: 1px solid $colorLightGray;
+          padding: 1rem;
+          border-radius: 5px;
+        }
+        .action-btn-wrapper {
+          grid-column: span 2;
+          grid-row: 5;
+          margin-top: 0;
+        }
+      }
+      .account-setting {
+        // display: unset;
+        display: block;
         background-color: white;
+        max-width: $maxWidthContainer;
+        margin: 0 auto;
+        width: 100%;
+        border-bottom: 1px solid $colorLightGray;
+
+        .active {
+          font-weight: bold;
+        }
       }
-      .profile-image-wrapper {
-        grid-column: 2;
-        grid-row: 1;
-        border: 1px solid $colorLightGray;
-        padding: 1rem;
-        border-radius: 5px;
-        background-color: white;
-      }
-      .upload-prof-wrapper {
-        grid-column: 2;
-        grid-row: 2;
-        background-color: white;
-        border: 1px solid $colorLightGray;
-        padding: 1rem;
-        border-radius: 5px;
-      }
-      .action-btn-wrapper {
-        grid-column: span 2;
-        grid-row: 5;
-        margin-top: 0;
-      }
-    }
-    .account-setting {
-      // display: unset;
-      display: block;
-      background-color: white;
     }
   }
 
@@ -650,8 +691,14 @@ main {
     .preference-wrapper {
       display: grid;
       grid-template-columns: 30% 70%;
-      gap: 1rem;
+      // gap: 1rem;
       padding: 1rem 0;
+
+      max-width: $maxWidthContainer;
+      margin: 0 auto;
+      width: 100%;
+
+      margin-top: -2rem;
     }
     .preference-page {
       grid-column: 1;
@@ -659,13 +706,18 @@ main {
       border: 1px solid #e6e6e6;
       padding: 1rem;
       border-radius: 5px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
       background-color: white;
     }
     .typeofWork-page {
       grid-row: span 2;
       border: 1px solid #e6e6e6;
+      border-left: none;
       padding: 1rem;
       border-radius: 5px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
       background-color: white;
     }
     .typeofWork-page {
@@ -701,6 +753,9 @@ main {
       border: 1px solid #e6e6e6;
       padding: 1rem;
       border-radius: 5px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left: none;
       background-color: white;
     }
   }
@@ -718,6 +773,9 @@ main {
       border: 1px solid #e6e6e6;
       padding: 1rem;
       border-radius: 5px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left: none;
       background-color: white;
     }
   }
