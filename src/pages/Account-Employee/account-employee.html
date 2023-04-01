@@ -4,45 +4,35 @@
       <div class="banner-image"></div>
       <h2 class="profile-name"></h2>
     </div>
+
+    <div class="account-setting">
+      <ul class="mobile-menu">
+        <li>
+          <a id="profileURL" href="#"><i class="fa-solid fa-user-check"></i><span class="text">Profile</span></a>
+        </li>
+        <li>
+          <a id="preferenceURL" href="#"><i class="fa-solid fa-circle-check"></i><span
+              class="text">Preferences</span></a>
+        </li>
+      </ul>
+      <ul class="web-menu">
+        <li class="active"><a href="#" id="webProfileURL"> Profile</a></li>
+        <li>
+          <a id="webPreferenceURL" href="#">Preferences</a>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div class="account-setting">
-    <ul class="mobile-menu">
-      <li>
-        <a id="profileURL" href="#"
-          ><i class="fa-solid fa-user-check"></i
-          ><span class="text">Profile</span></a
-        >
-      </li>
-      <li>
-        <a id="preferenceURL" href="#"
-          ><i class="fa-solid fa-circle-check"></i
-          ><span class="text">Preferences</span></a
-        >
-      </li>
-    </ul>
-    <ul class="web-menu">
-      <li class="active"><a href="#" id="webProfileURL"> Profile</a></li>
-      <li>
-        <a id="webPreferenceURL" href="#">Preferences</a>
-      </li>
-    </ul>
-  </div>
+
   <div class="profile-page" id="profile-page">
     <form id="profileForm" class="content">
       <div class="form-wrapper">
         <div class="profile-image-wrapper">
           <div class="profile-Image" id="profileImage">
-            <label
-              for="postingProfilePhoto"
-              class="visually-hidden"
-              id="lblProfileImage">
+            <label for="postingProfilePhoto" class="visually-hidden" id="lblProfileImage">
               Upload Image
             </label>
-            <input
-              required
-              type="file"
-              id="postingProfileImage"
-              name="postingProfileImage" />
+            <input required type="file" id="postingProfileImage" name="postingProfileImage" />
             <button id="uploadImgBtn" disabled>
               <div class="icon image-icon">
                 <span class="visually-hidden">Upload Image Button</span>
@@ -78,11 +68,7 @@
           <div id="profile-map"></div>
           <div class="input-group">
             <label for="contactNumber">Contact Number</label>
-            <input
-              required
-              type="text"
-              id="contactNumber"
-              name="contactNumber" />
+            <input required type="text" id="contactNumber" name="contactNumber" />
           </div>
           <div class="input-group">
             <label for="emailAddress">Contact Email Address</label>
@@ -96,18 +82,13 @@
             <span id="uploadedDate"></span>
           </div>
           <div class="input-group">
-            <label for="uploadProfURL"
-              >Upload your proof of work eligibility</label
-            >
+            <label for="uploadProfURL">Upload your proof of work eligibility</label>
             <a href="#"></a>
             <input type="file" id="uploadProfURL" />
           </div>
         </div>
         <div class="action-btn-wrapper center">
-          <button
-            type="submit"
-            id="submitBtn"
-            class="primary-button submit-btn">
+          <button type="submit" id="submitBtn" class="primary-button submit-btn">
             Save
           </button>
         </div>
@@ -119,22 +100,16 @@
       <nav>
         <ul class="preference-menu">
           <li class="sideMenu-active">
-            <span class="logo"></span
-            ><span class="text"
-              ><a id="typeOfWorkURL" href="#">Type of work</a></span
-            >
+            <span class="logo icon type-of-work-icon"></span>
+            <span class="text"><a id="typeOfWorkURL" href="#">Type of work</a></span>
           </li>
           <li>
-            <span class="logo"></span
-            ><span class="text"
-              ><a id="availabilityURL" href="#">Availability</a></span
-            >
+            <span class="logo icon availability-icon"></span><span class="text"><a id="availabilityURL"
+                href="#">Availability</a></span>
           </li>
           <li>
-            <span class="logo"></span
-            ><span class="text"
-              ><a id="lengthOfShiftURL" href="#">Length of shift</a></span
-            >
+            <span class="logo icon length-of-time-icon"></span><span class="text"><a id="lengthOfShiftURL"
+                href="#">Length of shift</a></span>
           </li>
         </ul>
       </nav>
@@ -145,10 +120,7 @@
         <div class="form-wrapper">
           <div class="form-group-typeOfWork"></div>
           <div class="action-btn-wrapper center">
-            <button
-              type="submit"
-              id="submitBtnTypeOfWork"
-              class="primary-button submit-btn">
+            <button type="submit" id="submitBtnTypeOfWork" class="primary-button submit-btn">
               Save
             </button>
           </div>
@@ -161,10 +133,7 @@
         <div class="form-wrapper">
           <div class="form-group-availability"></div>
           <div class="action-btn-wrapper center">
-            <button
-              type="submit"
-              id="availabilitySubmit"
-              class="primary-button submit-btn">
+            <button type="submit" id="availabilitySubmit" class="primary-button submit-btn">
               Save
             </button>
           </div>
@@ -186,10 +155,7 @@
           </div>
         </div>
         <div class="action-btn-wrapper center">
-          <button
-            type="submit"
-            id="lengthOfShiftSubmit"
-            class="primary-button submit-btn">
+          <button type="submit" id="lengthOfShiftSubmit" class="primary-button submit-btn">
             Save
           </button>
         </div>

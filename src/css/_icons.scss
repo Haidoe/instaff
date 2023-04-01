@@ -23,4 +23,19 @@
     -webkit-mask: url(../static/icons/star.svg) no-repeat center;
     mask: url(../static/icons/star.svg) no-repeat center;
   }
+
+  &.type-of-work-icon {
+    -webkit-mask: url(../static/icons/type-of-work.svg) no-repeat center;
+    mask: url(../static/icons/type-of-work.svg) no-repeat center;
+  }
+
+  &.availability-icon {
+    -webkit-mask: url(../static/icons/availability.svg) no-repeat center;
+    mask: url(../static/icons/availability.svg) no-repeat center;
+  }
+
+  &.length-of-time-icon {
+    -webkit-mask: url(../static/icons/length-of-time.svg) no-repeat center;
+    mask: url(../static/icons/length-of-time.svg) no-repeat center;
+  }
 }

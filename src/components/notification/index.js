@@ -22,6 +22,7 @@ class Notification {
     this.data = data;
 
     this.init();
+    this.notifTimer = 10000;
   }
 
   init() {
@@ -133,7 +134,7 @@ class NotificationsComponent {
 
     setTimeout(() => {
       notif.remove();
-    }, 5000);
+    }, this.notifTimer);
   }
 }
 
