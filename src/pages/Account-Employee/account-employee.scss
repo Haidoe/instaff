@@ -321,8 +321,11 @@ main {
     display: inline-block;
     width: 40px;
     height: 40px;
-    background-color: $colorLightGray;
-    border-radius: 50%;
+    // background-color: $colorLightGray;
+
+    &.icon {
+      scale: 0.9;
+    }
   }
 
   .preference-menu li {
@@ -338,7 +341,7 @@ main {
   }
 
   .preference-menu li .text {
-    padding-left: 20px;
+    padding-left: 8px;
     line-height: 40px;
     height: 40px;
   }
