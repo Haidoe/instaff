@@ -20,9 +20,7 @@ class Notification {
   constructor(data, wrapper) {
     this.wrapper = wrapper;
     this.data = data;
-
     this.init();
-    this.notifTimer = 10000;
   }
 
   init() {
@@ -134,7 +132,7 @@ class NotificationsComponent {
 
     setTimeout(() => {
       notif.remove();
-    }, this.notifTimer);
+    }, 10000);
   }
 }
 
