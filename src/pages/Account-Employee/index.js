@@ -180,19 +180,21 @@ class AccountEmployee extends EmployeePage {
   async loadTypeOfWorkListingData() {
     let results = await getTypeOfWorkByUserId(this.profileId);
     const checkList = [
-      "Barista",
-      "Bartender",
-      "Barback",
-      "Busser",
+      "Helper",
       "Cleaner",
+      "Cashier",
       "Custodial",
       "Counter Staff",
-      "Dish Washer",
-      "Event Server",
-      "Event Setup",
-      "Warehouse Associate",
-      "Warehouse Packer",
+      "Dishwasher",
+      "Server",
+      "Crew",
+      "Warehouse Worker",
+      "Housekeeper",
+      "Laundry Attendant",
+      "Clerk",
+      "Fast food worker",
     ];
+
     checkList.forEach((item) => {
       let findItem = undefined;
 
