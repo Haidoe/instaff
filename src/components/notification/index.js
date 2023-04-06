@@ -83,6 +83,8 @@ class NotificationsComponent {
   constructor() {
     this.wrapper = document.body;
     this.isLoaded = false;
+    //Audio
+    this.audio = new Audio("/static/bgm/instaff-notification.wav");
     //Notif Listener
     this.unsubscribe = null;
     this.initElements();
@@ -129,6 +131,7 @@ class NotificationsComponent {
 
   push(data) {
     const notif = new Notification(data, this.container);
+    this.audio.play();
 
     setTimeout(() => {
       notif.remove();
